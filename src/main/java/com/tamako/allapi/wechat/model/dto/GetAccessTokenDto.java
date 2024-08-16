@@ -17,4 +17,9 @@ public class GetAccessTokenDto {
      * 微信小程序 secret
      */
     private String secret;
+
+    /**
+     * 填写 client_credential
+     */
+    private final String grantType="client_credential";
 }

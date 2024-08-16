@@ -1,9 +1,11 @@
 package com.tamako.allapi.utils.network;
 
 
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -119,21 +121,50 @@ public class NetWorkRequest {
      * @return Response
      */
     public static Response postSync(String url) {
-        return postSync(url, null, null);
+        return postSync(url, (Headers) null, null);
     }
 
     /**
      * 同步POST请求
+     *
      * @param url         请求地址
      * @param headers     请求头
      * @param requestBody 请求体
      * @return Response
      */
-    public static Response putSync(String url, Map<String,String> headers, Map<String,String> requestBody) {
+    public static Response postSync(String url, Map<String, String> headers, Map<String, String> requestBody) {
         Headers headers1 = Headers.of(headers);
-        String body=JSONUtil.toJsonStr(requestBody);
-
+        String body = JSONUtil.toJsonStr(requestBody);
         RequestBody requestBody1 = RequestBody.create(body, JSON_TYPE);
         return postSync(url, headers1, requestBody1);
+    }
+
+    /**
+     * 异步POST请求
+     *
+     * @param url         请求地址
+     * @param headers     请求头
+     * @param requestBody 请求体
+     */
+    public static void postAsync(String url, Headers headers, RequestBody requestBody) {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .post(requestBody)
+                .headers(headers)
+                .url(url)
+                .build();
+        //准备好请求的Call对象
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                log.info("response code:{},response body:{}", response.code(), response.body());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
     }
 }
