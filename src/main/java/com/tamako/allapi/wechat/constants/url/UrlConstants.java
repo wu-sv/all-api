@@ -22,4 +22,9 @@ public class UrlConstants {
      * 小程序登录
      */
     public static final String WECHAT_MINI_LOGIN_URL = WECHAT_API_URL + "/sns/jscode2session";
+
+    /**
+     * 获取手机号
+     */
+    public static final String WECHAT_GET_PHONE_NUMBER_URL = WECHAT_API_URL + "/wxa/business/getuserphonenumber";
 }

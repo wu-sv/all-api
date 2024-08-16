@@ -2,8 +2,10 @@ package com.tamako.allapi.wechat.api;
 
 
 import com.tamako.allapi.wechat.model.dto.GetAccessTokenDto;
+import com.tamako.allapi.wechat.model.dto.GetPhoneNumberDto;
 import com.tamako.allapi.wechat.model.dto.Jscode2SessionDto;
 import com.tamako.allapi.wechat.model.vo.GetAccessTokenVo;
+import com.tamako.allapi.wechat.model.vo.getphonenumbervo.GetPhoneNumberVo;
 import com.tamako.allapi.wechat.model.vo.Jscode2SessionVo;
 
 /**
@@ -28,5 +30,10 @@ public interface WeChatApi {
     Jscode2SessionVo jscode2Session(Jscode2SessionDto dto);
 
 
+    /**
+     * 手机号快速验证
+     *
+     */
+    GetPhoneNumberVo getPhoneNumber(GetPhoneNumberDto dto);
 
 }

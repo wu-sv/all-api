@@ -24,8 +24,4 @@ public class Jscode2SessionDto {
      */
     private String jsCode;
 
-    /**
-     * 授权类型，此处只需填写 authorization_code
-     */
-    private final String grantType = "authorization_code";
 }

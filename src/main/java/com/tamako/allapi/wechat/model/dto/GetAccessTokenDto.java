@@ -18,8 +18,4 @@ public class GetAccessTokenDto {
      */
     private String secret;
 
-    /**
-     * 填写 client_credential
-     */
-    private final String grantType="client_credential";
 }

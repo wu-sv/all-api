@@ -1,6 +1,7 @@
 package com.tamako.allapi.utils.network;
 
 
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -21,20 +22,16 @@ public class NetWorkRequest {
      * 同步GET请求
      *
      * @param url 请求地址
-     * @return Response
+     * @return JSONObject
      */
-    public static Response getSync(String url) {
+    public static JSONObject getSync(String url) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .build();
-        try {
-            return client.newCall(request).execute();
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+
+        return handleResponse(client, request);
     }
 
     /**
@@ -75,21 +72,24 @@ public class NetWorkRequest {
      * @param url         请求地址
      * @param headers     请求头
      * @param requestBody 请求体
-     * @return Response
+     * @return JSONObject
      */
-    public static Response postSync(String url, Headers headers, RequestBody requestBody) {
+    public static JSONObject postSync(@NotNull String url, Headers headers, @NotNull RequestBody requestBody) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(headers)
-                .post(requestBody)
-                .build();
-        try {
-            return client.newCall(request).execute();
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
+        Request request;
+        if (headers != null) {
+            request = new Request.Builder()
+                    .url(url)
+                    .headers(headers)
+                    .post(requestBody)
+                    .build();
+        } else {
+            request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody)
+                    .build();
         }
+        return handleResponse(client, request);
     }
 
     /**
@@ -97,32 +97,12 @@ public class NetWorkRequest {
      *
      * @param url         请求地址
      * @param requestBody 请求体
-     * @return Response
+     * @return JSONObject
      */
-    public static Response postSync(String url, RequestBody requestBody) {
+    public static JSONObject postSync(String url, RequestBody requestBody) {
         return postSync(url, null, requestBody);
     }
 
-    /**
-     * 同步POST请求
-     *
-     * @param url     请求地址
-     * @param headers 请求头
-     */
-    public static Response postSync(String url, Headers headers) {
-        return postSync(url, headers, null);
-    }
-
-
-    /**
-     * 同步POST请求
-     *
-     * @param url 请求地址
-     * @return Response
-     */
-    public static Response postSync(String url) {
-        return postSync(url, (Headers) null, null);
-    }
 
     /**
      * 同步POST请求
@@ -130,14 +110,18 @@ public class NetWorkRequest {
      * @param url         请求地址
      * @param headers     请求头
      * @param requestBody 请求体
-     * @return Response
+     * @return JSONObject
      */
-    public static Response postSync(String url, Map<String, String> headers, Map<String, String> requestBody) {
-        Headers headers1 = Headers.of(headers);
+    public static JSONObject postSync(@NotNull String url, Map<String, String> headers, @NotNull Map<String, String> requestBody) {
+        Headers headers1 = null;
+        if (headers != null) {
+            headers1 = Headers.of(headers);
+        }
         String body = JSONUtil.toJsonStr(requestBody);
         RequestBody requestBody1 = RequestBody.create(body, JSON_TYPE);
         return postSync(url, headers1, requestBody1);
     }
+
 
     /**
      * 异步POST请求
@@ -166,5 +150,30 @@ public class NetWorkRequest {
 
             }
         });
+    }
+
+    /**
+     * 处理响应数据
+     *
+     * @param client  OkHttpClient
+     * @param request Request
+     * @return JSONObject
+     */
+    private static JSONObject handleResponse(OkHttpClient client, Request request) {
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                ResponseBody body = response.body();
+                if(body==null){
+                    log.error("response body is null");
+                    throw new RuntimeException("response body is null");
+                }
+                return JSONUtil.parseObj(body.string());
+            }else{
+                log.error("response code:{},response body:{}", response.code(), response.body());
+                throw new RuntimeException("response code:" + response.code());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
