@@ -1,4 +1,4 @@
-package com.tamako.allapi.wechat.model.vo.getphonenumbervo;
+package com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo;
 
 
 import lombok.Data;

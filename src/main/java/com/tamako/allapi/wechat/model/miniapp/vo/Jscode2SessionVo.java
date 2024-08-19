@@ -1,4 +1,4 @@
-package com.tamako.allapi.wechat.model.vo;
+package com.tamako.allapi.wechat.model.miniapp.vo;
 
 
 import cn.hutool.core.annotation.Alias;

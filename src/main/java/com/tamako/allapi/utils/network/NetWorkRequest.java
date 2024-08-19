@@ -92,6 +92,21 @@ public class NetWorkRequest {
         return handleResponse(client, request);
     }
 
+    public static byte[] postSyncBytes(@NotNull String url, @NotNull RequestBody requestBody) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        return handleBytesResponse(client, request);
+    }
+
+    public static byte[] postSyncBytes(@NotNull String url, @NotNull JSONObject requestBody) {
+        RequestBody body = RequestBody.create(JSONUtil.toJsonStr(requestBody),JSON_TYPE);
+        return postSyncBytes(url, body);
+    }
+
+
     /**
      * 同步POST请求
      *
@@ -99,10 +114,11 @@ public class NetWorkRequest {
      * @param requestBody 请求体
      * @return JSONObject
      */
-    public static JSONObject postSync(String url, RequestBody requestBody) {
-        return postSync(url, null, requestBody);
+    public static JSONObject postSync(@NotNull String url, @NotNull JSONObject requestBody) {
+        String body = JSONUtil.toJsonStr(requestBody);
+        RequestBody requestBody1 = RequestBody.create(body, JSON_TYPE);
+        return postSync(url, null, requestBody1);
     }
-
 
     /**
      * 同步POST请求
@@ -120,6 +136,17 @@ public class NetWorkRequest {
         String body = JSONUtil.toJsonStr(requestBody);
         RequestBody requestBody1 = RequestBody.create(body, JSON_TYPE);
         return postSync(url, headers1, requestBody1);
+    }
+
+    /**
+     * 同步POST请求
+     *
+     * @param url         请求地址
+     * @param requestBody 请求体
+     * @return JSONObject
+     */
+    public static JSONObject postSync(@NotNull String url, @NotNull Map<String, String> requestBody) {
+        return postSync(url, null, requestBody);
     }
 
 
@@ -163,12 +190,38 @@ public class NetWorkRequest {
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 ResponseBody body = response.body();
-                if(body==null){
+                if (body == null) {
                     log.error("response body is null");
                     throw new RuntimeException("response body is null");
                 }
                 return JSONUtil.parseObj(body.string());
-            }else{
+            } else {
+                log.error("response code:{},response body:{}", response.code(), response.body());
+                throw new RuntimeException("response code:" + response.code());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static byte[] handleBytesResponse(OkHttpClient client, Request request) {
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                ResponseBody body = response.body();
+                if (body == null) {
+                    log.error("response body is null");
+                    throw new RuntimeException("response body is null");
+                }
+                byte[] bytes = body.bytes();
+                //判断是报错还是正常返回
+                if(bytes.length<=200){
+                    JSONObject jsonObj=JSONUtil.parseObj(new String(bytes));
+                    log.error("错误码：{}，错误信息：{}",jsonObj.getStr("errcode"),jsonObj.getStr("errmsg"));
+                    throw new RuntimeException();
+                }
+                return body.bytes();
+            } else {
                 log.error("response code:{},response body:{}", response.code(), response.body());
                 throw new RuntimeException("response code:" + response.code());
             }

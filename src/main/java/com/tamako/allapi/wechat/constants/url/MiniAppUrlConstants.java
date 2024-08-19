@@ -5,7 +5,7 @@ package com.tamako.allapi.wechat.constants.url;
  * @author Tamako
  * @data 2024/8/16 10:45
  */
-public class UrlConstants {
+public class MiniAppUrlConstants {
     /**
      * 微信API地址
      */
@@ -27,4 +27,14 @@ public class UrlConstants {
      * 获取手机号
      */
     public static final String WECHAT_GET_PHONE_NUMBER_URL = WECHAT_API_URL + "/wxa/business/getuserphonenumber";
+
+    /**
+     * 获取不限制的小程序码
+     */
+    public static final String WECHAT_GET_UNLIMITED_QR_CODE = WECHAT_API_URL + "/wxa/getwxacodeunlimit";
+
+    /**
+     * 发送订阅消息
+     */
+    public static final String WECHAT_SEND_MESSAGE = WECHAT_API_URL + "/cgi-bin/message/subscribe/send";
 }
