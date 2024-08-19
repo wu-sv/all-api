@@ -15,12 +15,6 @@ import java.util.Map;
 @Data
 public class SendMessageDto {
     /**
-     * 接口调用凭证，该参数为 URL 参数，非 Body 参数
-     */
-    @Alias("access_token")
-    @NotNull
-    private String accessToken;
-    /**
      * 所需下发的订阅模板id
      */
     @Alias("template_id")
@@ -37,9 +31,10 @@ public class SendMessageDto {
     private String touser;
     /**
      * 模板内容，格式形如 { "key1": { "value": any }, "key2": { "value": any } }的object
+     * {@link #createData(Map)}
      */
     @NotNull
-    private Map<String,Map<String,String>> data;
+    private Map<String, Map<String, String>> data;
     /**
      * 跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版
      */
@@ -55,15 +50,16 @@ public class SendMessageDto {
 
     /**
      * 该参数是为了便于数据的构造，减少套层以避免出错
-     * @param data
-     * @return
+     *
+     * @param data 简单构建的map数据
+     * @return 构造好的data数据
      */
-    public Map<String,Map<String,String>> createData(Map<String,String> data){
-        Map<String,Map<String,String>> map = new HashMap<>();
-        data.forEach((k,v)->{
-            Map<String,String> value = new HashMap<>();
-            value.put("value",v);
-            map.put(k,value);
+    public Map<String, Map<String, String>> createData(Map<String, String> data) {
+        Map<String, Map<String, String>> map = new HashMap<>();
+        data.forEach((k, v) -> {
+            Map<String, String> value = new HashMap<>();
+            value.put("value", v);
+            map.put(k, value);
         });
         return map;
     }

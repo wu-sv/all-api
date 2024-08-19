@@ -4,8 +4,10 @@ package com.tamako.allapi.wechat.api;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
 import com.tamako.allapi.wechat.model.miniapp.vo.GetAccessTokenVo;
 import com.tamako.allapi.wechat.model.miniapp.vo.Jscode2SessionVo;
+import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
 import com.tamako.allapi.wechat.model.miniapp.vo.SendMessageVO;
 import com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo.GetPhoneNumberVo;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
@@ -32,10 +34,11 @@ public interface WeChatMiniAppApi {
     /**
      * 手机号快速验证
      *
-     * @param dto GetPhoneNumberDto
+     * @param accessToken access_token
+     * @param code        手机号获取凭证
      * @return GetPhoneNumberVo
      */
-    GetPhoneNumberVo getPhoneNumber(GetPhoneNumberDto dto);
+    GetPhoneNumberVo getPhoneNumber(@NotNull String accessToken, @NotNull String code);
 
     /**
      * 获取不限制的小程序码
@@ -44,16 +47,26 @@ public interface WeChatMiniAppApi {
      * @param dto GetUnlimitedQRCodeDto
      * @return GetUnlimitedQRCodeVo
      */
-    byte[] getUnlimitedQRCode(GetUnlimitedQRCodeDto dto);
-
+    byte[] getUnlimitedQRCode(@NotNull String accessToken, @NotNull GetUnlimitedQRCodeDto dto);
 
     /**
      * 发送订阅消息
      *
-     * @param dto SendMessageDto
+     * @param accessToken 接口调用凭证，该参数为 URL 参数，非 Body 参数
+     * @param dto         SendMessageDto
      * @return SendMessageVo
      */
-    SendMessageVO sendMessage(SendMessageDto dto);
+    SendMessageVO sendMessage(@NotNull String accessToken, @NotNull SendMessageDto dto);
+
+    /**
+     * 文本内容安全识别
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto MsgSecCheckDto
+     * @return MsgSecCheckVo
+     */
+    MsgSecCheckVo msgSecCheck (@NotNull String accessToken, @NotNull MsgSecCheckDto dto);
+
 
 
 }

@@ -194,7 +194,10 @@ public class NetWorkRequest {
                     log.error("response body is null");
                     throw new RuntimeException("response body is null");
                 }
-                return JSONUtil.parseObj(body.string());
+                JSONObject obj = JSONUtil.parseObj(body.string());
+                //处理微信的错误码
+                checkErrorCode(obj);
+                return obj;
             } else {
                 log.error("response code:{},response body:{}", response.code(), response.body());
                 throw new RuntimeException("response code:" + response.code());
@@ -227,6 +230,15 @@ public class NetWorkRequest {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void checkErrorCode(JSONObject jsonObject) {
+        Integer errcode = jsonObject.getInt("errcode");
+        if (errcode != null && errcode != 0) {
+            String errmsg = jsonObject.getStr("errmsg");
+            log.error("接口调用微信返回失败，失败状态码：{}，失败原因：{}", errcode, errmsg);
+            throw new RuntimeException(errmsg);
         }
     }
 }

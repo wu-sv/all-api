@@ -15,7 +15,7 @@ public class MiniAppUrlConstants {
     /**
      * 获取access_token(获取接口调用凭据)
      */
-    public static final String WECHAT_GET_ACCESS_TOKEN_URL =WECHAT_API_URL+"/cgi-bin/token";
+    public static final String WECHAT_GET_ACCESS_TOKEN_URL = WECHAT_API_URL + "/cgi-bin/token";
 
 
     /**
@@ -37,4 +37,9 @@ public class MiniAppUrlConstants {
      * 发送订阅消息
      */
     public static final String WECHAT_SEND_MESSAGE = WECHAT_API_URL + "/cgi-bin/message/subscribe/send";
+
+    /**
+     * 文本内容安全识别
+     */
+    public static final String WECHAT_MSG_SEC_CHECK = WECHAT_API_URL + "/wxa/msg_sec_check";
 }

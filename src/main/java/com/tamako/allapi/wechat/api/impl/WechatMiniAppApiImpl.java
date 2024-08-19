@@ -10,9 +10,11 @@ import com.tamako.allapi.wechat.constants.url.MiniAppUrlConstants;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
 import com.tamako.allapi.wechat.model.miniapp.vo.GetAccessTokenVo;
 import com.tamako.allapi.wechat.model.miniapp.vo.Jscode2SessionVo;
+import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
 import com.tamako.allapi.wechat.model.miniapp.vo.SendMessageVO;
 import com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo.GetPhoneNumberVo;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,39 +48,34 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
                 .addQuery("grant_type", "authorization_code")
                 .build();
         JSONObject jsonObject = NetWorkRequest.getSync(url);
-        Jscode2SessionVo vo = JSONUtil.toBean(jsonObject, Jscode2SessionVo.class);
-        if (vo.getErrcode() != 0) {
-            log.error("小程序登录失败，失败状态码：{}，失败原因：{}", vo.getErrcode(), vo.getErrmsg());
-            throw new RuntimeException("小程序登录失败，失败状态码：" + vo.getErrcode() + "，失败原因：" + vo.getErrmsg());
-        }
-        return vo;
+        return JSONUtil.toBean(jsonObject, Jscode2SessionVo.class);
 
     }
 
     @Override
-    public GetPhoneNumberVo getPhoneNumber(GetPhoneNumberDto dto) {
+    public GetPhoneNumberVo getPhoneNumber(@NotNull String accessToken, @NotNull String code) {
         String url = new UrlBuilder().setHost(MiniAppUrlConstants.WECHAT_GET_PHONE_NUMBER_URL)
-                .addQuery("access_token", dto.getAccessToken())
+                .addQuery("access_token", accessToken)
                 .build();
         Map<String, String> params = new HashMap<>();
-        params.put("code", dto.getCode());
+        params.put("code", code);
         JSONObject jsonObject = NetWorkRequest.postSync(url, params);
         return JSONUtil.toBean(jsonObject, GetPhoneNumberVo.class);
     }
 
     @Override
-    public byte[] getUnlimitedQRCode(GetUnlimitedQRCodeDto dto) {
+    public byte[] getUnlimitedQRCode(@NotNull String accessToken,@NotNull GetUnlimitedQRCodeDto dto) {
         String url = new UrlBuilder().setHost(MiniAppUrlConstants.WECHAT_GET_UNLIMITED_QR_CODE)
-                .addQuery("access_token", dto.getAccessToken())
+                .addQuery("access_token", accessToken)
                 .build();
         JSONObject params = JSONUtil.parseObj(dto, true);
         return NetWorkRequest.postSyncBytes(url, params);
     }
 
     @Override
-    public SendMessageVO sendMessage(SendMessageDto dto) {
+    public SendMessageVO sendMessage(@NotNull String accessToken, @NotNull SendMessageDto dto) {
         String url = new UrlBuilder().setHost(MiniAppUrlConstants.WECHAT_SEND_MESSAGE)
-                .addQuery("access_token", dto.getAccessToken())
+                .addQuery("access_token", accessToken)
                 .build();
         JSONObject jsonObject = NetWorkRequest.postSync(url, JSONUtil.parseObj(dto, true));
         SendMessageVO vo = JSONUtil.toBean(jsonObject, SendMessageVO.class);
@@ -89,5 +86,12 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
         return vo;
     }
 
-
+    @Override
+    public MsgSecCheckVo msgSecCheck(@NotNull String accessToken, @NotNull MsgSecCheckDto dto) {
+        String url = new UrlBuilder().setHost(MiniAppUrlConstants.WECHAT_MSG_SEC_CHECK)
+                .addQuery("access_token", accessToken)
+                .build();
+        JSONObject jsonObject = NetWorkRequest.postSync(url, JSONUtil.parseObj(dto, true));
+        return JSONUtil.toBean(jsonObject, MsgSecCheckVo.class);
+    }
 }
