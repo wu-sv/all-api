@@ -1,7 +1,7 @@
 package com.tamako.allapi.wechat.model.miniapp.dto;
 
 
-import com.tamako.allapi.wechat.enumerations.msgseccheck.MsgSecCheckSceneEnum;
+import com.tamako.allapi.wechat.enumerations.msgseccheck.SceneEnum;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +26,7 @@ public class MsgSecCheckDto {
 
     /**
      * 场景枚举值（1 资料；2 评论；3 论坛；4 社交日志）
-     * @see MsgSecCheckSceneEnum
+     * @see SceneEnum
      */
     @NotNull
     private Integer scene;

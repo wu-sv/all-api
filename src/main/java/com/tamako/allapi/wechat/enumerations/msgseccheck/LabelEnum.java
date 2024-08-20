@@ -8,7 +8,7 @@ import lombok.Getter;
  * @data 2024/8/19 16:13
  */
 @Getter
-public enum MsgSecCheckLabelEnum {
+public enum LabelEnum {
     NORMAL(100, "正常"),
     ADVERTISEMENT(10001, "广告"),
     CURRENT_POLITICS(20001, "时政"),
@@ -23,7 +23,7 @@ public enum MsgSecCheckLabelEnum {
     private final Integer code;
     private final String msg;
 
-    MsgSecCheckLabelEnum(int code, String msg) {
+    LabelEnum(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

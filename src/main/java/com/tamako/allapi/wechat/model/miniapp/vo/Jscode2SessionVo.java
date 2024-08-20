@@ -3,13 +3,15 @@ package com.tamako.allapi.wechat.model.miniapp.vo;
 
 import cn.hutool.core.annotation.Alias;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Tamako
  * @data 2024/8/16 14:19
  */
 @Data
-public class Jscode2SessionVo {
+@EqualsAndHashCode(callSuper = false)
+public class Jscode2SessionVo extends ResponseVo{
     /**
      * 会话密钥
      */
@@ -23,17 +25,8 @@ public class Jscode2SessionVo {
     private String unionId;
 
     /**
-     * 错误信息
-     */
-    private String errmsg;
-
-    /**
      * 用户唯一标识(最需要存储的)
      */
     private String openid;
 
-    /**
-     * 错误码
-     */
-    private Integer errcode;
 }

@@ -1,6 +1,6 @@
 package com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo;
-import com.tamako.allapi.wechat.enumerations.msgseccheck.MsgSecCheckLabelEnum;
-import com.tamako.allapi.wechat.enumerations.msgseccheck.MsgSecCheckSuggestEnum;
+import com.tamako.allapi.wechat.enumerations.msgseccheck.LabelEnum;
+import com.tamako.allapi.wechat.enumerations.msgseccheck.SuggestEnum;
 
 import lombok.Data;
 
@@ -12,12 +12,12 @@ import lombok.Data;
 public class Result {
     /**
      * 建议
-     * @see MsgSecCheckSuggestEnum
+     * @see SuggestEnum
      */
     private String suggest;
     /**
      * 命中标签枚举值
-     * @see MsgSecCheckLabelEnum
+     * @see LabelEnum
      */
     private Integer label;
 }

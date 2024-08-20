@@ -2,7 +2,9 @@ package com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo;
 
 
 import cn.hutool.core.annotation.Alias;
+import com.tamako.allapi.wechat.model.miniapp.vo.ResponseVo;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -11,15 +13,8 @@ import java.util.List;
  * @data 2024/8/19 15:21
  */
 @Data
-public class MsgSecCheckVo {
-    /**
-     * 错误码
-     */
-    private Integer errCode;
-    /**
-     * 错误信息
-     */
-    private String errMsg;
+@EqualsAndHashCode(callSuper = false)
+public class MsgSecCheckVo extends ResponseVo {
     /**
      * 详细检测结果
      */

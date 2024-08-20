@@ -2,10 +2,11 @@ package com.tamako.allapi.wechat.api;
 
 
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
-import com.tamako.allapi.wechat.model.miniapp.vo.GetAccessTokenVo;
-import com.tamako.allapi.wechat.model.miniapp.vo.Jscode2SessionVo;
+import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.UploadShippingInfoDto;
+import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto.SimpleUploadShoppingInfoDto;
+import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto.UploadShoppingInfoDto;
+import com.tamako.allapi.wechat.model.miniapp.vo.*;
 import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
-import com.tamako.allapi.wechat.model.miniapp.vo.SendMessageVO;
 import com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo.GetPhoneNumberVo;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,7 +57,7 @@ public interface WeChatMiniAppApi {
      * @param dto         SendMessageDto
      * @return SendMessageVo
      */
-    SendMessageVO sendMessage(@NotNull String accessToken, @NotNull SendMessageDto dto);
+    ResponseVo sendMessage(@NotNull String accessToken, @NotNull SendMessageDto dto);
 
     /**
      * 文本内容安全识别
@@ -68,5 +69,29 @@ public interface WeChatMiniAppApi {
     MsgSecCheckVo msgSecCheck (@NotNull String accessToken, @NotNull MsgSecCheckDto dto);
 
 
+    /**
+     * 上传购物详情
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto UploadShoppingInfoDto
+     * @return UploadShoppingInfoVo
+     */
+    ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull UploadShoppingInfoDto dto);
+
+    /**
+     * 上传购物详情(推荐,简化版)
+     * 该接口使用原支付交易对应的微信订单号
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto SimpleUploadShoppingInfoDto
+     * @return UploadShoppingInfoVo
+     */
+    ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull SimpleUploadShoppingInfoDto dto);
+
+
+    /**
+     * 上传物流信息
+     */
+    ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull UploadShippingInfoDto dto);
 
 }

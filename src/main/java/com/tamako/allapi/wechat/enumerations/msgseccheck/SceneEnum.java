@@ -8,7 +8,7 @@ import lombok.Getter;
  * @data 2024/8/19 15:51
  */
 @Getter
-public enum MsgSecCheckSceneEnum {
+public enum SceneEnum {
     INFORMATION(1, "资料"),
     COMMENTS(2, "评论"),
     FORUM(3, "论坛"),
@@ -16,7 +16,7 @@ public enum MsgSecCheckSceneEnum {
     private final Integer code;
     private final String desc;
 
-    MsgSecCheckSceneEnum(int code, String desc) {
+    SceneEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
     }

@@ -5,10 +5,10 @@ import lombok.Data;
 
 /**
  * @author Tamako
- * @data 2024/8/19 14:36
+ * @data 2024/8/20 12:01
  */
 @Data
-public class SendMessageVO {
+public class ResponseVo {
     private Integer errcode;
     private String errmsg;
 }
