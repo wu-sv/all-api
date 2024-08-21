@@ -1,11 +1,10 @@
-package com.tamako.allapi.wechat.api;
+package com.tamako.allapi.wechat;
 
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 /**
@@ -15,14 +14,15 @@ import java.time.ZonedDateTime;
 public class Test {
     public static void main(String[] args) {
         ZonedDateTime now = ZonedDateTime.now();
-        TestObject test=new TestObject();
+        TestObject test = new TestObject();
         test.setNow(now);
         test.setName("test");
-        JSONObject jsonObject= JSONUtil.parseObj(test).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        JSONObject jsonObject = JSONUtil.parseObj(test).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         System.out.println(JSONUtil.toJsonStr(jsonObject));
     }
+
     @Data
-    static class TestObject{
+    static class TestObject {
         ZonedDateTime now;
         String name;
 

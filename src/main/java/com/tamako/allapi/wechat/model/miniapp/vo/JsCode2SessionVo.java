@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Jscode2SessionVo extends ResponseVo{
+public class JsCode2SessionVo extends ResponseVo{
     /**
      * 会话密钥
      */

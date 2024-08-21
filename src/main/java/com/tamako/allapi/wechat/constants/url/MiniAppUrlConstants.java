@@ -47,4 +47,9 @@ public class MiniAppUrlConstants {
      * 上传购物详情
      */
     public static final String WECHAT_UPLOAD_SHOPPING_INFO = WECHAT_API_URL + "/user-order/orders";
+
+    /**
+     * 上传物流信息
+     */
+    public static final String WECHAT_UPLOAD_SHIPPING_INFO = WECHAT_API_URL + "/user-order/orders/shippings";
 }

@@ -1,13 +1,16 @@
-package com.tamako.allapi.wechat.api;
+package com.tamako.allapi.api;
 
 
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
+import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.SimpleUploadShippingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.UploadShippingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto.SimpleUploadShoppingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto.UploadShoppingInfoDto;
-import com.tamako.allapi.wechat.model.miniapp.vo.*;
-import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
+import com.tamako.allapi.wechat.model.miniapp.vo.GetAccessTokenVo;
+import com.tamako.allapi.wechat.model.miniapp.vo.JsCode2SessionVo;
+import com.tamako.allapi.wechat.model.miniapp.vo.ResponseVo;
 import com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo.GetPhoneNumberVo;
+import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -17,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 public interface WeChatMiniAppApi {
     /**
      * 获取access_token(获取接口调用凭据)(需要注意该access_token需要存入缓存中，避免频繁调用接口)
+     * 该接口为最简版本的获取access_token接口，仅供开发者测试使用，正式环境请使用缓存机制，避免频繁调用接口。
      *
      * @param dto GetAccessTokenDto
      * @return GetAccessTokenVo
@@ -24,13 +28,30 @@ public interface WeChatMiniAppApi {
     GetAccessTokenVo getAccessToken(GetAccessTokenDto dto);
 
     /**
+     * 获取access_token(推荐使用)
+     * 该接口可以直接或access_token,但是用户还需要使用缓存机制
+     *
+     * @return GetAccessTokenVo
+     */
+    GetAccessTokenVo getAccessToken();
+
+
+    /**
      * 小程序登录(通过code换取openId)
      *
-     * @param dto Jscode2SessionDto
-     * @return Jscode2SessionVo
+     * @param dto JsCode2SessionDto
+     * @return JsCode2SessionVo
      */
-    Jscode2SessionVo jscode2Session(Jscode2SessionDto dto);
+    JsCode2SessionVo jscode2Session(JsCode2SessionDto dto);
 
+    /**
+     * 小程序登录(推荐使用)
+     * 该接口只需要传入code,不需要传入appid和secret
+     *
+     * @param jsCode 登录时获取的 code
+     * @return JsCode2SessionVo
+     */
+    JsCode2SessionVo jscode2Session(@NotNull String jsCode);
 
     /**
      * 手机号快速验证
@@ -63,17 +84,17 @@ public interface WeChatMiniAppApi {
      * 文本内容安全识别
      *
      * @param accessToken 接口调用凭证
-     * @param dto MsgSecCheckDto
+     * @param dto         MsgSecCheckDto
      * @return MsgSecCheckVo
      */
-    MsgSecCheckVo msgSecCheck (@NotNull String accessToken, @NotNull MsgSecCheckDto dto);
+    MsgSecCheckVo msgSecCheck(@NotNull String accessToken, @NotNull MsgSecCheckDto dto);
 
 
     /**
      * 上传购物详情
      *
      * @param accessToken 接口调用凭证
-     * @param dto UploadShoppingInfoDto
+     * @param dto         UploadShoppingInfoDto
      * @return UploadShoppingInfoVo
      */
     ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull UploadShoppingInfoDto dto);
@@ -83,7 +104,7 @@ public interface WeChatMiniAppApi {
      * 该接口使用原支付交易对应的微信订单号
      *
      * @param accessToken 接口调用凭证
-     * @param dto SimpleUploadShoppingInfoDto
+     * @param dto         SimpleUploadShoppingInfoDto
      * @return UploadShoppingInfoVo
      */
     ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull SimpleUploadShoppingInfoDto dto);
@@ -91,7 +112,22 @@ public interface WeChatMiniAppApi {
 
     /**
      * 上传物流信息
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto         UploadShippingInfoDto
+     * @return UploadShippingInfoVo
      */
     ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull UploadShippingInfoDto dto);
+
+    /**
+     * 上传物流信息(推荐,简化版)
+     * 该接口使用原支付交易对应的微信订单号
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto         SimpleUploadShippingInfoDto
+     * @return UploadShippingInfoVo
+     */
+    ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull SimpleUploadShippingInfoDto dto);
+
 
 }

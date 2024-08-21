@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  * @data 2024/8/16 14:20
  */
 @Data
-public class Jscode2SessionDto {
+public class JsCode2SessionDto {
     /**
      * 小程序 appId
      */

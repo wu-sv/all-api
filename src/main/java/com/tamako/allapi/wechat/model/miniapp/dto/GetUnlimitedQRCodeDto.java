@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class GetUnlimitedQRCodeDto {
     /**
      * 最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，
-     * 其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
+     * 其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlEncode 处理，请使用其他编码方式）
      */
     @NotNull
     private String scene;

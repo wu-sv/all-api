@@ -1,4 +1,4 @@
-package com.tamako.allapi.utils.network;
+package com.tamako.allapi.utils;
 
 
 import cn.hutool.json.JSONObject;
@@ -56,7 +56,7 @@ public class NetWorkRequest {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                log.info("response code:{},response body:{}", response.code(), response.body());
+                logResponseInfo(response);
                 ResponseBody body = response.body();
                 if (body != null) {
                     String result = body.string();
@@ -102,7 +102,7 @@ public class NetWorkRequest {
     }
 
     public static byte[] postSyncBytes(@NotNull String url, @NotNull JSONObject requestBody) {
-        RequestBody body = RequestBody.create(JSONUtil.toJsonStr(requestBody),JSON_TYPE);
+        RequestBody body = RequestBody.create(JSONUtil.toJsonStr(requestBody), JSON_TYPE);
         return postSyncBytes(url, body);
     }
 
@@ -168,8 +168,8 @@ public class NetWorkRequest {
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                log.info("response code:{},response body:{}", response.code(), response.body());
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
+                logResponseInfo(response);
             }
 
             @Override
@@ -191,7 +191,7 @@ public class NetWorkRequest {
             if (response.isSuccessful()) {
                 ResponseBody body = response.body();
                 if (body == null) {
-                    log.error("response body is null");
+                    log.error("response body is null,please check your request");
                     throw new RuntimeException("response body is null");
                 }
                 JSONObject obj = JSONUtil.parseObj(body.string());
@@ -199,7 +199,7 @@ public class NetWorkRequest {
                 checkErrorCode(obj);
                 return obj;
             } else {
-                log.error("response code:{},response body:{}", response.code(), response.body());
+                logResponseInfo(response);
                 throw new RuntimeException("response code:" + response.code());
             }
         } catch (IOException e) {
@@ -213,19 +213,19 @@ public class NetWorkRequest {
             if (response.isSuccessful()) {
                 ResponseBody body = response.body();
                 if (body == null) {
-                    log.error("response body is null");
+                    log.error("response body is null,pleas check your request");
                     throw new RuntimeException("response body is null");
                 }
                 byte[] bytes = body.bytes();
                 //判断是报错还是正常返回
-                if(bytes.length<=200){
-                    JSONObject jsonObj=JSONUtil.parseObj(new String(bytes));
-                    log.error("错误码：{}，错误信息：{}",jsonObj.getStr("errcode"),jsonObj.getStr("errmsg"));
+                if (bytes.length <= 200) {
+                    JSONObject jsonObj = JSONUtil.parseObj(new String(bytes));
+                    log.error("错误码：{}，错误信息：{}", jsonObj.getStr("errcode"), jsonObj.getStr("errmsg"));
                     throw new RuntimeException();
                 }
                 return body.bytes();
             } else {
-                log.error("response code:{},response body:{}", response.code(), response.body());
+                logResponseInfo(response);
                 throw new RuntimeException("response code:" + response.code());
             }
         } catch (IOException e) {
@@ -240,5 +240,9 @@ public class NetWorkRequest {
             log.error("接口调用微信返回失败，失败状态码：{}，失败原因：{}", errcode, errmsg);
             throw new RuntimeException(errmsg);
         }
+    }
+
+    private static void logResponseInfo(Response response) {
+        log.error("response code:{},response body:{}", response.code(), response.body());
     }
 }
