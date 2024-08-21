@@ -6,7 +6,9 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.tamako.allapi.api.WeChatMiniAppApi;
 import com.tamako.allapi.utils.NetWorkRequest;
-import com.tamako.allapi.wechat.constants.url.MiniAppUrlConstants;
+import com.tamako.allapi.utils.RedisUtil;
+import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
+import com.tamako.allapi.wechat.constants.RedisConstant;
 import com.tamako.allapi.wechat.enumerations.uploadshop.OrderNumberTypeEnum;
 import com.tamako.allapi.wechat.model.miniapp.WechatProperties;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
@@ -37,11 +39,13 @@ import java.util.Map;
 public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
     @Resource
     private WechatProperties wechatProperties;
+    @Resource
+    private RedisUtil redisUtil;
 
     @Override
     public GetAccessTokenVo getAccessToken(GetAccessTokenDto dto) {
         log.info("获取接口调用凭据");
-        String url = new UrlBuilder().setHost(MiniAppUrlConstants.WECHAT_GET_ACCESS_TOKEN)
+        String url = new UrlBuilder().setHost(MiniAppUrlConstant.WECHAT_GET_ACCESS_TOKEN)
                 .addQuery("grant_type", "client_credential")
                 .addQuery("appid", dto.getAppid())
                 .addQuery("secret", dto.getSecret())
@@ -56,11 +60,22 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
         return getAccessToken(dto);
     }
 
+    @Override
+    public String getAccessTokenWithCache() {
+        String accessToken = redisUtil.get(RedisConstant.REDIS_WECHAT_ACCESS_TOKEN);
+        if (accessToken == null) {
+            log.info("缓存中没有access_token，重新获取");
+            GetAccessTokenVo vo = getAccessToken();
+            redisUtil.set(RedisConstant.REDIS_WECHAT_ACCESS_TOKEN, vo.getAccessToken(), vo.getExpiresIn() - 100);
+            accessToken = vo.getAccessToken();
+        }
+        return accessToken;
+    }
 
     @Override
     public JsCode2SessionVo jscode2Session(JsCode2SessionDto dto) {
         log.info("小程序登录");
-        String url = new UrlBuilder().setHost(MiniAppUrlConstants.WECHAT_MINI_LOGIN)
+        String url = new UrlBuilder().setHost(MiniAppUrlConstant.WECHAT_MINI_LOGIN)
                 .addQuery("appid", dto.getAppid())
                 .addQuery("secret", dto.getSecret())
                 .addQuery("js_code", dto.getJsCode())
@@ -79,7 +94,7 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
 
     @Override
     public GetPhoneNumberVo getPhoneNumber(@NotNull String accessToken, @NotNull String code) {
-        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstants.WECHAT_GET_PHONE_NUMBER, accessToken).build();
+        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_GET_PHONE_NUMBER, accessToken).build();
         Map<String, String> params = new HashMap<>();
         params.put("code", code);
         JSONObject jsonObject = NetWorkRequest.postSync(url, params);
@@ -88,14 +103,14 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
 
     @Override
     public byte[] getUnlimitedQRCode(@NotNull String accessToken, @NotNull GetUnlimitedQRCodeDto dto) {
-        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstants.WECHAT_GET_UNLIMITED_QR_CODE, accessToken).build();
+        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_GET_UNLIMITED_QR_CODE, accessToken).build();
         JSONObject params = JSONUtil.parseObj(dto, true);
         return NetWorkRequest.postSyncBytes(url, params);
     }
 
     @Override
     public ResponseVo sendMessage(@NotNull String accessToken, @NotNull SendMessageDto dto) {
-        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstants.WECHAT_SEND_MESSAGE, accessToken).build();
+        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_SEND_MESSAGE, accessToken).build();
         JSONObject jsonObject = NetWorkRequest.postSync(url, JSONUtil.parseObj(dto, true));
         ResponseVo vo = JSONUtil.toBean(jsonObject, ResponseVo.class);
         if (vo.getErrcode() != 0) {
@@ -107,14 +122,14 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
 
     @Override
     public MsgSecCheckVo msgSecCheck(@NotNull String accessToken, @NotNull MsgSecCheckDto dto) {
-        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstants.WECHAT_MSG_SEC_CHECK, accessToken).build();
+        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_MSG_SEC_CHECK, accessToken).build();
         JSONObject jsonObject = NetWorkRequest.postSync(url, JSONUtil.parseObj(dto, true));
         return JSONUtil.toBean(jsonObject, MsgSecCheckVo.class);
     }
 
     @Override
     public ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull UploadShoppingInfoDto dto) {
-        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstants.WECHAT_UPLOAD_SHOPPING_INFO, accessToken).build();
+        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_UPLOAD_SHOPPING_INFO, accessToken).build();
         JSONObject body = JSONUtil.parseObj(dto, true).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         JSONObject jsonObject = NetWorkRequest.postSync(url, body);
         return JSONUtil.toBean(jsonObject, ResponseVo.class);
@@ -136,7 +151,7 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
 
     @Override
     public ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull UploadShippingInfoDto dto) {
-        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstants.WECHAT_UPLOAD_SHIPPING_INFO, accessToken).build();
+        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_UPLOAD_SHIPPING_INFO, accessToken).build();
         JSONObject body = JSONUtil.parseObj(dto, true).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         JSONObject jsonObject = NetWorkRequest.postSync(url, body);
         return JSONUtil.toBean(jsonObject, ResponseVo.class);

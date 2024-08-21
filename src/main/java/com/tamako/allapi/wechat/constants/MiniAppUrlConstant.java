@@ -1,11 +1,11 @@
-package com.tamako.allapi.wechat.constants.url;
+package com.tamako.allapi.wechat.constants;
 
 
 /**
  * @author Tamako
  * @data 2024/8/16 10:45
  */
-public class MiniAppUrlConstants {
+public class MiniAppUrlConstant {
     /**
      * 微信API地址
      */
