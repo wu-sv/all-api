@@ -5,9 +5,9 @@
 
     <groupId>com.tamako</groupId>
     <artifactId>all-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>all-api</name>
-    <description>for ali api like weChat,ali and so on</description>
+    <description>for all api like weChat,ali and so on</description>
     <url>https://gitee.com/Tamako520/all-api</url>
 
     <developers>
