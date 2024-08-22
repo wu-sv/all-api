@@ -36,15 +36,6 @@ public interface WeChatMiniAppApi {
     GetAccessTokenVo getAccessToken();
 
     /**
-     * 获取access_token(推荐使用)
-     * 该接口引入了redis缓存机制，可以有效避免频繁调用接口，提高接口调用效率。
-     * 注意：该接口需要redis服务，请确保redis服务正常运行。
-     *
-     * @return String access_token
-     */
-    String getAccessTokenWithCache();
-
-    /**
      * 小程序登录(通过code换取openId)
      *
      * @param dto JsCode2SessionDto

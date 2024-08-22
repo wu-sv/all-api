@@ -6,9 +6,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.tamako.allapi.api.WeChatMiniAppApi;
 import com.tamako.allapi.utils.NetWorkUtil;
-import com.tamako.allapi.utils.RedisUtil;
 import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
-import com.tamako.allapi.wechat.constants.RedisConstant;
 import com.tamako.allapi.wechat.enumerations.miniapp.uploadshop.OrderNumberTypeEnum;
 import com.tamako.allapi.wechat.model.WechatProperties;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
@@ -39,8 +37,6 @@ import java.util.Map;
 public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
     @Resource
     private WechatProperties wechatProperties;
-    @Resource
-    private RedisUtil redisUtil;
 
     @Override
     public GetAccessTokenVo getAccessToken(GetAccessTokenDto dto) {
@@ -58,18 +54,6 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
     public GetAccessTokenVo getAccessToken() {
         GetAccessTokenDto dto = new GetAccessTokenDto(wechatProperties.getAppId(), wechatProperties.getSecret());
         return getAccessToken(dto);
-    }
-
-    @Override
-    public String getAccessTokenWithCache() {
-        String accessToken = redisUtil.get(RedisConstant.REDIS_WECHAT_ACCESS_TOKEN);
-        if (accessToken == null) {
-            log.info("缓存中没有access_token，重新获取");
-            GetAccessTokenVo vo = getAccessToken();
-            redisUtil.set(RedisConstant.REDIS_WECHAT_ACCESS_TOKEN, vo.getAccessToken(), vo.getExpiresIn() - 100);
-            accessToken = vo.getAccessToken();
-        }
-        return accessToken;
     }
 
     @Override

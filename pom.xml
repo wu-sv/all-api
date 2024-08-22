@@ -13,7 +13,7 @@
     <developers>
         <developer>
             <name>tamako</name>
-            <email>1253594122@qq.com</email>
+            <email>tamakowusv@qq.com</email>
         </developer>
     </developers>
 
@@ -25,12 +25,14 @@
     </properties>
 
     <dependencies>
+        <!--微信支付同时内部还有hutool包-->
         <dependency>
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-All</artifactId>
             <version>2.9.11</version>
         </dependency>
 
+        <!--@Data注解-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -39,6 +41,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--@NotNUll非空检查注解-->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
@@ -47,20 +50,41 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--控制台日志-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>3.3.2</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.9</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--http请求和响应-->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--@Resource注解-->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>6.1.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <version>3.3.2</version>
+            <optional>true</optional>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
 
