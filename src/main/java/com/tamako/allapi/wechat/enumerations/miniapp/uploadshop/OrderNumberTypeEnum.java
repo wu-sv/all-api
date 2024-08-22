@@ -1,4 +1,4 @@
-package com.tamako.allapi.wechat.enumerations.uploadshop;
+package com.tamako.allapi.wechat.enumerations.miniapp.uploadshop;
 
 
 import lombok.Getter;

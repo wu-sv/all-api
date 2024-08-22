@@ -1,7 +1,7 @@
 package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto;
 
 
-import com.tamako.allapi.wechat.enumerations.uploadshop.uploadshoppinginfo.LogisticsTypeEnum;
+import com.tamako.allapi.wechat.enumerations.miniapp.uploadshop.uploadshoppinginfo.LogisticsTypeEnum;
 import lombok.Data;
 
 import java.util.List;

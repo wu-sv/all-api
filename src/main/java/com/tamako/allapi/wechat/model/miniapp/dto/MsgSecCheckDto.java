@@ -1,7 +1,7 @@
 package com.tamako.allapi.wechat.model.miniapp.dto;
 
 
-import com.tamako.allapi.wechat.enumerations.msgseccheck.SceneEnum;
+import com.tamako.allapi.wechat.enumerations.miniapp.msgseccheck.SceneEnum;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 

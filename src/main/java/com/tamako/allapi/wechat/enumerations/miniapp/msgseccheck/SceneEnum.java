@@ -1,4 +1,4 @@
-package com.tamako.allapi.wechat.enumerations.msgseccheck;
+package com.tamako.allapi.wechat.enumerations.miniapp.msgseccheck;
 
 
 import lombok.Getter;

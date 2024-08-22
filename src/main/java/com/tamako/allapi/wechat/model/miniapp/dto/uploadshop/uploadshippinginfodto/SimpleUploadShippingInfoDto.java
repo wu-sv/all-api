@@ -2,7 +2,7 @@ package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfo
 
 
 import cn.hutool.core.annotation.Alias;
-import com.tamako.allapi.wechat.enumerations.uploadshop.uploadshippinginfo.DeliveryModeEnum;
+import com.tamako.allapi.wechat.enumerations.miniapp.uploadshop.uploadshippinginfo.DeliveryModeEnum;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 

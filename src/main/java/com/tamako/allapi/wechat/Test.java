@@ -1,11 +1,9 @@
 package com.tamako.allapi.wechat;
 
 
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.ZonedDateTime;
 
 /**
  * @author Tamako
@@ -13,18 +11,20 @@ import java.time.ZonedDateTime;
  */
 public class Test {
     public static void main(String[] args) {
-        ZonedDateTime now = ZonedDateTime.now();
-        TestObject test = new TestObject();
-        test.setNow(now);
-        test.setName("test");
-        JSONObject jsonObject = JSONUtil.parseObj(test).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        System.out.println(JSONUtil.toJsonStr(jsonObject));
+        String str = JSONUtil.toJsonStr(new TestObject("123", "Tamako"));
+        TestObject2 testObject2 = JSONUtil.toBean(str, TestObject2.class);
+        System.out.println(JSONUtil.toJsonStr(testObject2));
     }
 
     @Data
+    @AllArgsConstructor
     static class TestObject {
-        ZonedDateTime now;
-        String name;
+        private String now;
+        private String name;
+    }
 
+    @Data
+    static class TestObject2 {
+        private String now;
     }
 }

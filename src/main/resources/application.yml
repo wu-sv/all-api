@@ -1,0 +1,16 @@
+wechat:
+  app-id: <appId>
+  secret: <secret>
+  pay:
+    # 微信支付商户号
+    mch-id: <mchId>
+    # 微信支付商户密钥
+    mch-key: <mchKey>
+    # 微信支付回调地址
+    notify-url: <notify-url>
+    # 证书地址
+    cert-path: <apiclient_cert.pem>
+    # 证书秘钥地址
+    cert-key-path: <apiclient_key.pem>
+    # 微信支付平台证书路径
+    platform-path: <platform.pem>

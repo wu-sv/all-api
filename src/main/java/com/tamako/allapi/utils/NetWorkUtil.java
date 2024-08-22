@@ -6,9 +6,12 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Map;
 
 import static cn.hutool.http.HttpRequest.get;
@@ -19,7 +22,7 @@ import static cn.hutool.http.HttpRequest.post;
  * @data 2024/8/16 11:36
  */
 @Slf4j
-public class NetWorkRequest {
+public class NetWorkUtil {
 
 
     /**
@@ -79,6 +82,40 @@ public class NetWorkRequest {
         return postSync(url, null, body);
     }
 
+    /**
+     * 读取请求体数据
+     * @param request HttpServletRequest
+     * @return String
+     */
+    public static String readData(HttpServletRequest request) {
+        BufferedReader br = null;
+
+        try {
+            StringBuilder result = new StringBuilder();
+
+            String line;
+            for(br = request.getReader(); (line = br.readLine()) != null; result.append(line)) {
+                if (!result.isEmpty()) {
+                    result.append("\n");
+                }
+            }
+
+            line = result.toString();
+            return line;
+        } catch (IOException var12) {
+            log.error(var12.getMessage(), var12);
+            throw new RuntimeException(var12);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException var11) {
+                    log.error("close BufferedReader error", var11);
+                }
+            }
+
+        }
+    }
 
     /**
      * 处理响应数据
@@ -103,7 +140,13 @@ public class NetWorkRequest {
     }
 
 
-    public static byte[] handleBytesResponse(HttpRequest request) {
+
+    /**
+     * 处理字节响应数据
+     * @param request Request
+     * @return byte[]
+     */
+    private static byte[] handleBytesResponse(HttpRequest request) {
         try (HttpResponse response = request.execute()) {
             byte[] bytes = response.bodyBytes();
             if (bytes == null) {
@@ -122,6 +165,10 @@ public class NetWorkRequest {
         }
     }
 
+    /**
+     * 检查微信返回的错误码
+     * @param jsonObject JSONObject
+     */
     private static void checkErrorCode(JSONObject jsonObject) {
         Integer errcode = jsonObject.getInt("errcode");
         if (errcode != null && errcode != 0) {
