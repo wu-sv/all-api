@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * @author Tamako
- * @data 2024/8/20 10:53
  */
 @Data
 public class Order {
@@ -20,9 +19,15 @@ public class Order {
     @Alias("merchant_order_no")
     @NotNull
     private String merchantOrderNo;
+    /**
+     * 商品跳转链接
+     */
     @Alias("order_detail_jump_link")
     @NotNull
     private OrderDetailJumpLink orderDetailJumpLink;
+    /**
+     * 商品列表
+     */
     @Alias("item_list")
     private List<Item> itemList;
 

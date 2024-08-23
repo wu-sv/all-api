@@ -5,7 +5,6 @@ import lombok.Getter;
 
 /**
  * @author Tamako
- * @data 2024/8/19 16:36
  */
 @Getter
 public enum SuggestEnum {

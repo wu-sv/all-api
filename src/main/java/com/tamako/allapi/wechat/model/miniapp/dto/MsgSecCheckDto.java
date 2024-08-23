@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
- * @data 2024/8/19 15:21
  */
 @Data
 public class MsgSecCheckDto {

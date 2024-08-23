@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
- * @data 2024/8/22 09:43
  */
 @Data
 public class MiniAppPayOrderDto {

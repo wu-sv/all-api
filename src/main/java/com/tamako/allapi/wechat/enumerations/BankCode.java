@@ -193,9 +193,20 @@ public enum BankCode {
     BK_4763("4763", "南洋商业银行（中国）");
 
 
+    /**
+     * 银行代码.
+     */
     private final String code;
+    /**
+     * 银行名称.
+     */
     private final String bankName;
 
+    /**
+     * Constructor.
+     * @param code 银行代码
+     * @param bankName 银行名称
+     */
     BankCode(String code, String bankName) {
         this.code = code;
         this.bankName = bankName;

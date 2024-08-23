@@ -6,7 +6,6 @@ import lombok.Data;
 
 /**
  * @author Tamako
- * @data 2024/8/16 11:26
  */
 @Data
 public class GetAccessTokenVo {

@@ -3,7 +3,6 @@ package com.tamako.allapi.wechat.enumerations.wxpay;
 
 /**
  * @author Tamako
- * @data 2024/8/22 13:08
  */
 public enum TradeStateEnum {
     /**

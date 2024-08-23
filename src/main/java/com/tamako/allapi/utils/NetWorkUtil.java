@@ -19,7 +19,6 @@ import static cn.hutool.http.HttpRequest.post;
 
 /**
  * @author Tamako
- * @data 2024/8/16 11:36
  */
 @Slf4j
 public class NetWorkUtil {
@@ -52,6 +51,12 @@ public class NetWorkUtil {
         return handleResponse(request);
     }
 
+    /**
+     * 同步POST请求
+     * @param url 请求地址
+     * @param requestBody 请求体
+     * @return byte[]
+     */
     public static byte[] postSyncBytes(@NotNull String url, @NotNull JSONObject requestBody) {
         HttpRequest request = post(url)
                 .body(JSONUtil.toJsonStr(requestBody), ContentType.JSON.getValue());

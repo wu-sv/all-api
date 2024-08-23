@@ -11,7 +11,6 @@ import java.lang.annotation.*;
 
 /**
  * @author Tamako
- * @data 2024/8/23 13:34
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

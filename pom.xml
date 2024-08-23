@@ -30,6 +30,13 @@
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-All</artifactId>
             <version>2.9.11</version>
+            <optional>false</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15to18</artifactId>
+            <version>1.78.1</version>
         </dependency>
 
         <!--@Data注解-->

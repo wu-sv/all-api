@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
- * @data 2024/8/16 11:21
  */
 @Data
 public class GetAccessTokenDto {

@@ -5,7 +5,6 @@ import lombok.Data;
 
 /**
  * @author Tamako
- * @data 2024/8/16 15:52
  * 用户手机号信息
  */
 @Data

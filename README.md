@@ -8,6 +8,12 @@
 
 ### 快速开始
 
+在启动类中添加注解以启用
+
+```java
+@EnableAllAPI
+```
+
 在自己的`application.yml`中直接添加如下配置即可
 
 ```yaml
@@ -34,6 +40,59 @@ wechat:
 [微信支付参考文档](https://pay.weixin.qq.com/docs/merchant/products/mini-program-payment/preparation.html)
 
 [微信支付官网](https://pay.weixin.qq.com)
+
+### 使用事列
+
+1.现在`application.yml`文件中添加配置
+
+2.在启动类中添加注解`@EnableAllAPI`
+
+```java
+package com.tamako.test;
+
+import com.tamako.allapi.interfaces.EnableAllAPI;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@EnableAllAPI
+public class AllApiTestApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AllApiTestApplication.class, args);
+    }
+
+}
+```
+
+3.在自己的代码中直接使用
+
+```java
+package com.tamako.test.testproject;
+
+
+import com.tamako.allapi.api.WechatMiniAppApi;
+import com.tamako.allapi.wechat.model.miniapp.vo.GetAccessTokenVo;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@Slf4j
+public class TestController {
+
+    @Resource
+    private WechatMiniAppApi wechatMiniAppApi;
+
+
+    @GetMapping("/getAccessToken")
+    public GetAccessTokenVo getAccessToken() {
+        return wechatMiniAppApi.getAccessToken();
+    }
+}
+
+```
 
 ### 联系方式
 

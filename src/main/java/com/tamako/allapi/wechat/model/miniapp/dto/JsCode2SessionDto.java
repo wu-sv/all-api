@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
- * @data 2024/8/16 14:20
  */
 @Data
 public class JsCode2SessionDto {

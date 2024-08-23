@@ -23,7 +23,6 @@ import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -31,10 +30,12 @@ import java.util.Map;
 
 /**
  * @author Tamako
- * @data 2024/8/16 11:05
  */
 @Slf4j
 public class WechatMiniAppApi {
+    /**
+     * 微信配置
+     */
     @Resource
     private WechatProperties wechatProperties;
 
@@ -123,7 +124,8 @@ public class WechatMiniAppApi {
      * 获取不限制的小程序码
      * 该接口用于获取小程序码，适用于需要的码数量极多的业务场景。通过该接口生成的小程序码，永久有效，数量暂无限制
      *
-     * @param dto GetUnlimitedQRCodeDto
+     * @param accessToken 接口调用凭证
+     * @param dto         GetUnlimitedQRCodeDto
      * @return GetUnlimitedQRCodeVo
      */
     public byte[] getUnlimitedQRCode(@NotNull String accessToken, @NotNull GetUnlimitedQRCodeDto dto) {
@@ -233,7 +235,8 @@ public class WechatMiniAppApi {
     /**
      * 创建UrlBuilder
      *
-     * @param path path
+     * @param path        path
+     * @param accessToken access_token
      * @return UrlBuilder
      */
     private UrlBuilder createUrlBuilderWithAccessToken(@NotNull String path, @NotNull String accessToken) {

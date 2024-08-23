@@ -1,10 +1,10 @@
 package com.tamako.allapi.api;
 
 
-import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
@@ -28,11 +28,13 @@ import com.tamako.allapi.utils.NetWorkUtil;
 import com.tamako.allapi.wechat.model.WechatProperties;
 import com.tamako.allapi.wechat.model.wxpay.dto.MiniAppPayOrderDto;
 import com.tamako.allapi.wechat.model.wxpay.vo.MiniAppPayNotifyVo;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
@@ -40,16 +42,14 @@ import java.util.Map;
 
 /**
  * @author Tamako
- * @data 2024/8/22 09:31
  */
 @Slf4j
 public class WeChatPayApi {
-    private final WechatProperties wechatProperties;
-
-    public WeChatPayApi(WechatProperties wechatProperties) {
-        this.wechatProperties = wechatProperties;
-    }
-
+    /**
+     * 微信配置
+     */
+    @Resource
+    private WechatProperties wechatProperties;
 
     /**
      * 小程序支付下单
@@ -106,6 +106,10 @@ public class WeChatPayApi {
 
     /**
      * 小程序支付结果通知
+     *
+     * @param request  请求
+     * @param response 响应
+     * @return 通知结果
      */
     public MiniAppPayNotifyVo miniAppPayNotify(HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> map = new HashMap<>();
@@ -152,15 +156,14 @@ public class WeChatPayApi {
             boolean isValid = PayKit.checkCertificateIsValid(cert, wechatProperties.getPay().getMchId(), -2);
             DateTime notAfter = DateUtil.date(cert.getNotAfter());
             log.info("证书是否可用 {} 证书有效期为 {}", isValid, DateUtil.format(notAfter, DatePattern.NORM_DATETIME_PATTERN));
-            //当证书有效期小于2小时，重新生成证书
-            if (notAfter.isAfter(DateTime.now().offsetNew(DateField.HOUR, -2))) {
-                return getNewCertPath();
+            File file = new File(wechatProperties.getPay().getPlatformPath());
+            if (FileUtil.isEmpty(file)) {
+                getNewCertPath(serialNo);
             }
             return serialNo;
-        } else {
-            //证书不存在，生成新证书
-            return getNewCertPath();
         }
+        return null;
+
     }
 
     /**
@@ -168,7 +171,7 @@ public class WeChatPayApi {
      *
      * @return 证书
      */
-    private String getNewCertPath() {
+    private void getNewCertPath(String serialNo) {
         log.info("重新生成证书");
         try {
             IJPayHttpResponse response = WxPayApi.v3(
@@ -176,7 +179,7 @@ public class WeChatPayApi {
                     WxDomainEnum.CHINA.getDomain(),
                     OtherApiEnum.GET_CERTIFICATES.getUrl(),
                     wechatProperties.getPay().getMchId(),
-                    getSerialNumber(),
+                    serialNo,
                     null,
                     wechatProperties.getPay().getCertKeyPath(),
                     ""
@@ -190,7 +193,7 @@ public class WeChatPayApi {
                 // 默认认为只有一个平台证书
                 JSONObject encryptObject = dataArray.getJSONObject(0);
                 //【证书序列号】 平台证书的主键，唯一定义此资源的标识
-                String serialNo = encryptObject.getStr("serial_no");
+                serialNo = encryptObject.getStr("serial_no");
                 //【证书信息】 证书内容
                 JSONObject encryptCertificate = encryptObject.getJSONObject("encrypt_certificate");
                 //【加密证书的附加数据】 加密证书的附加数据，固定为“certificate"。
@@ -206,7 +209,6 @@ public class WeChatPayApi {
             boolean verifySignature = WxPayKit.verifySignature(response, wechatProperties.getPay().getPlatformPath());
             if (verifySignature) {
                 log.info("获取证书成功");
-                return platSerialNo;
             } else {
                 throw new RuntimeException("获取证书失败");
             }
@@ -223,6 +225,7 @@ public class WeChatPayApi {
      * @param nonce          加密证书的随机串
      * @param cipherText     加密后的证书内容
      * @param platformPath   平台证书保存路径
+     * @return 证书序列号
      */
     private String savePlatformCert(String associatedData, String nonce, String cipherText, String platformPath) {
         try {

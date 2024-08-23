@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author Tamako
- * @data 2024/8/21 13:46
  */
 @Data
 @ConfigurationProperties(prefix = "wechat")
@@ -26,6 +25,9 @@ public class WechatProperties {
      */
     private Pay pay;
 
+    /**
+     * 微信支付参数
+     */
     @Data
     public static class Pay {
         /**

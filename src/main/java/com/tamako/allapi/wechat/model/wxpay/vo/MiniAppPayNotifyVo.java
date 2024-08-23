@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * @author Tamako
- * @data 2024/8/22 11:38
  */
 @Data
 public class MiniAppPayNotifyVo {
@@ -105,6 +104,9 @@ public class MiniAppPayNotifyVo {
      */
     private SceneInfo sceneInfo;
 
+    /**
+     * 金额
+     */
     @Data
     public static class Amount {
         /**
@@ -130,6 +132,9 @@ public class MiniAppPayNotifyVo {
         private String payerCurrency;
     }
 
+    /**
+     * 场景信息描述
+     */
     @Data
     public static class SceneInfo {
         /**

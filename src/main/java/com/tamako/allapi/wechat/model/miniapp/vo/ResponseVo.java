@@ -5,10 +5,15 @@ import lombok.Data;
 
 /**
  * @author Tamako
- * @data 2024/8/20 12:01
  */
 @Data
 public class ResponseVo {
+    /**
+     * 错误码
+     */
     private Integer errcode;
+    /**
+     * 错误信息
+     */
     private String errmsg;
 }

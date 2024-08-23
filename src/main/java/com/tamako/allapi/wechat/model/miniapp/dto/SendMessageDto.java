@@ -10,7 +10,6 @@ import java.util.Map;
 
 /**
  * @author Tamako
- * @data 2024/8/19 14:36
  */
 @Data
 public class SendMessageDto {
@@ -50,11 +49,12 @@ public class SendMessageDto {
 
     /**
      * 该参数是为了便于数据的构造，减少套层以避免出错
+     * { "key1" : any ,  "key2" : any }
      *
      * @param data 简单构建的map数据
      * @return 构造好的data数据
      */
-    public Map<String, Map<String, String>> createData(Map<String, String> data) {
+    public static Map<String, Map<String, String>> createData(Map<String, String> data) {
         Map<String, Map<String, String>> map = new HashMap<>();
         data.forEach((k, v) -> {
             Map<String, String> value = new HashMap<>();

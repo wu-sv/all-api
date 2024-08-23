@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * @author Tamako
- * @data 2024/8/20 13:21
  */
 @Data
 public class UploadShippingInfoDto {

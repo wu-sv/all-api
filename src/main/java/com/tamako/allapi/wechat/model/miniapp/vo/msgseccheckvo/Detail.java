@@ -6,7 +6,6 @@ import lombok.Data;
 
 /**
  * @author Tamako
- * @data 2024/8/19 16:05
  */
 @Data
 public class Detail {

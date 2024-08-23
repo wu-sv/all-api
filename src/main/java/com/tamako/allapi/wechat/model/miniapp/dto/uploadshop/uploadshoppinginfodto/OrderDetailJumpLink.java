@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
- * @data 2024/8/20 11:15
  */
 @Data
 public class OrderDetailJumpLink {
