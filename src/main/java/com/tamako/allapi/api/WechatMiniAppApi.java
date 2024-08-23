@@ -1,10 +1,9 @@
-package com.tamako.allapi.wechat.impl;
+package com.tamako.allapi.api;
 
 
 import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.tamako.allapi.api.WeChatMiniAppApi;
 import com.tamako.allapi.utils.NetWorkUtil;
 import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
 import com.tamako.allapi.wechat.enumerations.miniapp.uploadshop.OrderNumberTypeEnum;
@@ -24,6 +23,7 @@ import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -34,32 +34,54 @@ import java.util.Map;
  * @data 2024/8/16 11:05
  */
 @Slf4j
-public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
+public class WechatMiniAppApi {
     @Resource
     private WechatProperties wechatProperties;
 
-    @Override
+    /**
+     * 获取access_token(获取接口调用凭据)(需要注意该access_token需要存入缓存中，避免频繁调用接口)
+     * 该接口为最简版本的获取access_token接口，仅供开发者测试使用，正式环境请使用缓存机制，避免频繁调用接口。
+     *
+     * @param dto GetAccessTokenDto
+     * @return GetAccessTokenVo
+     */
     public GetAccessTokenVo getAccessToken(GetAccessTokenDto dto) {
         log.info("获取接口调用凭据");
-        String url = new UrlBuilder().setHost(MiniAppUrlConstant.WECHAT_GET_ACCESS_TOKEN)
+        UrlBuilder urlBuilder = UrlBuilder.of()
+                .setScheme("https")
+                .setHost(MiniAppUrlConstant.WECHAT_API_URL)
+                .addPath(MiniAppUrlConstant.WECHAT_GET_ACCESS_TOKEN)
                 .addQuery("grant_type", "client_credential")
                 .addQuery("appid", dto.getAppid())
-                .addQuery("secret", dto.getSecret())
-                .build();
-        JSONObject jsonObject = NetWorkUtil.getSync(url);
+                .addQuery("secret", dto.getSecret());
+
+        JSONObject jsonObject = NetWorkUtil.getSync(urlBuilder.build());
         return JSONUtil.toBean(jsonObject, GetAccessTokenVo.class);
     }
 
-    @Override
+    /**
+     * 获取access_token
+     * 该接口可以直接或access_token,但是用户还需要使用缓存机制
+     *
+     * @return GetAccessTokenVo
+     */
     public GetAccessTokenVo getAccessToken() {
         GetAccessTokenDto dto = new GetAccessTokenDto(wechatProperties.getAppId(), wechatProperties.getSecret());
         return getAccessToken(dto);
     }
 
-    @Override
+    /**
+     * 小程序登录(通过code换取openId)
+     *
+     * @param dto JsCode2SessionDto
+     * @return JsCode2SessionVo
+     */
     public JsCode2SessionVo jscode2Session(JsCode2SessionDto dto) {
         log.info("小程序登录");
-        String url = new UrlBuilder().setHost(MiniAppUrlConstant.WECHAT_MINI_LOGIN)
+        String url = UrlBuilder.of()
+                .setScheme("https")
+                .setHost(MiniAppUrlConstant.WECHAT_API_URL)
+                .addPath(MiniAppUrlConstant.WECHAT_MINI_LOGIN)
                 .addQuery("appid", dto.getAppid())
                 .addQuery("secret", dto.getSecret())
                 .addQuery("js_code", dto.getJsCode())
@@ -70,13 +92,25 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
 
     }
 
-    @Override
+    /**
+     * 小程序登录(推荐使用)
+     * 该接口只需要传入code,不需要传入appid和secret
+     *
+     * @param jsCode 登录时获取的 code
+     * @return JsCode2SessionVo
+     */
     public JsCode2SessionVo jscode2Session(@NotNull String jsCode) {
         JsCode2SessionDto dto = new JsCode2SessionDto(wechatProperties.getAppId(), wechatProperties.getSecret(), jsCode);
         return jscode2Session(dto);
     }
 
-    @Override
+    /**
+     * 手机号快速验证
+     *
+     * @param accessToken access_token
+     * @param code        手机号获取凭证
+     * @return GetPhoneNumberVo
+     */
     public GetPhoneNumberVo getPhoneNumber(@NotNull String accessToken, @NotNull String code) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_GET_PHONE_NUMBER, accessToken).build();
         Map<String, String> params = new HashMap<>();
@@ -85,14 +119,26 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
         return JSONUtil.toBean(jsonObject, GetPhoneNumberVo.class);
     }
 
-    @Override
+    /**
+     * 获取不限制的小程序码
+     * 该接口用于获取小程序码，适用于需要的码数量极多的业务场景。通过该接口生成的小程序码，永久有效，数量暂无限制
+     *
+     * @param dto GetUnlimitedQRCodeDto
+     * @return GetUnlimitedQRCodeVo
+     */
     public byte[] getUnlimitedQRCode(@NotNull String accessToken, @NotNull GetUnlimitedQRCodeDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_GET_UNLIMITED_QR_CODE, accessToken).build();
         JSONObject params = JSONUtil.parseObj(dto, true);
         return NetWorkUtil.postSyncBytes(url, params);
     }
 
-    @Override
+    /**
+     * 发送订阅消息
+     *
+     * @param accessToken 接口调用凭证，该参数为 URL 参数，非 Body 参数
+     * @param dto         SendMessageDto
+     * @return SendMessageVo
+     */
     public ResponseVo sendMessage(@NotNull String accessToken, @NotNull SendMessageDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_SEND_MESSAGE, accessToken).build();
         JSONObject jsonObject = NetWorkUtil.postSync(url, JSONUtil.parseObj(dto, true));
@@ -104,14 +150,26 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
         return vo;
     }
 
-    @Override
+    /**
+     * 文本内容安全识别
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto         MsgSecCheckDto
+     * @return MsgSecCheckVo
+     */
     public MsgSecCheckVo msgSecCheck(@NotNull String accessToken, @NotNull MsgSecCheckDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_MSG_SEC_CHECK, accessToken).build();
         JSONObject jsonObject = NetWorkUtil.postSync(url, JSONUtil.parseObj(dto, true));
         return JSONUtil.toBean(jsonObject, MsgSecCheckVo.class);
     }
 
-    @Override
+    /**
+     * 上传购物详情
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto         UploadShoppingInfoDto
+     * @return UploadShoppingInfoVo
+     */
     public ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull UploadShoppingInfoDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_UPLOAD_SHOPPING_INFO, accessToken).build();
         JSONObject body = JSONUtil.parseObj(dto, true).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
@@ -119,7 +177,14 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
         return JSONUtil.toBean(jsonObject, ResponseVo.class);
     }
 
-    @Override
+    /**
+     * 上传购物详情(推荐,简化版)
+     * 该接口使用原支付交易对应的微信订单号
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto         SimpleUploadShoppingInfoDto
+     * @return UploadShoppingInfoVo
+     */
     public ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull SimpleUploadShoppingInfoDto dto) {
         OrderKey orderKey = new OrderKey();
         orderKey.setOrderNumberType(OrderNumberTypeEnum.WECHAT_PAYMENT_NUMBER.getCode());
@@ -133,7 +198,13 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
         return uploadShoppingInfo(accessToken, uploadShoppingInfoDto);
     }
 
-    @Override
+    /**
+     * 上传物流信息
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto         UploadShippingInfoDto
+     * @return UploadShippingInfoVo
+     */
     public ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull UploadShippingInfoDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_UPLOAD_SHIPPING_INFO, accessToken).build();
         JSONObject body = JSONUtil.parseObj(dto, true).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
@@ -141,8 +212,14 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
         return JSONUtil.toBean(jsonObject, ResponseVo.class);
     }
 
-
-    @Override
+    /**
+     * 上传物流信息(推荐,简化版)
+     * 该接口使用原支付交易对应的微信订单号
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto         SimpleUploadShippingInfoDto
+     * @return UploadShippingInfoVo
+     */
     public ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull SimpleUploadShippingInfoDto dto) {
         OrderKey orderKey = new OrderKey();
         orderKey.setOrderNumberType(OrderNumberTypeEnum.WECHAT_PAYMENT_NUMBER.getCode());
@@ -153,8 +230,17 @@ public class WechatMiniAppApiImpl implements WeChatMiniAppApi {
         return uploadShippingInfo(accessToken, uploadShippingInfoDto);
     }
 
-    private UrlBuilder createUrlBuilderWithAccessToken(@NotNull String url, @NotNull String accessToken) {
-        return new UrlBuilder().setHost(url)
+    /**
+     * 创建UrlBuilder
+     *
+     * @param path path
+     * @return UrlBuilder
+     */
+    private UrlBuilder createUrlBuilderWithAccessToken(@NotNull String path, @NotNull String accessToken) {
+        return UrlBuilder.of()
+                .setScheme("https")
+                .setHost(MiniAppUrlConstant.WECHAT_API_URL)
+                .addPath(path)
                 .addQuery("access_token", accessToken);
     }
 
