@@ -6,15 +6,29 @@
 
 所有的实现的接口都在`com.tamako.allapi.api`目录中可以直接查看，目前编写了微信小程序服务器端常用的接口和微信支付（小程序端）
 
-### 快速开始
-
 在启动类中添加注解以启用
 
 ```java
 @EnableAllAPI
 ```
 
-在自己的`application.yml`中直接添加如下配置即可
+在这里需要说明微信支付平台证书路径只需要填一个路径加文件名就好，不用管这个文件是否存在，该项目会自动生成该文件。其他文件则需要自行到官网进行获取：
+
+
+
+### 快速开始
+
+1.在`pom.xml`中导入依赖
+
+```xml
+<dependency>
+	<groupId>io.gitee.tamako520</groupId>
+	<artifactId>all-api</artifactId>
+	<version>1.0.0</version>
+</dependency>
+```
+
+2.在`application.yml`文件中添加配置
 
 ```yaml
 wechat:
@@ -35,17 +49,7 @@ wechat:
     platform-path: <platform.pem>
 ```
 
-在这里需要说明微信支付平台证书路径只需要填一个路径加文件名就好，不用管这个文件是否存在，该项目会自动生成该文件。其他文件则需要自行到官网进行获取：
-
-[微信支付参考文档](https://pay.weixin.qq.com/docs/merchant/products/mini-program-payment/preparation.html)
-
-[微信支付官网](https://pay.weixin.qq.com)
-
-### 使用事列
-
-1.现在`application.yml`文件中添加配置
-
-2.在启动类中添加注解`@EnableAllAPI`
+3.在启动类中添加注解`@EnableAllAPI`
 
 ```java
 package com.tamako.test;
@@ -65,7 +69,7 @@ public class AllApiTestApplication {
 }
 ```
 
-3.在自己的代码中直接使用
+4.在自己的代码中直接使用
 
 ```java
 package com.tamako.test.testproject;
@@ -98,5 +102,10 @@ public class TestController {
 
 如有任何问题都可直接发送邮件给我：tamakowusv@qq.com
 
+### 参考文档
 
+[微信支付参考文档](https://pay.weixin.qq.com/docs/merchant/products/mini-program-payment/preparation.html)
 
+[微信支付官网](https://pay.weixin.qq.com)
+
+[微信官方文档-小程序](https://developers.weixin.qq.com/miniprogram/dev/framework/)

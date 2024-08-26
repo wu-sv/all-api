@@ -33,7 +33,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
@@ -42,6 +41,7 @@ import java.util.Map;
 
 /**
  * @author Tamako
+ * @since 2021/1/18 16:22
  */
 @Slf4j
 public class WeChatPayApi {
@@ -149,27 +149,34 @@ public class WeChatPayApi {
      */
     private String getSerialNumber() {
         X509Certificate cert = PayKit.getCertificate(wechatProperties.getPay().getCertPath());
+        if (cert == null) {
+            // 证书不存在
+            throw new RuntimeException("缺少apiclient_cert.pem证书");
+        }
         //如果证书存在，则获取序列号
-        if (cert != null) {
-            String serialNo = cert.getSerialNumber().toString(16).toUpperCase();
-            // 提前两天检查证书是否有效
-            boolean isValid = PayKit.checkCertificateIsValid(cert, wechatProperties.getPay().getMchId(), -2);
-            DateTime notAfter = DateUtil.date(cert.getNotAfter());
-            log.info("证书是否可用 {} 证书有效期为 {}", isValid, DateUtil.format(notAfter, DatePattern.NORM_DATETIME_PATTERN));
-            File file = new File(wechatProperties.getPay().getPlatformPath());
-            if (FileUtil.isEmpty(file)) {
+        //证书存在
+        String serialNo = cert.getSerialNumber().toString(16).toUpperCase();
+        //检查证书是否有效
+        boolean isValid = PayKit.checkCertificateIsValid(cert, wechatProperties.getPay().getMchId(), -2);
+        DateTime notAfter = DateUtil.date(cert.getNotAfter());
+        if (isValid && notAfter.after(DateUtil.date())) {
+            //证书有效,且时间未到期
+            //判断是否保存了该文件，如果不存在，则重新获取证书并保存
+            if (FileUtil.isEmpty(new File(wechatProperties.getPay().getPlatformPath()))) {
                 getNewCertPath(serialNo);
             }
             return serialNo;
+        } else {
+            log.info("证书是否可用 {} 证书有效期为 {}", isValid, DateUtil.format(notAfter, DatePattern.NORM_DATETIME_PATTERN));
+            throw new RuntimeException("apiclient_cert.pem证书无效");
         }
-        return null;
 
     }
 
     /**
      * 获取新证书
      *
-     * @return 证书
+     * @param serialNo 证书序列号
      */
     private void getNewCertPath(String serialNo) {
         log.info("重新生成证书");
@@ -184,33 +191,44 @@ public class WeChatPayApi {
                     wechatProperties.getPay().getCertKeyPath(),
                     ""
             );
-//            String serialNumber = response.getHeader("Wechatpay-Serial");
             String body = response.getBody();
-            String platSerialNo = "";
             if (response.getStatus() == HttpStatus.HTTP_OK) {
+                boolean verifySignature = WxPayKit.verifySignature(response, wechatProperties.getPay().getPlatformPath());
+                if (verifySignature) {
+                    log.info("获取证书成功");
+                } else {
+                    throw new RuntimeException("获取证书失败");
+                }
                 JSONObject jsonObject = JSONUtil.parseObj(body);
                 JSONArray dataArray = jsonObject.getJSONArray("data");
-                // 默认认为只有一个平台证书
-                JSONObject encryptObject = dataArray.getJSONObject(0);
-                //【证书序列号】 平台证书的主键，唯一定义此资源的标识
-                serialNo = encryptObject.getStr("serial_no");
-                //【证书信息】 证书内容
-                JSONObject encryptCertificate = encryptObject.getJSONObject("encrypt_certificate");
-                //【加密证书的附加数据】 加密证书的附加数据，固定为“certificate"。
-                String associatedData = encryptCertificate.getStr("associated_data");
-                //【加密后的证书内容】 使用API KEY和上述参数，可以解密出平台证书的明文。证书明文为PEM格式。
-                // （注意：更换证书时会出现PEM格式中的证书失效时间与接口返回的证书弃用时间不一致的情况）
-                String cipherText = encryptCertificate.getStr("ciphertext");
-                //【加密证书的随机串】 对应到加密算法中的IV。
-                String nonce = encryptCertificate.getStr("nonce");
-                //保存平台证书
-                platSerialNo = savePlatformCert(associatedData, nonce, cipherText, wechatProperties.getPay().getPlatformPath());
-            }
-            boolean verifySignature = WxPayKit.verifySignature(response, wechatProperties.getPay().getPlatformPath());
-            if (verifySignature) {
-                log.info("获取证书成功");
-            } else {
-                throw new RuntimeException("获取证书失败");
+                //判断证书数量（证书数量大于1时，说明需要更换证书）
+                switch (dataArray.size()) {
+                    case 1: {
+                        // 默认认为只有一个平台证书
+                        JSONObject encryptObject = dataArray.getJSONObject(0);
+                        //保存平台证书
+                        savePlatformCert(encryptObject);
+                        break;
+                    }
+                    case 2: {
+                        //新老证书交替时，取启用时间最新的证书
+                        JSONObject encryptObject0 = dataArray.getJSONObject(0);
+                        JSONObject encryptObject1 = dataArray.getJSONObject(1);
+                        DateTime effectiveTime0 = encryptObject0.get("effective_time", DateTime.class);
+                        DateTime effectiveTime1 = encryptObject1.get("effective_time", DateTime.class);
+                        if (effectiveTime0.after(effectiveTime1)) {
+                            // 取启用时间最新的证书
+                            savePlatformCert(encryptObject0);
+                        } else {
+                            savePlatformCert(encryptObject1);
+                        }
+                        break;
+                    }
+                    default: {
+                        // 证书数量大于2或者小于1时，证书有问题
+                        throw new RuntimeException("证书获取异常");
+                    }
+                }
             }
         } catch (Exception e) {
             log.error("获取证书失败", e);
@@ -221,13 +239,18 @@ public class WeChatPayApi {
     /**
      * 保存平台证书
      *
-     * @param associatedData 加密证书的附加数据
-     * @param nonce          加密证书的随机串
-     * @param cipherText     加密后的证书内容
-     * @param platformPath   平台证书保存路径
-     * @return 证书序列号
+     * @param encryptObject 加密证书对象
      */
-    private String savePlatformCert(String associatedData, String nonce, String cipherText, String platformPath) {
+    private void savePlatformCert(JSONObject encryptObject) {
+        //【证书信息】 证书内容
+        JSONObject encryptCertificate = encryptObject.getJSONObject("encrypt_certificate");
+        //【加密证书的附加数据】 加密证书的附加数据，固定为“certificate"。
+        String associatedData = encryptCertificate.getStr("associated_data");
+        //【加密后的证书内容】 使用API KEY和上述参数，可以解密出平台证书的明文。证书明文为PEM格式。
+        // （注意：更换证书时会出现PEM格式中的证书失效时间与接口返回的证书弃用时间不一致的情况）
+        String cipherText = encryptCertificate.getStr("ciphertext");
+        //【加密证书的随机串】 对应到加密算法中的IV。
+        String nonce = encryptCertificate.getStr("nonce");
         try {
             AesUtil aesUtil = new AesUtil(wechatProperties.getPay().getMchKey().getBytes(StandardCharsets.UTF_8));
             // 平台证书密文解密
@@ -238,11 +261,8 @@ public class WeChatPayApi {
                     cipherText
             );
             // 保存证书
-            FileWriter writer = new FileWriter(platformPath);
+            FileWriter writer = new FileWriter(wechatProperties.getPay().getPlatformPath());
             writer.write(publicKey);
-            // 获取平台证书序列号
-            X509Certificate certificate = PayKit.getCertificate(new ByteArrayInputStream(publicKey.getBytes()));
-            return certificate.getSerialNumber().toString(16).toUpperCase();
         } catch (Exception e) {
             log.error("保存平台证书失败", e);
             throw new RuntimeException(e);
