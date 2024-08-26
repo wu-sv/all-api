@@ -24,7 +24,7 @@
 <dependency>
 	<groupId>io.gitee.tamako520</groupId>
 	<artifactId>all-api</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 </dependency>
 ```
 
