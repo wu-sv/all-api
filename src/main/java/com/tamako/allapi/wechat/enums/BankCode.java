@@ -1,4 +1,4 @@
-package com.tamako.allapi.wechat.enumerations;
+package com.tamako.allapi.wechat.enums;
 
 
 /**

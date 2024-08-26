@@ -1,4 +1,4 @@
-package com.tamako.allapi.wechat.enumerations.wxpay;
+package com.tamako.allapi.wechat.enums.wxpay;
 
 
 /**

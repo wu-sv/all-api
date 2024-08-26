@@ -2,13 +2,11 @@ package com.tamako.allapi.wechat.model.wxpay.vo;
 
 
 import cn.hutool.core.annotation.Alias;
-import com.tamako.allapi.wechat.enumerations.BankCode;
-import com.tamako.allapi.wechat.enumerations.wxpay.TradeStateEnum;
-import com.tamako.allapi.wechat.enumerations.wxpay.TradeTypeEnum;
+import com.tamako.allapi.wechat.enums.BankCode;
+import com.tamako.allapi.wechat.enums.wxpay.TradeStateEnum;
+import com.tamako.allapi.wechat.enums.wxpay.TradeTypeEnum;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto.Payer;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * @author Tamako

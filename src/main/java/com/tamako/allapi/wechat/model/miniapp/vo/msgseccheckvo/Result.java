@@ -1,6 +1,6 @@
 package com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo;
-import com.tamako.allapi.wechat.enumerations.miniapp.msgseccheck.LabelEnum;
-import com.tamako.allapi.wechat.enumerations.miniapp.msgseccheck.SuggestEnum;
+import com.tamako.allapi.wechat.enums.miniapp.msgseccheck.LabelEnum;
+import com.tamako.allapi.wechat.enums.miniapp.msgseccheck.SuggestEnum;
 
 import lombok.Data;
 

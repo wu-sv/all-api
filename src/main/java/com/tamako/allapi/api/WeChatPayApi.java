@@ -12,6 +12,8 @@ import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.kit.AesUtil;
@@ -43,8 +45,12 @@ import java.util.Map;
  * @author Tamako
  * @since 2021/1/18 16:22
  */
-@Slf4j
+
 public class WeChatPayApi {
+    /**
+     * 日志
+     */
+    private static final Log log = LogFactory.get();
     /**
      * 微信配置
      */
@@ -96,6 +102,7 @@ public class WeChatPayApi {
                 String prepayId = jsonObject.getStr("prepay_id");
                 return WxPayKit.jsApiCreateSign(wechatProperties.getAppId(), prepayId, wechatProperties.getPay().getCertKeyPath());
             } else {
+                log.error("微信商户号查询订单失败,状态码：{}, 响应信息：{}", response.getStatus(), response.getBody());
                 throw new RuntimeException("微信支付接口调用失败");
             }
         } catch (Exception e) {
@@ -141,6 +148,46 @@ public class WeChatPayApi {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * 商户订单号查询订单
+     * 推荐使用方法：在微信支付时将单号存到redis中，
+     * 在接收到回调信息后删除redis中的信息
+     * 定时判断redis中是否有订单，如果有，则查询订单
+     *
+     * @param outTradeNo 商户订单号
+     * @return 订单信息
+     */
+    public MiniAppPayNotifyVo miniAppQueryOrder(String outTradeNo) {
+        try {
+            Map<String, String> params = new HashMap<>(16);
+            params.put("mchid", wechatProperties.getPay().getMchId());
+            IJPayHttpResponse response = WxPayApi.v3(
+                    RequestMethodEnum.GET,
+                    WxDomainEnum.CHINA.getDomain(),
+                    String.format(BasePayApiEnum.ORDER_QUERY_BY_OUT_TRADE_NO.getUrl(), outTradeNo),
+                    wechatProperties.getPay().getMchId(),
+                    getSerialNumber(),
+                    null,
+                    wechatProperties.getPay().getCertKeyPath(),
+                    params
+            );
+            //根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(response, wechatProperties.getPay().getPlatformPath());
+            log.info("微信支付接口调用结果：{}", verifySignature);
+            if (response.getStatus() == HttpStatus.HTTP_OK && verifySignature) {
+                return JSONUtil.toBean(response.getBody(), MiniAppPayNotifyVo.class);
+            } else {
+                log.error("微信商户号查询订单失败,状态码：{}, 响应信息：{}", response.getStatus(), response.getBody());
+                throw new RuntimeException("微信支付接口调用失败");
+            }
+
+        } catch (Exception e) {
+            log.error("微信商户号查询订单失败",e);
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * 获取证书序列号

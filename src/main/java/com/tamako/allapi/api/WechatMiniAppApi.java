@@ -4,9 +4,11 @@ package com.tamako.allapi.api;
 import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.tamako.allapi.utils.NetWorkUtil;
 import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
-import com.tamako.allapi.wechat.enumerations.miniapp.uploadshop.OrderNumberTypeEnum;
+import com.tamako.allapi.wechat.enums.miniapp.uploadshop.OrderNumberTypeEnum;
 import com.tamako.allapi.wechat.model.WechatProperties;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.OrderKey;
@@ -31,8 +33,11 @@ import java.util.Map;
 /**
  * @author Tamako
  */
-@Slf4j
 public class WechatMiniAppApi {
+    /**
+     * 日志
+     */
+    private static final Log log = LogFactory.get();
     /**
      * 微信配置
      */
