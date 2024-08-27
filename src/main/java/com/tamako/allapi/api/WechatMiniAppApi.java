@@ -51,7 +51,7 @@ public class WechatMiniAppApi {
      * @param dto GetAccessTokenDto
      * @return GetAccessTokenVo
      */
-    public GetAccessTokenVo getAccessToken(GetAccessTokenDto dto) {
+    public GetAccessTokenVo getAccessToken(@NotNull GetAccessTokenDto dto) {
         log.info("获取接口调用凭据");
         UrlBuilder urlBuilder = UrlBuilder.of()
                 .setScheme("https")
@@ -82,7 +82,7 @@ public class WechatMiniAppApi {
      * @param dto JsCode2SessionDto
      * @return JsCode2SessionVo
      */
-    public JsCode2SessionVo jscode2Session(JsCode2SessionDto dto) {
+    public JsCode2SessionVo jscode2Session(@NotNull JsCode2SessionDto dto) {
         log.info("小程序登录");
         String url = UrlBuilder.of()
                 .setScheme("https")
