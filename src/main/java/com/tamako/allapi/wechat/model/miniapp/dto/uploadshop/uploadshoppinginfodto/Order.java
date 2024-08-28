@@ -2,6 +2,8 @@ package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfo
 
 
 import cn.hutool.core.annotation.Alias;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +13,8 @@ import java.util.List;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class Order {
     /**
      * 商户交易订单编号，商户侧的交易订单详情页向用户展示的订单编号

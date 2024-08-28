@@ -3,12 +3,18 @@ package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop;
 
 import cn.hutool.core.annotation.Alias;
 import com.tamako.allapi.wechat.enums.miniapp.uploadshop.OrderNumberTypeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderKey {
     /**
      * 订单单号类型，用于确认需要上传详情的订单

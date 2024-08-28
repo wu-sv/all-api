@@ -2,6 +2,8 @@ package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfo
 
 
 import cn.hutool.core.annotation.Alias;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +13,8 @@ import java.util.List;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class Item {
     /**
      * 商户侧商品ID，商户系统内部商品编码，用于标识不同的商品。请注意，当发货模式选择“分拆发货”时，需要使用商户侧商品ID来标记各物流单中包含的具体商品

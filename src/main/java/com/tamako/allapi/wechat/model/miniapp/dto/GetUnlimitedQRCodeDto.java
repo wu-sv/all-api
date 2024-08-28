@@ -2,6 +2,8 @@ package com.tamako.allapi.wechat.model.miniapp.dto;
 
 
 import cn.hutool.core.annotation.Alias;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class GetUnlimitedQRCodeDto {
     /**
      * 最大32个可见字符，只支持数字，大小写英文以及部分特殊字符

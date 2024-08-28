@@ -9,7 +9,9 @@
 在启动类中添加注解以启用
 
 ```java
+@SpringBootApplication
 @EnableAllAPI
+public class AllApiTestApplication{}
 ```
 
 在这里需要说明微信支付平台证书路径只需要填一个路径加文件名就好，不用管这个文件是否存在，该项目会自动生成该文件。其他文件则需要自行到官网进行获取：
@@ -75,7 +77,7 @@ public class AllApiTestApplication {
 package com.tamako.test.testproject;
 
 
-import com.tamako.allapi.api.WechatMiniAppApi;
+import com.tamako.allapi.api.impl.WechatMiniAppImpl;
 import com.tamako.allapi.wechat.model.miniapp.vo.GetAccessTokenVo;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -87,7 +89,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Resource
-    private WechatMiniAppApi wechatMiniAppApi;
+    private WechatMiniAppImpl wechatMiniAppImpl;
 
 
     @GetMapping("/getAccessToken")

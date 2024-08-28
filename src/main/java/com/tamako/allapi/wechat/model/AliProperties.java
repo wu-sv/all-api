@@ -26,6 +26,10 @@ public class AliProperties {
      */
     private AliOSS oss;
 
+    /**
+     * 阿里云 SMS 配置
+     */
+    private AliSMS sms;
 
     /**
      * 阿里云 OSS 配置
@@ -40,5 +44,20 @@ public class AliProperties {
          * 阿里云 OSS 访问 Bucket 名称
          */
         private String bucketName;
+    }
+
+    /**
+     * 阿里云 SMS 配置
+     */
+    @Data
+    public static class AliSMS {
+        /**
+         * 阿里云 SMS 短信签名
+         */
+        private String signName;
+        /**
+         * 阿里云 SMS 短信模板
+         */
+        private String templateCode;
     }
 }

@@ -4,6 +4,8 @@ package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfo
 import cn.hutool.core.annotation.Alias;
 import com.tamako.allapi.wechat.enums.miniapp.uploadshop.uploadshippinginfo.DeliveryModeEnum;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.OrderKey;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,6 +16,8 @@ import java.util.List;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class UploadShippingInfoDto {
     /**
      * 订单，需要上传物流信息的订单，需要和上传购物详情的订单类型保持一致

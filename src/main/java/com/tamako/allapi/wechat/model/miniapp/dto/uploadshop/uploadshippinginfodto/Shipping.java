@@ -2,6 +2,8 @@ package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfo
 
 
 import cn.hutool.core.annotation.Alias;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +13,8 @@ import java.util.List;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class Shipping {
     /**
      * 物流单号，示例值: 323244567777 字符字节限制: [1, 128]

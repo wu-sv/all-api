@@ -2,6 +2,8 @@ package com.tamako.allapi.wechat.model.wxpay.dto;
 
 
 import cn.hutool.core.date.DateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class MiniAppPayOrderDto {
     /**
      * 【商品描述】 商品描述

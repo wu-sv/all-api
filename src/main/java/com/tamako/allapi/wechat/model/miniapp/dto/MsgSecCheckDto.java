@@ -2,6 +2,8 @@ package com.tamako.allapi.wechat.model.miniapp.dto;
 
 
 import com.tamako.allapi.wechat.enums.miniapp.msgseccheck.SceneEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class MsgSecCheckDto {
 
     /**

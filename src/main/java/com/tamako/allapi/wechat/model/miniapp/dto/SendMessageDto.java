@@ -2,6 +2,8 @@ package com.tamako.allapi.wechat.model.miniapp.dto;
 
 
 import cn.hutool.core.annotation.Alias;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +14,8 @@ import java.util.Map;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class SendMessageDto {
     /**
      * 所需下发的订阅模板id
@@ -54,7 +58,7 @@ public class SendMessageDto {
      * @param data 简单构建的map数据
      * @return 构造好的data数据
      */
-    public static Map<String, Map<String, String>> createData(Map<String, String> data) {
+    public static Map<String, Map<String, String>> createData(@NotNull Map<String, String> data) {
         Map<String, Map<String, String>> map = new HashMap<>();
         data.forEach((k, v) -> {
             Map<String, String> value = new HashMap<>();

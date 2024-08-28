@@ -1,6 +1,8 @@
 package com.tamako.allapi.wechat.model.miniapp.dto;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
  * @author Tamako
  */
 @Data
+@Builder
+@AllArgsConstructor
 public class JsCode2SessionDto {
     /**
      * 小程序 appId
