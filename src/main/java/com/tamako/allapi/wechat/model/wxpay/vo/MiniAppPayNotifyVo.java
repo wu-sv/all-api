@@ -9,6 +9,8 @@ import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfod
 import lombok.Data;
 
 /**
+ * 微信小程序支付通知参数对象
+ *
  * @author Tamako
  */
 @Data

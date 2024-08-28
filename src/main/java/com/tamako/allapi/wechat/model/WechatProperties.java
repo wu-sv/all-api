@@ -9,9 +9,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Tamako
- *
  * 微信配置类
+ *
+ * @author Tamako
  */
 @Data
 @ConfigurationProperties(prefix = "wechat")

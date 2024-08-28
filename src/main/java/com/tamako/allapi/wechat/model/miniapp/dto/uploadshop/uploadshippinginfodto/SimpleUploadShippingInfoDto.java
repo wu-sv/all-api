@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * @author Tamako
- *
  * 上传商品物流信息的简单dto
+ *
+ * @author Tamako
  */
 @Data
 @Builder
@@ -27,6 +27,7 @@ public class SimpleUploadShippingInfoDto {
     /**
      * 发货模式，发货模式枚举值：1、UNIFIED_DELIVERY（统一发货）2、SPLIT_DELIVERY（分拆发货）
      * 示例值: 1
+     *
      * @see DeliveryModeEnum
      */
     @NotNull

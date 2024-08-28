@@ -6,13 +6,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @author Tamako
- *
  * 微信小程序登录凭证校验返回结果
+ *
+ * @author Tamako
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class JsCode2SessionVo extends ResponseVo{
+public class JsCode2SessionVo extends ResponseVo {
     /**
      * 会话密钥
      */

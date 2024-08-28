@@ -13,9 +13,9 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
- * @author Tamako
- *
  * 上传物流信息的DTO
+ *
+ * @author Tamako
  */
 @Data
 @Builder
@@ -30,6 +30,7 @@ public class UploadShippingInfoDto {
     /**
      * 发货模式，发货模式枚举值：1、UNIFIED_DELIVERY（统一发货）2、SPLIT_DELIVERY（分拆发货）
      * 示例值: 1
+     *
      * @see DeliveryModeEnum
      */
     @Alias("delivery_mode")

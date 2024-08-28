@@ -9,9 +9,9 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @author Tamako
- *
  * 微信文本安全校验vo
+ *
+ * @author Tamako
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

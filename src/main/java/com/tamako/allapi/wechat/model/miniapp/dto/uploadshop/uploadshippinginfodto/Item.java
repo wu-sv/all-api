@@ -8,9 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Tamako
- *
  * 商品信息
+ *
+ * @author Tamako
  */
 @Data
 @Builder

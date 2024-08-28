@@ -31,9 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Tamako
- *
  * 微信小程序API实现类
+ *
+ * @author Tamako
  */
 public class WechatMiniAppImpl implements WechatMiniAppApi {
     /**

@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * @author Tamako
- *
  * 物流信息
+ *
+ * @author Tamako
  */
 @Data
 @Builder

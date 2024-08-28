@@ -11,9 +11,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Tamako
- *
  * 收发货人联系方式
+ *
+ * @author Tamako
  */
 @Data
 @Builder

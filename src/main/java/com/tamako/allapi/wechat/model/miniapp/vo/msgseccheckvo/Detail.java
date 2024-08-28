@@ -8,9 +8,9 @@ import com.tamako.allapi.wechat.enums.miniapp.msgseccheck.SuggestEnum;
 import lombok.Data;
 
 /**
- * @author Tamako
- *
  * 详细检测结果
+ *
+ * @author Tamako
  */
 @Data
 public class Detail {

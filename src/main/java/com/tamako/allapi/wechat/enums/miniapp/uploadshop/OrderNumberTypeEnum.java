@@ -7,9 +7,9 @@ package com.tamako.allapi.wechat.enums.miniapp.uploadshop;
 import lombok.Getter;
 
 /**
- * @author Tamako
- *
  * 订单号类型枚举
+ *
+ * @author Tamako
  */
 @Getter
 public enum OrderNumberTypeEnum {
@@ -33,6 +33,7 @@ public enum OrderNumberTypeEnum {
 
     /**
      * 构造方法
+     *
      * @param code code值
      * @param desc 描述
      */

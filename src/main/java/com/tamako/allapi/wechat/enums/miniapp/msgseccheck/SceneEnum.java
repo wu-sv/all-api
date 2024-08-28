@@ -4,9 +4,9 @@ package com.tamako.allapi.wechat.enums.miniapp.msgseccheck;
 import lombok.Getter;
 
 /**
- * @author Tamako
- *
  * 场景值枚举类
+ *
+ * @author Tamako
  */
 @Getter
 public enum SceneEnum {
@@ -37,6 +37,7 @@ public enum SceneEnum {
 
     /**
      * 构造方法
+     *
      * @param code 场景值
      * @param desc 场景描述
      */

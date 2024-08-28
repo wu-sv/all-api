@@ -5,9 +5,9 @@ package com.tamako.allapi.wechat.constants;
 
 
 /**
- * @author Tamako
- *
  * 微信小程序URL常量
+ *
+ * @author Tamako
  */
 public class MiniAppUrlConstant {
     /**

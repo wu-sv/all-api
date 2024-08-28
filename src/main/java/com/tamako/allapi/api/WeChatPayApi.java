@@ -9,10 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
+ * 微信支付API
+ *
  * @author Tamako
  * @since 2024/8/28 13:13
- *
- * 微信支付API
  */
 public interface WeChatPayApi {
     /**

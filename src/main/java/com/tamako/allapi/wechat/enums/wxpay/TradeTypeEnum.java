@@ -2,9 +2,9 @@ package com.tamako.allapi.wechat.enums.wxpay;
 
 
 /**
- * @author Tamako
- *
  * 交易方式枚举
+ *
+ * @author Tamako
  */
 public enum TradeTypeEnum {
     /**

@@ -9,9 +9,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @author Tamako
- *
  * 手机号登录信息返回值
+ *
+ * @author Tamako
  */
 
 @Data

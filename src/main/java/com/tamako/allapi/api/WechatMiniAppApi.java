@@ -14,10 +14,10 @@ import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * 微信小程序API
+ *
  * @author Tamako
  * @since 2024/8/28 13:12
- *
- * 微信小程序API
  */
 public interface WechatMiniAppApi {
     /**

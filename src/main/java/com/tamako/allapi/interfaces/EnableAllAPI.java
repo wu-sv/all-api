@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * @author Tamako
- *
  * 注解类，用于启用所有API
+ *
+ * @author Tamako
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

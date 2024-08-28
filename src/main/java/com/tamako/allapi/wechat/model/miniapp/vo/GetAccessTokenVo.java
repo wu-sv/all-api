@@ -8,9 +8,9 @@ import cn.hutool.core.annotation.Alias;
 import lombok.Data;
 
 /**
- * @author Tamako
- *
  * 获取小程序全局唯一后台接口调用凭据（access_token）返回对象
+ *
+ * @author Tamako
  */
 @Data
 public class GetAccessTokenVo {

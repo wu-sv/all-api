@@ -4,9 +4,9 @@ package com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo;
 import lombok.Data;
 
 /**
- * @author Tamako
- *
  * 用户手机号信息
+ *
+ * @author Tamako
  */
 @Data
 public class PhoneInfo {

@@ -8,9 +8,9 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @author Tamako
- *
  * 用于生成小程序码的请求参数
+ *
+ * @author Tamako
  */
 @Data
 @Builder

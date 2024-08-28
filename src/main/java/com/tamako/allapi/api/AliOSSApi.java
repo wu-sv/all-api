@@ -1,6 +1,4 @@
-/**
- * 所有的api接口（直接看这里就好了）
- */
+
 package com.tamako.allapi.api;
 
 
@@ -11,10 +9,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 阿里云对象存储服务API接口
+ *
  * @author Tamako
  * @since 2024/8/28 13:11
- *
- * 阿里云对象存储服务API接口
  */
 public interface AliOSSApi {
     /**

@@ -21,9 +21,9 @@ import static cn.hutool.http.HttpRequest.get;
 import static cn.hutool.http.HttpRequest.post;
 
 /**
- * @author Tamako
- *
  * 网络请求工具，封装了hutool的网络请求
+ *
+ * @author Tamako
  */
 @Slf4j
 public class NetWorkUtil {
@@ -58,7 +58,8 @@ public class NetWorkUtil {
 
     /**
      * 同步POST请求
-     * @param url 请求地址
+     *
+     * @param url         请求地址
      * @param requestBody 请求体
      * @return byte[]
      */
@@ -94,6 +95,7 @@ public class NetWorkUtil {
 
     /**
      * 读取请求体数据
+     *
      * @param request HttpServletRequest
      * @return String
      */
@@ -104,7 +106,7 @@ public class NetWorkUtil {
             StringBuilder result = new StringBuilder();
 
             String line;
-            for(br = request.getReader(); (line = br.readLine()) != null; result.append(line)) {
+            for (br = request.getReader(); (line = br.readLine()) != null; result.append(line)) {
                 if (!result.isEmpty()) {
                     result.append("\n");
                 }
@@ -150,9 +152,9 @@ public class NetWorkUtil {
     }
 
 
-
     /**
      * 处理字节响应数据
+     *
      * @param request Request
      * @return byte[]
      */
@@ -177,6 +179,7 @@ public class NetWorkUtil {
 
     /**
      * 检查微信返回的错误码
+     *
      * @param jsonObject JSONObject
      */
     private static void checkErrorCode(JSONObject jsonObject) {

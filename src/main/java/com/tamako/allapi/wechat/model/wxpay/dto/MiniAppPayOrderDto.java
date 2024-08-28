@@ -8,6 +8,8 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * 微信小程序支付订单DTO
+ *
  * @author Tamako
  */
 @Data

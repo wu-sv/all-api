@@ -10,8 +10,8 @@ import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponseBody;
-import com.tamako.allapi.api.AliSMSApi;
 import com.tamako.allapi.ali.model.AliProperties;
+import com.tamako.allapi.api.AliSMSApi;
 import darabonba.core.client.ClientOverrideConfiguration;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 阿里云短信API实现
+ *
  * @author Tamako
  * @since 2024/8/28 11:50
- *
- * 阿里云短信API实现
  */
 public class AliSMSImpl implements AliSMSApi {
     /**
@@ -47,20 +47,20 @@ public class AliSMSImpl implements AliSMSApi {
     public void sendSms(@NotNull String phone, @NotNull String code) {
         try (AsyncClient client = createAsyncClient()) {
             HashMap<String, String> contentParam = new HashMap<>();
-            contentParam.put("code",code);
+            contentParam.put("code", code);
             SendSmsRequest request = SendSmsRequest.builder()
                     .signName(aliProperties.getSms().getSignName())
                     .templateCode(aliProperties.getSms().getTemplateCode())
                     .phoneNumbers(phone)
                     .templateParam(JSONUtil.toJsonStr(contentParam))
                     .build();
-            CompletableFuture<SendSmsResponse> responseFuture=client.sendSms(request);
-            SendSmsResponseBody body=responseFuture.get().getBody();
-            if (!"OK".equalsIgnoreCase(body.getCode())){
-                log.error("发送登录短信验证码失败：状态码-{}，状态描述-{}",body.getCode(),body.getMessage());
-                throw new RuntimeException("发送登录短信验证码失败：状态码-"+body.getCode()+"，状态描述-"+body.getMessage());
+            CompletableFuture<SendSmsResponse> responseFuture = client.sendSms(request);
+            SendSmsResponseBody body = responseFuture.get().getBody();
+            if (!"OK".equalsIgnoreCase(body.getCode())) {
+                log.error("发送登录短信验证码失败：状态码-{}，状态描述-{}", body.getCode(), body.getMessage());
+                throw new RuntimeException("发送登录短信验证码失败：状态码-" + body.getCode() + "，状态描述-" + body.getMessage());
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("发送登录短信验证码失败：", e);
             throw new RuntimeException("发送登录短信验证码失败：", e);
         }

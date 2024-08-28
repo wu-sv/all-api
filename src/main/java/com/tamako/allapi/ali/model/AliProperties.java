@@ -9,10 +9,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
+ * 阿里云配置类
+ *
  * @author Tamako
  * @since 2024/8/27 09:01
- *
- * 阿里云配置类
  */
 @Data
 @ConfigurationProperties(prefix = "ali")

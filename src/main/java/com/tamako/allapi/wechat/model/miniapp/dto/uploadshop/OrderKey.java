@@ -12,9 +12,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Tamako
- *
  * 微信购物订单号dto
+ *
+ * @author Tamako
  */
 @Data
 @Builder
@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 public class OrderKey {
     /**
      * 订单单号类型，用于确认需要上传详情的订单
+     *
      * @see OrderNumberTypeEnum
      */
     @Alias("order_number_type")

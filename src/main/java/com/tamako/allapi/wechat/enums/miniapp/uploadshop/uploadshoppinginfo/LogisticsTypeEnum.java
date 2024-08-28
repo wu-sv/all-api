@@ -7,24 +7,24 @@ package com.tamako.allapi.wechat.enums.miniapp.uploadshop.uploadshoppinginfo;
 import lombok.Getter;
 
 /**
- * @author Tamako
- *
  * 物流类型枚举
+ *
+ * @author Tamako
  */
 @Getter
 public enum LogisticsTypeEnum {
     /**
      * 实体物流配送
      */
-    physical_logistics_distribution(1,"实体物流配送"),
+    physical_logistics_distribution(1, "实体物流配送"),
     /**
      * 同城配送
      */
-    Same_city_distribution(2,"同城配送"),
+    Same_city_distribution(2, "同城配送"),
     /**
      * 虚拟商品
      */
-    Virtual_Goods(3,"虚拟商品");
+    Virtual_Goods(3, "虚拟商品");
 
     /**
      * code值
@@ -37,6 +37,7 @@ public enum LogisticsTypeEnum {
 
     /**
      * 构造方法
+     *
      * @param code code值
      * @param desc 描述
      */

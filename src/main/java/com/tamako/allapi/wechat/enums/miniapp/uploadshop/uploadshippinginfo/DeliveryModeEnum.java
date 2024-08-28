@@ -7,9 +7,9 @@ package com.tamako.allapi.wechat.enums.miniapp.uploadshop.uploadshippinginfo;
 import lombok.Getter;
 
 /**
- * @author Tamako
- *
  * 发货方式枚举
+ *
+ * @author Tamako
  */
 @Getter
 public enum DeliveryModeEnum {

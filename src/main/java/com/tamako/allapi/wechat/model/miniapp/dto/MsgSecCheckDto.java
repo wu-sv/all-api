@@ -8,9 +8,9 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @author Tamako
- *
  * 用于校验文本安全的请求参数
+ *
+ * @author Tamako
  */
 @Data
 @Builder
@@ -31,6 +31,7 @@ public class MsgSecCheckDto {
 
     /**
      * 场景枚举值（1 资料；2 评论；3 论坛；4 社交日志）
+     *
      * @see SceneEnum
      */
     @NotNull

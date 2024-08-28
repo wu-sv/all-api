@@ -7,9 +7,9 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @author Tamako
+ * 用于微信登录的请求参数
  *
- * 用于手机号登录的请求参数
+ * @author Tamako
  */
 @Data
 @Builder

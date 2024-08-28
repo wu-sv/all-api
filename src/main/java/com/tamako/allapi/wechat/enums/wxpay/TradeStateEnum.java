@@ -5,9 +5,9 @@ package com.tamako.allapi.wechat.enums.wxpay;
 
 
 /**
- * @author Tamako
- *
  * 交易状态枚举
+ *
+ * @author Tamako
  */
 public enum TradeStateEnum {
     /**

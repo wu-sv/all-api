@@ -42,10 +42,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 微信支付接口实现类
+ *
  * @author Tamako
  * @since 2021/1/18 16:22
- *
- * 微信支付接口实现类
  */
 
 public class WeChatPayImpl implements WeChatPayApi {
@@ -188,7 +188,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             }
 
         } catch (Exception e) {
-            log.error("微信商户号查询订单失败",e);
+            log.error("微信商户号查询订单失败", e);
             throw new RuntimeException(e);
         }
     }

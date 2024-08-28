@@ -16,8 +16,8 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
-import com.tamako.allapi.api.AliOSSApi;
 import com.tamako.allapi.ali.model.AliProperties;
+import com.tamako.allapi.api.AliOSSApi;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,10 +27,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 阿里云OSS接口实现
+ *
  * @author Tamako
  * @since 2024/8/26 14:14
- *
- * 阿里云OSS接口实现
  */
 public class AliOSSImpl implements AliOSSApi {
     /**

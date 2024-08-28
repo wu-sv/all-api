@@ -10,9 +10,9 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @author Tamako
- *
  * 获取微信小程序 access_token 请求参数
+ *
+ * @author Tamako
  */
 @Data
 @Builder

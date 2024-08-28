@@ -11,9 +11,9 @@ import java.util.List;
 
 
 /**
- * @author Tamako
- *
  * 简单上传购物信息DTO
+ *
+ * @author Tamako
  */
 @Data
 @Builder

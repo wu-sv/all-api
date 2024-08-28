@@ -4,9 +4,9 @@ package com.tamako.allapi.wechat.enums.miniapp.msgseccheck;
 import lombok.Getter;
 
 /**
- * @author Tamako
- *
  * 建议值枚举
+ *
+ * @author Tamako
  */
 @Getter
 public enum SuggestEnum {

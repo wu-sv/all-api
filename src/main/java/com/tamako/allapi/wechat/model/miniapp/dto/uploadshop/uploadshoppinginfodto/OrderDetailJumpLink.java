@@ -7,9 +7,9 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @author Tamako
- *
  * 订单详情跳转链接
+ *
+ * @author Tamako
  */
 @Data
 @Builder
