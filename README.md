@@ -16,7 +16,13 @@ public class AllApiTestApplication{}
 
 在这里需要说明微信支付平台证书路径只需要填一个路径加文件名就好，不用管这个文件是否存在，该项目会自动生成该文件。其他文件则需要自行到官网进行获取：
 
+### 在线网页
 
+[gitee项目](https://gitee.com/Tamako520/all-api)
+
+[ApiDoc文档](https://apidoc.gitee.com/Tamako520/all-api/)
+
+[github项目](https://github.com/wu-sv/all-api)
 
 ### 快速开始
 
@@ -49,6 +55,15 @@ wechat:
     cert-key-path: <apiclient_key.pem>
     # 微信支付平台证书路径
     platform-path: <platform.pem>
+ali:
+  access-key-id: <accessKeyId>
+  access-key-secret: <accessKeySecret>
+  oss:
+    endpoint: <endpoint>  
+    bucket-name: <bucketName>
+  sms:
+    sign-name: <signName>
+    template-code: <templateCode>
 ```
 
 3.在启动类中添加注解`@EnableAllAPI`
@@ -111,3 +126,8 @@ public class TestController {
 [微信支付官网](https://pay.weixin.qq.com)
 
 [微信官方文档-小程序](https://developers.weixin.qq.com/miniprogram/dev/framework/)
+
+[阿里短信服务参考文档](https://help.aliyun.com/zh/sms)
+
+[阿里OSS参考文档](https://help.aliyun.com/zh/oss/)
+
