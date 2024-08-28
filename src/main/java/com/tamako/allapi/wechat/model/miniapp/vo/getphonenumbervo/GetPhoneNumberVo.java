@@ -1,3 +1,6 @@
+/**
+ * 微信手机号登录vo包
+ */
 package com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo;
 
 
@@ -7,6 +10,8 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author Tamako
+ *
+ * 手机号登录信息返回值
  */
 
 @Data

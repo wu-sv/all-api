@@ -11,6 +11,8 @@ import java.util.Map;
 /**
  * @author Tamako
  * @since 2024/8/28 13:13
+ *
+ * 微信支付API
  */
 public interface WeChatPayApi {
     /**

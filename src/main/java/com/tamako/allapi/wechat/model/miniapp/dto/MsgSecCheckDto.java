@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
+ *
+ * 用于校验文本安全的请求参数
  */
 @Data
 @Builder

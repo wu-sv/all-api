@@ -1,3 +1,6 @@
+/**
+ * 微信上传物流信息的dto包
+ */
 package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto;
 
 
@@ -11,6 +14,8 @@ import java.util.List;
 
 /**
  * @author Tamako
+ *
+ * 商品信息
  */
 @Data
 @Builder

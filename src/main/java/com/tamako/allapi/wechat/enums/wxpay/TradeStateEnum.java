@@ -1,8 +1,13 @@
+/**
+ * 微信支付枚举包
+ */
 package com.tamako.allapi.wechat.enums.wxpay;
 
 
 /**
  * @author Tamako
+ *
+ * 交易状态枚举
  */
 public enum TradeStateEnum {
     /**

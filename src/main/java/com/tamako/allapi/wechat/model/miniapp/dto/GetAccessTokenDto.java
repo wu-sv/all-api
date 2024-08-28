@@ -1,3 +1,6 @@
+/**
+ * 微信小程序dto包
+ */
 package com.tamako.allapi.wechat.model.miniapp.dto;
 
 
@@ -8,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
+ *
+ * 获取微信小程序 access_token 请求参数
  */
 @Data
 @Builder

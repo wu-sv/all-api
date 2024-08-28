@@ -5,6 +5,8 @@ import lombok.Getter;
 
 /**
  * @author Tamako
+ *
+ * 建议值枚举
  */
 @Getter
 public enum SuggestEnum {

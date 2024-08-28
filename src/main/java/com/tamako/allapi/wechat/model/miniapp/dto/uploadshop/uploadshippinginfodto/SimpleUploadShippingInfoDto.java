@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * @author Tamako
+ *
+ * 上传商品物流信息的简单dto
  */
 @Data
 @Builder

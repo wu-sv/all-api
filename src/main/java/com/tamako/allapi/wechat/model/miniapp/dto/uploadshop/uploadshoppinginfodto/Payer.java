@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Tamako
+ *
+ * 用户信息
  */
 
 @Data

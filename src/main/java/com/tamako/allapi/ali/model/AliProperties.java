@@ -1,4 +1,7 @@
-package com.tamako.allapi.wechat.model;
+/**
+ * 阿里云模型包
+ */
+package com.tamako.allapi.ali.model;
 
 
 import lombok.Data;
@@ -8,6 +11,8 @@ import org.springframework.stereotype.Component;
 /**
  * @author Tamako
  * @since 2024/8/27 09:01
+ *
+ * 阿里云配置类
  */
 @Data
 @ConfigurationProperties(prefix = "ali")

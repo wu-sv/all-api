@@ -1,3 +1,6 @@
+/**
+ * 工具包
+ */
 package com.tamako.allapi.utils;
 
 
@@ -19,6 +22,8 @@ import static cn.hutool.http.HttpRequest.post;
 
 /**
  * @author Tamako
+ *
+ * 网络请求工具，封装了hutool的网络请求
  */
 @Slf4j
 public class NetWorkUtil {

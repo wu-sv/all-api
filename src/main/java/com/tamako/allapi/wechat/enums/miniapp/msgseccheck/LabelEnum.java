@@ -1,3 +1,6 @@
+/**
+ *  微信文本安全检测枚举包
+ */
 package com.tamako.allapi.wechat.enums.miniapp.msgseccheck;
 
 
@@ -5,6 +8,8 @@ import lombok.Getter;
 
 /**
  * @author Tamako
+ *
+ * 命中标签枚举值
  */
 @Getter
 public enum LabelEnum {

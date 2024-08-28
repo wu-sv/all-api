@@ -1,8 +1,11 @@
+/**
+ * 微信枚举包
+ */
 package com.tamako.allapi.wechat.enums;
 
 
 /**
- * 银行代码.
+ * 银行代码
  *
  * @author tamako
  */

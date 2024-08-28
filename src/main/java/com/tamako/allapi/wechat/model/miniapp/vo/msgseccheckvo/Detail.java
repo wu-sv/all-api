@@ -1,3 +1,6 @@
+/**
+ * 微信文本安全校验vo包
+ */
 package com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo;
 
 import com.tamako.allapi.wechat.enums.miniapp.msgseccheck.LabelEnum;
@@ -6,6 +9,8 @@ import lombok.Data;
 
 /**
  * @author Tamako
+ *
+ * 详细检测结果
  */
 @Data
 public class Detail {

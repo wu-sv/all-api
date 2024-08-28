@@ -14,6 +14,8 @@ import java.util.List;
 
 /**
  * @author Tamako
+ *
+ * 上传购物详情请求参数
  */
 @Data
 @Builder

@@ -12,6 +12,8 @@ import java.util.Map;
 
 /**
  * @author Tamako
+ *
+ * 用于发送订阅消息的请求参数
  */
 @Data
 @Builder

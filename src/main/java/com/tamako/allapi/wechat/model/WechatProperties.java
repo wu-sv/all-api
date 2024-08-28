@@ -1,3 +1,6 @@
+/**
+ * 微信模型包
+ */
 package com.tamako.allapi.wechat.model;
 
 
@@ -7,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author Tamako
+ *
+ * 微信配置类
  */
 @Data
 @ConfigurationProperties(prefix = "wechat")

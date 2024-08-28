@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author Tamako
+ *
+ * 微信小程序登录凭证校验返回结果
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

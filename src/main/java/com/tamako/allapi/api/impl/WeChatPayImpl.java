@@ -44,6 +44,8 @@ import java.util.Map;
 /**
  * @author Tamako
  * @since 2021/1/18 16:22
+ *
+ * 微信支付接口实现类
  */
 
 public class WeChatPayImpl implements WeChatPayApi {

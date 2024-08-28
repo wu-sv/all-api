@@ -1,3 +1,6 @@
+/**
+ * 微信上传物流信息枚举包
+ */
 package com.tamako.allapi.wechat.enums.miniapp.uploadshop.uploadshippinginfo;
 
 
@@ -5,6 +8,8 @@ import lombok.Getter;
 
 /**
  * @author Tamako
+ *
+ * 发货方式枚举
  */
 @Getter
 public enum DeliveryModeEnum {

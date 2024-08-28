@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Tamako
  * @since 2024/8/28 13:12
+ *
+ * 阿里云短信接口
  */
 public interface AliSMSApi {
     /**

@@ -1,3 +1,6 @@
+/**
+ * 微信上传物流信息dto包
+ */
 package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto;
 
 
@@ -9,6 +12,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Tamako
+ *
+ * 收发货人联系方式
  */
 @Data
 @Builder

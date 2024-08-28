@@ -6,6 +6,8 @@ import lombok.Data;
 
 /**
  * @author Tamako
+ *
+ * 综合结果
  */
 @Data
 public class Result {

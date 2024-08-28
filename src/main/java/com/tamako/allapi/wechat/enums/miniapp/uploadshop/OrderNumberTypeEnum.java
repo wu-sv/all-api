@@ -1,3 +1,6 @@
+/**
+ * 微信购物订单枚举包
+ */
 package com.tamako.allapi.wechat.enums.miniapp.uploadshop;
 
 
@@ -5,6 +8,8 @@ import lombok.Getter;
 
 /**
  * @author Tamako
+ *
+ * 订单号类型枚举
  */
 @Getter
 public enum OrderNumberTypeEnum {

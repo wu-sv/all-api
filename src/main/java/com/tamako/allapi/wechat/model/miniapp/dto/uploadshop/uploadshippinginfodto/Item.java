@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Tamako
+ *
+ * 商品信息
  */
 @Data
 @Builder

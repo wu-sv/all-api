@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * @author Tamako
+ *
+ * 微信文本安全校验vo
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

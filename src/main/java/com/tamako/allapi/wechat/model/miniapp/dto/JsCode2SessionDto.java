@@ -8,6 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
+ *
+ * 用于手机号登录的请求参数
  */
 @Data
 @Builder

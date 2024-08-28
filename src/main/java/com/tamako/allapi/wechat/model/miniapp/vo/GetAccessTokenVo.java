@@ -1,3 +1,6 @@
+/**
+ * 微信小程序vo包
+ */
 package com.tamako.allapi.wechat.model.miniapp.vo;
 
 
@@ -6,6 +9,8 @@ import lombok.Data;
 
 /**
  * @author Tamako
+ *
+ * 获取小程序全局唯一后台接口调用凭据（access_token）返回对象
  */
 @Data
 public class GetAccessTokenVo {

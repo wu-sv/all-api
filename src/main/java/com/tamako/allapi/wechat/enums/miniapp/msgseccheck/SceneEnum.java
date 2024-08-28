@@ -5,6 +5,8 @@ import lombok.Getter;
 
 /**
  * @author Tamako
+ *
+ * 场景值枚举类
  */
 @Getter
 public enum SceneEnum {

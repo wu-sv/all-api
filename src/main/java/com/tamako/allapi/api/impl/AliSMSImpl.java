@@ -11,7 +11,7 @@ import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponseBody;
 import com.tamako.allapi.api.AliSMSApi;
-import com.tamako.allapi.wechat.model.AliProperties;
+import com.tamako.allapi.ali.model.AliProperties;
 import darabonba.core.client.ClientOverrideConfiguration;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +23,8 @@ import java.util.concurrent.CompletableFuture;
 /**
  * @author Tamako
  * @since 2024/8/28 11:50
+ *
+ * 阿里云短信API实现
  */
 public class AliSMSImpl implements AliSMSApi {
     /**

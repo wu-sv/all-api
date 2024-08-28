@@ -16,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Tamako
  * @since 2024/8/28 13:12
+ *
+ * 微信小程序API
  */
 public interface WechatMiniAppApi {
     /**
