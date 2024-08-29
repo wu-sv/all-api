@@ -78,4 +78,8 @@ public class GetUnlimitedQRCodeDto {
          */
         private String b;
     }
+
+    public GetUnlimitedQRCodeDto(@NotNull String scene) {
+        this.scene = scene;
+    }
 }

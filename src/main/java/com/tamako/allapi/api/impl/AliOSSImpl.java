@@ -16,6 +16,7 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
+import com.aliyun.oss.model.PutObjectResult;
 import com.tamako.allapi.ali.model.AliProperties;
 import com.tamako.allapi.api.AliOSSApi;
 import jakarta.annotation.Resource;
@@ -68,7 +69,7 @@ public class AliOSSImpl implements AliOSSApi {
                 //公共读
                 String url = UrlBuilder.of()
                         .setScheme("https")
-                        .setHost(aliProperties.getOss().getBucketName() + "." + aliProperties.getOss().getEndpoint())
+                        .setHost(aliProperties.getOss().getBucketName() + "." + aliProperties.getOss().getEndpoint().replaceAll("https://", ""))
                         .addPath(fileName)
                         .build();
                 return URLUtil.decode(url);

@@ -15,6 +15,7 @@ import com.tamako.allapi.api.AliSMSApi;
 import darabonba.core.client.ClientOverrideConfiguration;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.HashMap;

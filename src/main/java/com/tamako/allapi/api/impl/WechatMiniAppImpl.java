@@ -25,6 +25,7 @@ import com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo.GetPhoneNumber
 import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;

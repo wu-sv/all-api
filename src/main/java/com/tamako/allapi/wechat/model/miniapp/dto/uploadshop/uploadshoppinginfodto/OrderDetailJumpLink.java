@@ -1,6 +1,7 @@
 package com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto;
 
 
+import com.tamako.allapi.wechat.enums.miniapp.uploadshop.uploadshoppinginfo.OrderDetailJumpLinkTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,8 +33,9 @@ public class OrderDetailJumpLink {
     private String path;
     /**
      * 链接类型枚举值：1、URL；2、MINI_PROGRAM
-     * 示例值: 1
+     * @see OrderDetailJumpLinkTypeEnum
      */
     @NotNull
     private Integer type;
+
 }
