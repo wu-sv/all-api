@@ -4,13 +4,7 @@
 package com.tamako.allapi.interfaces;
 
 
-import com.tamako.allapi.ali.model.AliProperties;
-import com.tamako.allapi.api.impl.AliOSSImpl;
-import com.tamako.allapi.api.impl.AliSMSImpl;
-import com.tamako.allapi.api.impl.WeChatPayImpl;
-import com.tamako.allapi.api.impl.WechatMiniAppImpl;
-import com.tamako.allapi.wechat.model.WechatProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import com.tamako.allapi.configuration.APIConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -23,7 +17,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@EnableConfigurationProperties({WechatProperties.class, AliProperties.class})
-@Import({AliOSSImpl.class, AliSMSImpl.class, WechatMiniAppImpl.class, WeChatPayImpl.class})
+@Import(APIConfiguration.class)
 public @interface EnableAllAPI {
 }

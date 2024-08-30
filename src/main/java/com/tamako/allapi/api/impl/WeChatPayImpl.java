@@ -28,13 +28,12 @@ import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import com.tamako.allapi.api.WeChatPayApi;
 import com.tamako.allapi.utils.NetWorkUtil;
-import com.tamako.allapi.wechat.model.WechatProperties;
+import com.tamako.allapi.configuration.WechatProperties;
 import com.tamako.allapi.wechat.model.wxpay.dto.MiniAppPayOrderDto;
 import com.tamako.allapi.wechat.model.wxpay.vo.MiniAppPayNotifyVo;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -56,8 +55,12 @@ public class WeChatPayImpl implements WeChatPayApi {
     /**
      * 微信配置
      */
-    @Resource
-    private WechatProperties wechatProperties;
+
+    private final WechatProperties wechatProperties;
+
+    public WeChatPayImpl(WechatProperties wechatProperties) {
+        this.wechatProperties = wechatProperties;
+    }
 
     /**
      * 小程序支付下单

@@ -16,8 +16,7 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
-import com.aliyun.oss.model.PutObjectResult;
-import com.tamako.allapi.ali.model.AliProperties;
+import com.tamako.allapi.configuration.AliProperties;
 import com.tamako.allapi.api.AliOSSApi;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
@@ -42,8 +41,12 @@ public class AliOSSImpl implements AliOSSApi {
     /**
      * 阿里云OSS配置
      */
-    @Resource
-    private AliProperties aliProperties;
+
+    private final AliProperties aliProperties;
+
+    public AliOSSImpl(AliProperties aliProperties) {
+        this.aliProperties = aliProperties;
+    }
 
     /**
      * 简单上传

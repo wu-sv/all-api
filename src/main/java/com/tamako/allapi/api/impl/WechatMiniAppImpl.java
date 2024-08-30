@@ -10,7 +10,7 @@ import com.tamako.allapi.api.WechatMiniAppApi;
 import com.tamako.allapi.utils.NetWorkUtil;
 import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
 import com.tamako.allapi.wechat.enums.miniapp.uploadshop.OrderNumberTypeEnum;
-import com.tamako.allapi.wechat.model.WechatProperties;
+import com.tamako.allapi.configuration.WechatProperties;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.OrderKey;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.SimpleUploadShippingInfoDto;
@@ -25,7 +25,6 @@ import com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo.GetPhoneNumber
 import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -44,8 +43,12 @@ public class WechatMiniAppImpl implements WechatMiniAppApi {
     /**
      * 微信配置
      */
-    @Resource
-    private WechatProperties wechatProperties;
+
+    private final WechatProperties wechatProperties;
+
+    public WechatMiniAppImpl(WechatProperties wechatProperties) {
+        this.wechatProperties = wechatProperties;
+    }
 
     /**
      * 获取access_token(获取接口调用凭据)(需要注意该access_token需要存入缓存中，避免频繁调用接口)

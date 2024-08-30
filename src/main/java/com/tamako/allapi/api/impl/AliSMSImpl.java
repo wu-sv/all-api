@@ -10,12 +10,11 @@ import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponseBody;
-import com.tamako.allapi.ali.model.AliProperties;
+import com.tamako.allapi.configuration.AliProperties;
 import com.tamako.allapi.api.AliSMSApi;
 import darabonba.core.client.ClientOverrideConfiguration;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -35,8 +34,12 @@ public class AliSMSImpl implements AliSMSApi {
     /**
      * 阿里云短信配置
      */
-    @Resource
-    private AliProperties aliProperties;
+
+    private final AliProperties aliProperties;
+
+    public AliSMSImpl(AliProperties aliProperties) {
+        this.aliProperties = aliProperties;
+    }
 
 
     /**
