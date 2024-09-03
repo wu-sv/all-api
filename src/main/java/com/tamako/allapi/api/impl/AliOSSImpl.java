@@ -16,13 +16,13 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
-import com.tamako.allapi.configuration.AliProperties;
 import com.tamako.allapi.api.AliOSSApi;
-import jakarta.annotation.Resource;
+import com.tamako.allapi.configuration.AliProperties;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class AliOSSImpl implements AliOSSApi {
      * @param file            上传文件流
      * @param fileName        上传文件名
      * @param forbidOverwrite 是否禁止覆盖(false:不禁止,true:禁止)
-     * @param readPermissions 读权限(true:公共读,false:私有读)
+     * @param readPermissions 读权限(true:私有读,false:公共读)
      * @param expiration      过期时间(时间要在当前时间之后)
      * @return 上传成功后的url
      */
@@ -68,7 +68,7 @@ public class AliOSSImpl implements AliOSSApi {
             metadata.setHeader("x-oss_forbid_overwrite", forbidOverwrite.toString());
             putObjectRequest.setMetadata(metadata);
             client.putObject(putObjectRequest);
-            if (readPermissions) {
+            if (!readPermissions) {
                 //公共读
                 String url = UrlBuilder.of()
                         .setScheme("https")
@@ -89,6 +89,30 @@ public class AliOSSImpl implements AliOSSApi {
         }
     }
 
+    @Override
+    public String upload(@NotNull OSS client, @NotNull InputStream file, @NotNull String fileName, @NotNull Boolean forbidOverwrite, @NotNull Boolean readPermissions, Date expiration) throws OSSException, ClientException {
+        fileName = this.formatCheckAndConvert(fileName);
+        PutObjectRequest putObjectRequest = new PutObjectRequest(aliProperties.getOss().getBucketName(), fileName, file);
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setHeader("x-oss_forbid_overwrite", forbidOverwrite.toString());
+        putObjectRequest.setMetadata(metadata);
+        client.putObject(putObjectRequest);
+        if (!readPermissions) {
+            //公共读
+            String url = UrlBuilder.of()
+                    .setScheme("https")
+                    .setHost(aliProperties.getOss().getBucketName() + "." + aliProperties.getOss().getEndpoint().replaceAll("https://", ""))
+                    .addPath(fileName)
+                    .build();
+            return URLUtil.decode(url);
+        } else {
+            //私有读
+            URL url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration);
+            return URLUtil.decode(url.toExternalForm());
+        }
+
+    }
+
     /**
      * 简单上传(默认不禁止覆盖且为公共读)
      *
@@ -97,7 +121,7 @@ public class AliOSSImpl implements AliOSSApi {
      */
     @Override
     public String upload(@NotNull InputStream file, @NotNull String fileName) {
-        return this.upload(file, fileName, false, true, null);
+        return this.upload(file, fileName, false, false, null);
     }
 
     /**
@@ -117,7 +141,7 @@ public class AliOSSImpl implements AliOSSApi {
                 throw new RuntimeException("文件不存在");
             }
             URL url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration);
-            return url.toExternalForm();
+            return URLUtil.decode(url.toExternalForm());
         } catch (OSSException | ClientException oe) {
             log.error("生成签名URL失败", oe);
             throw new RuntimeException(oe);
@@ -126,6 +150,35 @@ public class AliOSSImpl implements AliOSSApi {
         }
     }
 
+    /**
+     * 生成以GET方法访问的签名URLs
+     *
+     * @param fileNames  文件名
+     * @param expiration 过期时间
+     * @return 签名URLs
+     */
+    @Override
+    public List<String> generatePresignedUrl(@NotNull List<String> fileNames, @NotNull Date expiration) {
+        this.formatCheckAndConvert(fileNames);
+        OSS client = this.initClient();
+        try {
+            List<String> urls = new ArrayList<>();
+            fileNames.forEach(fileName -> {
+                boolean exists = this.exists(client, fileName);
+                if (!exists) {
+                    throw new RuntimeException("文件不存在");
+                }
+                URL url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration);
+                urls.add(URLUtil.decode(url.toExternalForm()));
+            });
+            return urls;
+        } catch (OSSException | ClientException oe) {
+            log.error("生成签名URL失败", oe);
+            throw new RuntimeException(oe);
+        } finally {
+            this.closeClient(client);
+        }
+    }
 
     /**
      * 删除文件或目录（如果要删除目录，目录必须为空）
