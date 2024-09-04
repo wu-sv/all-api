@@ -168,8 +168,7 @@ public class NetWorkUtil {
             //判断是报错还是正常返回
             if (bytes.length <= 200) {
                 JSONObject jsonObj = JSONUtil.parseObj(new String(bytes));
-                log.error("错误码：{}，错误信息：{}", jsonObj.getStr("errcode"), jsonObj.getStr("errmsg"));
-                throw new RuntimeException();
+                checkErrorCode(jsonObj);
             }
             return bytes;
         } catch (Exception e) {
@@ -187,7 +186,7 @@ public class NetWorkUtil {
         if (errcode != null && errcode != 0) {
             String errmsg = jsonObject.getStr("errmsg");
             log.error("接口调用微信返回失败，失败状态码：{}，失败原因：{}", errcode, errmsg);
-            throw new RuntimeException(errmsg);
+            throw new RuntimeException(errcode + "：" + errmsg);
         }
     }
 
