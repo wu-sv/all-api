@@ -62,25 +62,7 @@ public class AliOSSImpl implements AliOSSApi {
     public String upload(@NotNull InputStream file, @NotNull String fileName, @NotNull Boolean forbidOverwrite, @NotNull Boolean readPermissions, Date expiration) {
         OSS client = this.initClient();
         try {
-            fileName = this.formatCheckAndConvert(fileName);
-            PutObjectRequest putObjectRequest = new PutObjectRequest(aliProperties.getOss().getBucketName(), fileName, file);
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setHeader("x-oss_forbid_overwrite", forbidOverwrite.toString());
-            putObjectRequest.setMetadata(metadata);
-            client.putObject(putObjectRequest);
-            if (!readPermissions) {
-                //公共读
-                String url = UrlBuilder.of()
-                        .setScheme("https")
-                        .setHost(aliProperties.getOss().getBucketName() + "." + aliProperties.getOss().getEndpoint().replaceAll("https://", ""))
-                        .addPath(fileName)
-                        .build();
-                return URLUtil.decode(url);
-            } else {
-                //私有读
-                URL url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration);
-                return URLUtil.decode(url.toExternalForm());
-            }
+            return this.upload(client, file, fileName, forbidOverwrite, readPermissions, expiration);
         } catch (OSSException | ClientException oe) {
             log.error("上传失败", oe);
             throw new RuntimeException(oe);
@@ -107,8 +89,7 @@ public class AliOSSImpl implements AliOSSApi {
             return URLUtil.decode(url);
         } else {
             //私有读
-            URL url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration);
-            return URLUtil.decode(url.toExternalForm());
+            return client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString().replaceAll("\\+", "%2B");
         }
 
     }
@@ -168,8 +149,8 @@ public class AliOSSImpl implements AliOSSApi {
                 if (!exists) {
                     throw new RuntimeException("文件不存在");
                 }
-                URL url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration);
-                urls.add(URLUtil.decode(url.toExternalForm()));
+                String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString().replaceAll("\\+", "%2B");
+                urls.add(url);
             });
             return urls;
         } catch (OSSException | ClientException oe) {
@@ -254,11 +235,9 @@ public class AliOSSImpl implements AliOSSApi {
      * 批量文件格式校验与转换
      *
      * @param fileNameList 文件名列表
-     * @return 格式化后的文件名
      */
-    private List<String> formatCheckAndConvert(List<String> fileNameList) {
+    private void formatCheckAndConvert(List<String> fileNameList) {
         fileNameList.replaceAll(this::formatCheckAndConvert);
-        return fileNameList;
     }
 
     /**
