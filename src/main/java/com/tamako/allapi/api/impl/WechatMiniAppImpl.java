@@ -169,12 +169,7 @@ public class WechatMiniAppImpl implements WechatMiniAppApi {
     public ResponseVo sendMessage(@NotNull String accessToken, @NotNull SendMessageDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_SEND_MESSAGE, accessToken).build();
         JSONObject jsonObject = NetWorkUtil.postSync(url, JSONUtil.parseObj(dto, true));
-        ResponseVo vo = JSONUtil.toBean(jsonObject, ResponseVo.class);
-        if (vo.getErrcode() != 0) {
-            log.error("发送消息失败，失败状态码：{}，失败原因：{}", vo.getErrcode(), vo.getErrmsg());
-            throw new RuntimeException(vo.getErrmsg());
-        }
-        return vo;
+        return JSONUtil.toBean(jsonObject, ResponseVo.class);
     }
 
     /**
