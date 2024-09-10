@@ -2,6 +2,7 @@ package com.tamako.allapi.api;
 
 
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
+import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.CommonUploadShippingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.SimpleUploadShippingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.UploadShippingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto.SimpleUploadShoppingInfoDto;
@@ -92,7 +93,7 @@ public interface WechatMiniAppApi {
     MsgSecCheckVo msgSecCheck(@NotNull String accessToken, @NotNull MsgSecCheckDto dto);
 
     /**
-     * 上传购物详情
+     * 上传购物详情（微信电商使用）
      *
      * @param accessToken 接口调用凭证
      * @param dto         UploadShoppingInfoDto
@@ -101,7 +102,7 @@ public interface WechatMiniAppApi {
     ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull UploadShoppingInfoDto dto);
 
     /**
-     * 上传购物详情(推荐,简化版)
+     * 上传购物详情(推荐,简化版)（微信电商使用）
      * 该接口使用原支付交易对应的微信订单号
      *
      * @param accessToken 接口调用凭证
@@ -111,7 +112,7 @@ public interface WechatMiniAppApi {
     ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull SimpleUploadShoppingInfoDto dto);
 
     /**
-     * 上传物流信息
+     * 上传物流信息（微信电商使用）
      *
      * @param accessToken 接口调用凭证
      * @param dto         UploadShippingInfoDto
@@ -120,7 +121,7 @@ public interface WechatMiniAppApi {
     ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull UploadShippingInfoDto dto);
 
     /**
-     * 上传物流信息(推荐,简化版)
+     * 上传物流信息(推荐,简化版)（微信电商使用）
      * 该接口使用原支付交易对应的微信订单号
      *
      * @param accessToken 接口调用凭证
@@ -128,4 +129,10 @@ public interface WechatMiniAppApi {
      * @return UploadShippingInfoVo
      */
     ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull SimpleUploadShippingInfoDto dto);
+
+    /**
+     * 发货信息录入接口（普通商户使用）
+     * 该接口在平台能力处，与上传物流信息接口不同，
+     */
+    ResponseVo uploadShippingInfo(@NotNull String accessToken,@NotNull CommonUploadShippingInfoDto dto);
 }

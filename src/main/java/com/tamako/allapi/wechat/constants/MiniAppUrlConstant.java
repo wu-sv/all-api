@@ -48,12 +48,17 @@ public class MiniAppUrlConstant {
     public static final String WECHAT_MSG_SEC_CHECK = "/wxa/msg_sec_check";
 
     /**
-     * 上传购物详情
+     * 上传购物详情(微信电商)
      */
     public static final String WECHAT_UPLOAD_SHOPPING_INFO = "/user-order/orders";
 
     /**
-     * 上传物流信息
+     * 上传物流信息(微信电商)
      */
     public static final String WECHAT_UPLOAD_SHIPPING_INFO = "/user-order/orders/shippings";
+
+    /**
+     * 发货信息录入接口（普通商户）
+     */
+    public static final String WECHAT_COMMON_UPLOAD_SHIPPING_INFO = "/wxa/sec/order/upload_shipping_info";
 }

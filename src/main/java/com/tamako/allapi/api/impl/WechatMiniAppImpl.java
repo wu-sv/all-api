@@ -7,12 +7,13 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.tamako.allapi.api.WechatMiniAppApi;
+import com.tamako.allapi.configuration.WechatProperties;
 import com.tamako.allapi.utils.NetWorkUtil;
 import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
 import com.tamako.allapi.wechat.enums.miniapp.uploadshop.OrderNumberTypeEnum;
-import com.tamako.allapi.configuration.WechatProperties;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.OrderKey;
+import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.CommonUploadShippingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.SimpleUploadShippingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.UploadShippingInfoDto;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto.Payer;
@@ -23,7 +24,6 @@ import com.tamako.allapi.wechat.model.miniapp.vo.JsCode2SessionVo;
 import com.tamako.allapi.wechat.model.miniapp.vo.ResponseVo;
 import com.tamako.allapi.wechat.model.miniapp.vo.getphonenumbervo.GetPhoneNumberVo;
 import com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo.MsgSecCheckVo;
-import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.ZonedDateTime;
@@ -263,6 +263,14 @@ public class WechatMiniAppImpl implements WechatMiniAppApi {
                 .build();
         uploadShippingInfoDto.setUploadTime(now);
         return uploadShippingInfo(accessToken, uploadShippingInfoDto);
+    }
+
+    @Override
+    public ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull CommonUploadShippingInfoDto dto) {
+        String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_COMMON_UPLOAD_SHIPPING_INFO, accessToken).build();
+        JSONObject body = JSONUtil.parseObj(dto, true).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        JSONObject jsonObject = NetWorkUtil.postSync(url, body);
+        return JSONUtil.toBean(jsonObject, ResponseVo.class);
     }
 
     /**
