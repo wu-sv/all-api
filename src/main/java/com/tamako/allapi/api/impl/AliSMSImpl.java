@@ -10,10 +10,9 @@ import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponseBody;
-import com.tamako.allapi.configuration.AliProperties;
 import com.tamako.allapi.api.AliSMSApi;
+import com.tamako.allapi.configuration.AliProperties;
 import darabonba.core.client.ClientOverrideConfiguration;
-import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -68,7 +67,6 @@ public class AliSMSImpl implements AliSMSApi {
             log.error("发送登录短信验证码失败：", e);
             throw new RuntimeException("发送登录短信验证码失败：", e);
         }
-
     }
 
     /**

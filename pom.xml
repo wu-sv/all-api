@@ -5,7 +5,7 @@
 
     <groupId>io.gitee.tamako520</groupId>
     <artifactId>all-api</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
     <name>all-api</name>
     <description>Facilitate rapid development，Secondary encapsulation of the api like weChat,ali and so on</description>
     <url>https://gitee.com/Tamako520/all-api</url>
@@ -194,6 +194,13 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>3.3.3</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
 
         <!--===================test==============================-->
         <dependency>
