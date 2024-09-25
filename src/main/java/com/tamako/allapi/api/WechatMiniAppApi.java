@@ -132,7 +132,11 @@ public interface WechatMiniAppApi {
 
     /**
      * 发货信息录入接口（普通商户使用）
-     * 该接口在平台能力处，与上传物流信息接口不同，
+     * 该接口在平台能力处，与上传物流信息接口不同
+     *
+     * @param accessToken 接口调用凭证
+     * @param dto         发货信息录入dto
+     * @return ResponseVo
      */
-    ResponseVo uploadShippingInfo(@NotNull String accessToken,@NotNull CommonUploadShippingInfoDto dto);
+    ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull CommonUploadShippingInfoDto dto);
 }

@@ -27,11 +27,10 @@ import com.ijpay.wxpay.model.v3.Amount;
 import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import com.tamako.allapi.api.WeChatPayApi;
-import com.tamako.allapi.utils.NetWorkUtil;
 import com.tamako.allapi.configuration.WechatProperties;
+import com.tamako.allapi.utils.NetWorkUtil;
 import com.tamako.allapi.wechat.model.wxpay.dto.MiniAppPayOrderDto;
 import com.tamako.allapi.wechat.model.wxpay.vo.MiniAppPayNotifyVo;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

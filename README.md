@@ -31,7 +31,7 @@ GitHub：[https://github.com/wu-sv/all-api](https://github.com/wu-sv/all-api)
 <dependency>
 	<groupId>io.gitee.tamako520</groupId>
 	<artifactId>all-api</artifactId>
-	<version>1.1.5</version>
+	<version>1.1.5.1</version>
 </dependency>
 ```
 

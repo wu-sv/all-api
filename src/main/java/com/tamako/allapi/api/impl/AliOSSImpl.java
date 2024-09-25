@@ -79,19 +79,19 @@ public class AliOSSImpl implements AliOSSApi {
         metadata.setHeader("x-oss_forbid_overwrite", forbidOverwrite.toString());
         putObjectRequest.setMetadata(metadata);
         client.putObject(putObjectRequest);
+        String url;
         if (!readPermissions) {
             //公共读
-            String url = UrlBuilder.of()
+            url = UrlBuilder.of()
                     .setScheme("https")
                     .setHost(aliProperties.getOss().getBucketName() + "." + aliProperties.getOss().getEndpoint().replaceAll("https://", ""))
                     .addPath(fileName)
                     .build();
-            return URLUtil.decode(url);
         } else {
             //私有读
-            return client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString().replaceAll("\\+", "%2B");
+            url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
         }
-
+        return this.decode(url);
     }
 
     /**
@@ -122,7 +122,7 @@ public class AliOSSImpl implements AliOSSApi {
                 throw new RuntimeException("文件不存在");
             }
             URL url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration);
-            return URLUtil.decode(url.toExternalForm());
+            return this.decode(url.toString());
         } catch (OSSException | ClientException oe) {
             log.error("生成签名URL失败", oe);
             throw new RuntimeException(oe);
@@ -149,8 +149,8 @@ public class AliOSSImpl implements AliOSSApi {
                 if (!exists) {
                     throw new RuntimeException("文件不存在");
                 }
-                String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString().replaceAll("\\+", "%2B");
-                urls.add(url);
+                String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
+                urls.add(this.decode(url));
             });
             return urls;
         } catch (OSSException | ClientException oe) {
@@ -258,5 +258,15 @@ public class AliOSSImpl implements AliOSSApi {
         if (ossClient != null) {
             ossClient.shutdown();
         }
+    }
+
+    /**
+     * 解码URL(将unicode编码转为中文)
+     *
+     * @param url URL
+     * @return 解码后的URL
+     */
+    private String decode(String url) {
+        return URLUtil.decode(url).replaceAll("\\+", "%2B");
     }
 }
