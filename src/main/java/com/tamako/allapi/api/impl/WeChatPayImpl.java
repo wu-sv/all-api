@@ -28,6 +28,8 @@ import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import com.tamako.allapi.api.WeChatPayApi;
 import com.tamako.allapi.configuration.WechatProperties;
+import com.tamako.allapi.exception.AllApiException;
+import com.tamako.allapi.exception.PlatformEnum;
 import com.tamako.allapi.utils.NetWorkUtil;
 import com.tamako.allapi.wechat.model.wxpay.dto.MiniAppPayOrderDto;
 import com.tamako.allapi.wechat.model.wxpay.vo.MiniAppPayNotifyVo;
@@ -108,11 +110,11 @@ public class WeChatPayImpl implements WeChatPayApi {
                 return WxPayKit.jsApiCreateSign(wechatProperties.getAppId(), prepayId, wechatProperties.getPay().getCertKeyPath());
             } else {
                 log.error("微信商户号查询订单失败,状态码：{}, 响应信息：{}", response.getStatus(), response.getBody());
-                throw new RuntimeException("微信支付接口调用失败");
+                throw new AllApiException(PlatformEnum.WX, response.getStatus(), response.getBody());
             }
         } catch (Exception e) {
             log.error("微信支付接口调用失败", e);
-            throw new RuntimeException(e);
+            throw new AllApiException(PlatformEnum.WX, e);
         }
     }
 
@@ -151,7 +153,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             return JSONUtil.toBean(plainText, MiniAppPayNotifyVo.class);
         } catch (Exception e) {
             log.error("微信支付通知接口调用失败", e);
-            throw new RuntimeException(e);
+            throw new AllApiException(PlatformEnum.WX, e);
         }
     }
 
@@ -186,12 +188,12 @@ public class WeChatPayImpl implements WeChatPayApi {
                 return JSONUtil.toBean(response.getBody(), MiniAppPayNotifyVo.class);
             } else {
                 log.error("微信商户号查询订单失败,状态码：{}, 响应信息：{}", response.getStatus(), response.getBody());
-                throw new RuntimeException("微信支付接口调用失败");
+                throw new AllApiException(PlatformEnum.WX, response.getStatus(), response.getBody());
             }
 
         } catch (Exception e) {
             log.error("微信商户号查询订单失败", e);
-            throw new RuntimeException(e);
+            throw new AllApiException(PlatformEnum.WX, e);
         }
     }
 
@@ -205,7 +207,7 @@ public class WeChatPayImpl implements WeChatPayApi {
         X509Certificate cert = PayKit.getCertificate(wechatProperties.getPay().getCertPath());
         if (cert == null) {
             // 证书不存在
-            throw new RuntimeException("缺少apiclient_cert.pem证书");
+            throw new AllApiException(PlatformEnum.WX, "缺少apiclient_cert.pem证书");
         }
         //如果证书存在，则获取序列号
         //证书存在
@@ -222,7 +224,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             return serialNo;
         } else {
             log.info("证书是否可用 {} 证书有效期为 {}", isValid, DateUtil.format(notAfter, DatePattern.NORM_DATETIME_PATTERN));
-            throw new RuntimeException("apiclient_cert.pem证书无效");
+            throw new AllApiException(PlatformEnum.WX, "apiclient_cert.pem证书无效");
         }
 
     }
@@ -251,7 +253,7 @@ public class WeChatPayImpl implements WeChatPayApi {
                 if (verifySignature) {
                     log.info("获取证书成功");
                 } else {
-                    throw new RuntimeException("获取证书失败");
+                    throw new AllApiException(PlatformEnum.WX, "获取证书失败");
                 }
                 JSONObject jsonObject = JSONUtil.parseObj(body);
                 JSONArray dataArray = jsonObject.getJSONArray("data");
@@ -280,13 +282,13 @@ public class WeChatPayImpl implements WeChatPayApi {
                     }
                     default: {
                         // 证书数量大于2或者小于1时，证书有问题
-                        throw new RuntimeException("证书获取异常");
+                        throw new AllApiException(PlatformEnum.WX, "证书获取异常");
                     }
                 }
             }
         } catch (Exception e) {
             log.error("获取证书失败", e);
-            throw new RuntimeException(e);
+            throw new AllApiException(PlatformEnum.WX, e);
         }
     }
 
@@ -319,7 +321,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             writer.write(publicKey);
         } catch (Exception e) {
             log.error("保存平台证书失败", e);
-            throw new RuntimeException(e);
+            throw new AllApiException(PlatformEnum.WX, e);
         }
 
     }

@@ -18,6 +18,8 @@ import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.tamako.allapi.api.AliOSSApi;
 import com.tamako.allapi.configuration.AliProperties;
+import com.tamako.allapi.exception.AllApiException;
+import com.tamako.allapi.exception.PlatformEnum;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
@@ -65,7 +67,7 @@ public class AliOSSImpl implements AliOSSApi {
             return this.upload(client, file, fileName, forbidOverwrite, readPermissions, expiration);
         } catch (OSSException | ClientException oe) {
             log.error("上传失败", oe);
-            throw new RuntimeException(oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
         } finally {
             this.closeClient(client);
         }
@@ -119,13 +121,13 @@ public class AliOSSImpl implements AliOSSApi {
         try {
             boolean exists = this.exists(client, fileName);
             if (!exists) {
-                throw new RuntimeException("文件不存在");
+                throw new AllApiException("文件不存在");
             }
             URL url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration);
             return this.decode(url.toString());
         } catch (OSSException | ClientException oe) {
             log.error("生成签名URL失败", oe);
-            throw new RuntimeException(oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
         } finally {
             this.closeClient(client);
         }
@@ -147,7 +149,7 @@ public class AliOSSImpl implements AliOSSApi {
             fileNames.forEach(fileName -> {
                 boolean exists = this.exists(client, fileName);
                 if (!exists) {
-                    throw new RuntimeException("文件不存在");
+                    throw new AllApiException("文件不存在");
                 }
                 String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
                 urls.add(this.decode(url));
@@ -155,7 +157,7 @@ public class AliOSSImpl implements AliOSSApi {
             return urls;
         } catch (OSSException | ClientException oe) {
             log.error("生成签名URL失败", oe);
-            throw new RuntimeException(oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
         } finally {
             this.closeClient(client);
         }
@@ -172,13 +174,12 @@ public class AliOSSImpl implements AliOSSApi {
         OSS client = this.initClient();
         try {
             if (!this.exists(client, fileName)) {
-                throw new RuntimeException("文件不存在");
+                throw new AllApiException("文件不存在");
             }
             client.deleteObject(aliProperties.getOss().getBucketName(), fileName);
         } catch (OSSException | ClientException oe) {
-
             log.error("删除文件失败", oe);
-            throw new RuntimeException(oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
         } finally {
             this.closeClient(client);
         }
@@ -197,7 +198,7 @@ public class AliOSSImpl implements AliOSSApi {
             client.deleteObjects(new DeleteObjectsRequest(aliProperties.getOss().getBucketName()).withKeys(fileNameList).withEncodingType("url"));
         } catch (OSSException | ClientException oe) {
             log.error("批量删除文件失败", oe);
-            throw new RuntimeException(oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
         } finally {
             this.closeClient(client);
         }
@@ -222,7 +223,7 @@ public class AliOSSImpl implements AliOSSApi {
      */
     private String formatCheckAndConvert(String fileName) {
         if (StrUtil.isEmpty(fileName)) {
-            throw new RuntimeException("文件名错误");
+            throw new AllApiException("文件名错误");
         }
         //去掉开头的“/”
         if (fileName.startsWith("/")) {

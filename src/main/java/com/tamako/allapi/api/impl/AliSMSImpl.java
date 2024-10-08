@@ -12,6 +12,8 @@ import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponseBody;
 import com.tamako.allapi.api.AliSMSApi;
 import com.tamako.allapi.configuration.AliProperties;
+import com.tamako.allapi.exception.AllApiException;
+import com.tamako.allapi.exception.PlatformEnum;
 import darabonba.core.client.ClientOverrideConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -61,11 +63,11 @@ public class AliSMSImpl implements AliSMSApi {
             SendSmsResponseBody body = responseFuture.get().getBody();
             if (!"OK".equalsIgnoreCase(body.getCode())) {
                 log.error("发送登录短信验证码失败：状态码-{}，状态描述-{}", body.getCode(), body.getMessage());
-                throw new RuntimeException("发送登录短信验证码失败：状态码-" + body.getCode() + "，状态描述-" + body.getMessage());
+                throw new AllApiException(PlatformEnum.ALI, Integer.parseInt(body.getCode()), body.getMessage());
             }
         } catch (Exception e) {
             log.error("发送登录短信验证码失败：", e);
-            throw new RuntimeException("发送登录短信验证码失败：", e);
+            throw new AllApiException(PlatformEnum.ALI, e);
         }
     }
 

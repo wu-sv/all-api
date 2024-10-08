@@ -9,6 +9,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.tamako.allapi.exception.AllApiException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -101,7 +102,6 @@ public class NetWorkUtil {
      */
     public static String readData(HttpServletRequest request) {
         BufferedReader br = null;
-
         try {
             StringBuilder result = new StringBuilder();
 
@@ -111,12 +111,11 @@ public class NetWorkUtil {
                     result.append("\n");
                 }
             }
-
             line = result.toString();
             return line;
         } catch (IOException var12) {
             log.error(var12.getMessage(), var12);
-            throw new RuntimeException(var12);
+            throw new AllApiException(var12);
         } finally {
             if (br != null) {
                 try {
@@ -140,14 +139,14 @@ public class NetWorkUtil {
             String body = response.body();
             if (response.body() == null) {
                 log.error("response body is null,please check your request");
-                throw new RuntimeException("response body is null");
+                throw new AllApiException("response body is null");
             }
             JSONObject obj = JSONUtil.parseObj(body);
             //处理微信的错误码
             checkErrorCode(obj);
             return obj;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AllApiException(e);
         }
     }
 
@@ -163,7 +162,7 @@ public class NetWorkUtil {
             byte[] bytes = response.bodyBytes();
             if (bytes == null) {
                 log.error("response body is null,pleas check your request");
-                throw new RuntimeException("response body is null");
+                throw new AllApiException("response body is null");
             }
             //判断是报错还是正常返回
             if (bytes.length <= 200) {
@@ -172,7 +171,7 @@ public class NetWorkUtil {
             }
             return bytes;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AllApiException(e);
         }
     }
 
@@ -186,7 +185,7 @@ public class NetWorkUtil {
         if (errcode != null && errcode != 0) {
             String errmsg = jsonObject.getStr("errmsg");
             log.error("接口调用微信返回失败，失败状态码：{}，失败原因：{}", errcode, errmsg);
-            throw new RuntimeException(errcode + "：" + errmsg);
+            throw new AllApiException(errcode + "：" + errmsg);
         }
     }
 
