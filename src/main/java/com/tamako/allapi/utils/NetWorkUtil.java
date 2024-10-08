@@ -10,6 +10,7 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.tamako.allapi.exception.AllApiException;
+import com.tamako.allapi.exception.PlatformEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -145,6 +146,8 @@ public class NetWorkUtil {
             //处理微信的错误码
             checkErrorCode(obj);
             return obj;
+        } catch (AllApiException e) {
+            throw e;
         } catch (Exception e) {
             throw new AllApiException(e);
         }
@@ -170,6 +173,8 @@ public class NetWorkUtil {
                 checkErrorCode(jsonObj);
             }
             return bytes;
+        } catch (AllApiException e) {
+            throw e;
         } catch (Exception e) {
             throw new AllApiException(e);
         }
@@ -185,7 +190,7 @@ public class NetWorkUtil {
         if (errcode != null && errcode != 0) {
             String errmsg = jsonObject.getStr("errmsg");
             log.error("接口调用微信返回失败，失败状态码：{}，失败原因：{}", errcode, errmsg);
-            throw new AllApiException(errcode + "：" + errmsg);
+            throw new AllApiException(PlatformEnum.WX, errcode, errmsg);
         }
     }
 
