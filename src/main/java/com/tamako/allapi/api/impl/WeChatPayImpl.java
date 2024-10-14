@@ -110,7 +110,7 @@ public class WeChatPayImpl implements WeChatPayApi {
                 return WxPayKit.jsApiCreateSign(wechatProperties.getAppId(), prepayId, wechatProperties.getPay().getCertKeyPath());
             } else {
                 log.error("微信商户号查询订单失败,状态码：{}, 响应信息：{}", response.getStatus(), response.getBody());
-                throw new AllApiException(PlatformEnum.WX, response.getStatus(), response.getBody());
+                throw new AllApiException(PlatformEnum.WX, String.valueOf(response.getStatus()), response.getBody());
             }
         } catch (Exception e) {
             log.error("微信支付接口调用失败", e);
@@ -188,7 +188,7 @@ public class WeChatPayImpl implements WeChatPayApi {
                 return JSONUtil.toBean(response.getBody(), MiniAppPayNotifyVo.class);
             } else {
                 log.error("微信商户号查询订单失败,状态码：{}, 响应信息：{}", response.getStatus(), response.getBody());
-                throw new AllApiException(PlatformEnum.WX, response.getStatus(), response.getBody());
+                throw new AllApiException(PlatformEnum.WX,String.valueOf(response.getStatus()), response.getBody());
             }
 
         } catch (Exception e) {

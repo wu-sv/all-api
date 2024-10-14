@@ -12,12 +12,12 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AllApiException extends RuntimeException {
+public  class AllApiException extends RuntimeException {
     private PlatformEnum platformEnum;
-    private Integer code;
+    private String code;
     private String msg;
 
-    public AllApiException(PlatformEnum platformEnum, Integer code, String msg) {
+    public AllApiException(PlatformEnum platformEnum, String code, String msg) {
         this.platformEnum = platformEnum;
         this.code = code;
         this.msg = msg;

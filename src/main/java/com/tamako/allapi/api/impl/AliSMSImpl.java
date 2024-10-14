@@ -63,11 +63,13 @@ public class AliSMSImpl implements AliSMSApi {
             SendSmsResponseBody body = responseFuture.get().getBody();
             if (!"OK".equalsIgnoreCase(body.getCode())) {
                 log.error("发送登录短信验证码失败：状态码-{}，状态描述-{}", body.getCode(), body.getMessage());
-                throw new AllApiException(PlatformEnum.ALI, Integer.parseInt(body.getCode()), body.getMessage());
+                throw new AllApiException(PlatformEnum.ALI, body.getCode(), body.getMessage());
             }
+        } catch (AllApiException e) {
+            throw e;
         } catch (Exception e) {
             log.error("发送登录短信验证码失败：", e);
-            throw new AllApiException(PlatformEnum.ALI, e);
+            throw new RuntimeException(e);
         }
     }
 
