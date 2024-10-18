@@ -5,11 +5,13 @@ package com.tamako.allapi.api;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSException;
+import com.aliyun.oss.model.PartETag;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 阿里云对象存储服务API接口
@@ -51,6 +53,70 @@ public interface AliOSSApi {
      * @param fileName 上传文件名
      */
     String upload(@NotNull InputStream file, @NotNull String fileName);
+
+    /**
+     * 分片上传初始化
+     *
+     * @param fileName 文件名
+     * @return 初始化成功后的uploadId
+     */
+    String initiateMultipartUpload(@NotNull String fileName);
+
+    /**
+     * 分片上传初始化(带OSS客户端参数，需要手动关闭)
+     *
+     * @param fileName 文件名
+     * @return 初始化成功后的uploadId和OSS客户端
+     */
+    Map<String, Object> initiateMultipartUploadAndOss(@NotNull String fileName);
+
+    /**
+     * 分片上传
+     *
+     * @param partFile   上传文件流
+     * @param fileName   上传文件名
+     * @param partSize   分片大小(单位：Byte)
+     * @param partNumber 分片序号（从1开始）
+     * @param uploadId   分片上传ID
+     * @return 上传成功后的url
+     */
+    PartETag uploadPart(@NotNull InputStream partFile, @NotNull String fileName,
+                        @NotNull Long partSize, @NotNull Integer partNumber,
+                        @NotNull String uploadId);
+
+    /**
+     * 分片上传(带OSS客户端参数，需要手动关闭)
+     *
+     * @param partFile   上传文件流
+     * @param fileName   上传文件名
+     * @param partSize   分片大小(单位：Byte)
+     * @param partNumber 分片序号（从1开始）
+     * @param uploadId   分片上传ID
+     * @param client     OSS客户端
+     * @return 上传成功后的url
+     */
+    PartETag uploadPart(@NotNull InputStream partFile, @NotNull String fileName,
+                        @NotNull Long partSize, @NotNull Integer partNumber,
+                        @NotNull String uploadId, @NotNull OSS client);
+
+    /**
+     * 合并分片上传
+     *
+     * @param fileName  文件名
+     * @param uploadId  分片上传ID
+     * @param partEtags 分片上传ETags
+     */
+    void completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull List<PartETag> partEtags);
+
+    /**
+     * 合并分片上传(带OSS客户端参数，在此处关闭)
+     *
+     * @param fileName  文件名
+     * @param uploadId  分片上传ID
+     * @param partEtags 分片上传ETags
+     * @param client    OSS客户端
+     */
+    void completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull List<PartETag> partEtags, @NotNull OSS client);
 
     /**
      * 生成以GET方法访问的签名URL

@@ -13,9 +13,7 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
-import com.aliyun.oss.model.DeleteObjectsRequest;
-import com.aliyun.oss.model.ObjectMetadata;
-import com.aliyun.oss.model.PutObjectRequest;
+import com.aliyun.oss.model.*;
 import com.tamako.allapi.api.AliOSSApi;
 import com.tamako.allapi.configuration.AliProperties;
 import com.tamako.allapi.exception.AllApiException;
@@ -24,9 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 阿里云OSS接口实现
@@ -40,12 +36,27 @@ public class AliOSSImpl implements AliOSSApi {
      */
     private static final Log log = LogFactory.get();
 
+
+    /**
+     * 上传ID常量
+     */
+    public static final String UPLOAD_ID = "uploadId";
+
+    /**
+     * OSS客户端常量
+     */
+    public static final String OSS_CLIENT = "ossClient";
+
     /**
      * 阿里云OSS配置
      */
-
     private final AliProperties aliProperties;
 
+    /**
+     * 构造方法
+     *
+     * @param aliProperties 阿里云OSS配置
+     */
     public AliOSSImpl(AliProperties aliProperties) {
         this.aliProperties = aliProperties;
     }
@@ -105,6 +116,147 @@ public class AliOSSImpl implements AliOSSApi {
     @Override
     public String upload(@NotNull InputStream file, @NotNull String fileName) {
         return this.upload(file, fileName, false, false, null);
+    }
+
+    /**
+     * 分片上传初始化
+     *
+     * @param fileName 文件名
+     * @return 初始化成功后的uploadId
+     */
+    @Override
+    public String initiateMultipartUpload(@NotNull String fileName) {
+        String bucketName = aliProperties.getOss().getBucketName();
+        OSS client = this.initClient();
+        try {
+            InitiateMultipartUploadRequest request = new InitiateMultipartUploadRequest(bucketName, fileName);
+            ObjectMetadata metadata = new ObjectMetadata();
+            request.setObjectMetadata(metadata);
+            InitiateMultipartUploadResult upResult = client.initiateMultipartUpload(request);
+            return upResult.getUploadId();
+        } catch (OSSException | ClientException oe) {
+            log.error("分片上传初始化失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
+        } finally {
+            this.closeClient(client);
+        }
+    }
+
+    /**
+     * 分片上传初始化(带OSS客户端参数，需要手动关闭)
+     *
+     * @param fileName 文件名
+     * @return 初始化成功后的uploadId和OSS客户端
+     */
+    @Override
+    public Map<String, Object> initiateMultipartUploadAndOss(@NotNull String fileName) {
+        String bucketName = aliProperties.getOss().getBucketName();
+        OSS client = this.initClient();
+        Map<String, Object> result = new HashMap<>();
+        result.put(OSS_CLIENT, client);
+        try {
+            InitiateMultipartUploadRequest request = new InitiateMultipartUploadRequest(bucketName, fileName);
+            ObjectMetadata metadata = new ObjectMetadata();
+            request.setObjectMetadata(metadata);
+            InitiateMultipartUploadResult upResult = client.initiateMultipartUpload(request);
+            result.put(UPLOAD_ID, upResult.getUploadId());
+            return result;
+        } catch (OSSException | ClientException oe) {
+            log.error("分片上传初始化失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
+        }
+    }
+
+    /**
+     * 分片上传
+     *
+     * @param partFile   上传文件流
+     * @param fileName   上传文件名
+     * @param partSize   分片大小(单位：Byte)
+     * @param partNumber 分片序号（从1开始）
+     * @param uploadId   分片上传ID
+     * @return 上传成功后的url
+     */
+    @Override
+    public PartETag uploadPart(@NotNull InputStream partFile, @NotNull String fileName,
+                               @NotNull Long partSize, @NotNull Integer partNumber,
+                               @NotNull String uploadId) {
+        OSS client = this.initClient();
+        try {
+            return uploadPart(partFile, fileName, partSize, partNumber, uploadId, client);
+        } catch (OSSException | ClientException oe) {
+            log.error("分片上传失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
+        } finally {
+            this.closeClient(client);
+        }
+    }
+
+    /**
+     * 分片上传(带OSS客户端参数，需要手动关闭)
+     *
+     * @param partFile   上传文件流
+     * @param fileName   上传文件名
+     * @param partSize   分片大小(单位：Byte)
+     * @param partNumber 分片序号（从1开始）
+     * @param uploadId   分片上传ID
+     * @param client     OSS客户端
+     * @return 上传成功后的url
+     */
+    @Override
+    public PartETag uploadPart(@NotNull InputStream partFile, @NotNull String fileName,
+                               @NotNull Long partSize, @NotNull Integer partNumber,
+                               @NotNull String uploadId, @NotNull OSS client) {
+        try {
+            String bucketName = aliProperties.getOss().getBucketName();
+            UploadPartRequest uploadPartRequest = new UploadPartRequest();
+            uploadPartRequest.setBucketName(bucketName);
+            uploadPartRequest.setKey(fileName);
+            uploadPartRequest.setUploadId(uploadId);
+            uploadPartRequest.setInputStream(partFile);
+            uploadPartRequest.setPartSize(partSize);
+            uploadPartRequest.setPartNumber(partNumber);
+            UploadPartResult uploadPartResult = client.uploadPart(uploadPartRequest);
+            return uploadPartResult.getPartETag();
+        } catch (OSSException | ClientException oe) {
+            log.error("分片上传失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
+        }
+    }
+
+    /**
+     * 合并分片上传
+     *
+     * @param fileName  文件名
+     * @param uploadId  分片上传ID
+     * @param partEtags 分片上传ETags
+     */
+    @Override
+    public void completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull List<PartETag> partEtags) {
+        OSS client = this.initClient();
+        completeMultipartUpload(fileName, uploadId, partEtags, client);
+    }
+
+    /**
+     * 合并分片上传(带OSS客户端参数，在此处关闭)
+     *
+     * @param fileName  文件名
+     * @param uploadId  分片上传ID
+     * @param partEtags 分片上传ETags
+     * @param client    OSS客户端
+     */
+    @Override
+    public void completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull List<PartETag> partEtags, @NotNull OSS client) {
+        try {
+            CompleteMultipartUploadRequest completeMultipartUploadRequest =
+                    new CompleteMultipartUploadRequest(aliProperties.getOss().getBucketName(), fileName, uploadId, partEtags);
+            client.completeMultipartUpload(completeMultipartUploadRequest);
+        } catch (OSSException | ClientException oe) {
+            log.error("合并分片上传失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, oe);
+        } finally {
+            this.closeClient(client);
+        }
     }
 
     /**
