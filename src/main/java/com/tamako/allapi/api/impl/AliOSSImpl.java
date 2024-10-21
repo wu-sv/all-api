@@ -260,6 +260,26 @@ public class AliOSSImpl implements AliOSSApi {
     }
 
     /**
+     * 取消分片上传
+     *
+     * @param fileName 文件名
+     * @param uploadId 分片上传ID
+     */
+    @Override
+    public void abortMultipartUpload(@NotNull String fileName, @NotNull String uploadId) {
+        OSS client = this.initClient();
+        try {
+            AbortMultipartUploadRequest abortMultipartUploadRequest =
+                    new AbortMultipartUploadRequest(aliProperties.getOss().getBucketName(), fileName, uploadId);
+            client.abortMultipartUpload(abortMultipartUploadRequest);
+        } catch (OSSException | ClientException oe) {
+            log.error("取消分片上传失败", oe);
+        } finally {
+            this.closeClient(client);
+        }
+    }
+
+    /**
      * 生成以GET方法访问的签名URL
      *
      * @param fileName   文件名

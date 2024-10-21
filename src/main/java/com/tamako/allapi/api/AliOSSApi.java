@@ -119,6 +119,14 @@ public interface AliOSSApi {
     void completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull List<PartETag> partEtags, @NotNull OSS client);
 
     /**
+     * 取消分片上传
+     *
+     * @param fileName 文件名
+     * @param uploadId 分片上传ID
+     */
+    void abortMultipartUpload(@NotNull String fileName, @NotNull String uploadId);
+
+    /**
      * 生成以GET方法访问的签名URL
      *
      * @param fileName   文件名
