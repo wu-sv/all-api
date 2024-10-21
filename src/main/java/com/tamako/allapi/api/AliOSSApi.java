@@ -102,21 +102,25 @@ public interface AliOSSApi {
     /**
      * 合并分片上传
      *
-     * @param fileName  文件名
-     * @param uploadId  分片上传ID
-     * @param partEtags 分片上传ETags
+     * @param fileName        文件名
+     * @param uploadId        分片上传ID
+     * @param readPermissions 读权限(true:私有读,false:公共读)
+     * @param expiration      过期时间(时间要在当前时间之后)
+     * @return 合并成功后的url
      */
-    void completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull List<PartETag> partEtags);
+    String completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull Boolean readPermissions, @NotNull Date expiration);
 
     /**
      * 合并分片上传(带OSS客户端参数，在此处关闭)
      *
-     * @param fileName  文件名
-     * @param uploadId  分片上传ID
-     * @param partEtags 分片上传ETags
-     * @param client    OSS客户端
+     * @param fileName        文件名
+     * @param uploadId        分片上传ID
+     * @param client          OSS客户端
+     * @param readPermissions 读权限(true:私有读,false:公共读)
+     * @param expiration      过期时间(时间要在当前时间之后)
+     * @return 合并成功后的url
      */
-    void completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull List<PartETag> partEtags, @NotNull OSS client);
+    String completeMultipartUpload(@NotNull String fileName, @NotNull String uploadId, @NotNull Boolean readPermissions, @NotNull Date expiration, @NotNull OSS client);
 
     /**
      * 取消分片上传
