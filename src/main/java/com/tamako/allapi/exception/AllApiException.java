@@ -12,32 +12,36 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public  class AllApiException extends RuntimeException {
+public class AllApiException extends RuntimeException {
     private PlatformEnum platformEnum;
     private String code;
     private String msg;
 
     public AllApiException(PlatformEnum platformEnum, String code, String msg) {
+        super(msg);
         this.platformEnum = platformEnum;
         this.code = code;
         this.msg = msg;
     }
 
-    public AllApiException(PlatformEnum platformEnum, Throwable cause) {
-        super(cause);
+    public AllApiException(PlatformEnum platformEnum, String msg, Throwable cause) {
+        super(platformEnum.getName() + "接口调用:" + msg, cause);
         this.platformEnum = platformEnum;
+        this.msg = msg;
     }
 
     public AllApiException(PlatformEnum platformEnum, String msg) {
+        super(msg);
         this.platformEnum = platformEnum;
         this.msg = msg;
     }
 
     public AllApiException(Throwable cause) {
-        super(cause);
+        super("调用接口失败", cause);
     }
 
     public AllApiException(String msg) {
+        super(msg);
         this.msg = msg;
     }
 

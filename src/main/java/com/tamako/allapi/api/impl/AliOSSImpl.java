@@ -78,7 +78,7 @@ public class AliOSSImpl implements AliOSSApi {
             return this.upload(client, file, fileName, forbidOverwrite, readPermissions, expiration);
         } catch (OSSException | ClientException oe) {
             log.error("上传失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "上传失败", oe);
         } finally {
             this.closeClient(client);
         }
@@ -140,7 +140,7 @@ public class AliOSSImpl implements AliOSSApi {
             return upResult.getUploadId();
         } catch (OSSException | ClientException oe) {
             log.error("分片上传初始化失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "分片上传初始化失败", oe);
         } finally {
             this.closeClient(client);
         }
@@ -167,7 +167,7 @@ public class AliOSSImpl implements AliOSSApi {
             return result;
         } catch (OSSException | ClientException oe) {
             log.error("分片上传初始化失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "分片上传初始化失败", oe);
         }
     }
 
@@ -190,7 +190,7 @@ public class AliOSSImpl implements AliOSSApi {
             return uploadPart(partFile, fileName, partSize, partNumber, uploadId, client);
         } catch (OSSException | ClientException oe) {
             log.error("分片上传失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "分片上传失败", oe);
         } finally {
             this.closeClient(client);
         }
@@ -224,7 +224,7 @@ public class AliOSSImpl implements AliOSSApi {
             return uploadPartResult.getPartETag();
         } catch (OSSException | ClientException oe) {
             log.error("分片上传失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "分片上传失败", oe);
         }
     }
 
@@ -261,13 +261,13 @@ public class AliOSSImpl implements AliOSSApi {
             CompleteMultipartUploadRequest completeMultipartUploadRequest =
                     new CompleteMultipartUploadRequest(aliProperties.getOss().getBucketName(), fileName, uploadId, null);
             Map<String, String> headers = new HashMap<>();
-            headers.put("x-oss-complete-all","yes");
+            headers.put("x-oss-complete-all", "yes");
             completeMultipartUploadRequest.setHeaders(headers);
             client.completeMultipartUpload(completeMultipartUploadRequest);
             return this.getUrl(client, fileName, readPermissions, expiration);
         } catch (OSSException | ClientException oe) {
             log.error("合并分片上传失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "合并分片上传失败", oe);
         } finally {
             this.closeClient(client);
         }
@@ -289,6 +289,7 @@ public class AliOSSImpl implements AliOSSApi {
             client.abortMultipartUpload(abortMultipartUploadRequest);
         } catch (OSSException | ClientException oe) {
             log.error("取消分片上传失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, "取消分片上传失败", oe);
         } finally {
             this.closeClient(client);
         }
@@ -314,7 +315,7 @@ public class AliOSSImpl implements AliOSSApi {
             return this.decode(url.toString());
         } catch (OSSException | ClientException oe) {
             log.error("生成签名URL失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "生成签名URL失败", oe);
         } finally {
             this.closeClient(client);
         }
@@ -336,15 +337,16 @@ public class AliOSSImpl implements AliOSSApi {
             fileNames.forEach(fileName -> {
                 boolean exists = this.exists(client, fileName);
                 if (!exists) {
-                    throw new AllApiException("文件不存在");
+                    urls.add("文件不存在");
+                } else {
+                    String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
+                    urls.add(this.decode(url));
                 }
-                String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
-                urls.add(this.decode(url));
             });
             return urls;
         } catch (OSSException | ClientException oe) {
             log.error("生成签名URL失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "生成签名URL失败", oe);
         } finally {
             this.closeClient(client);
         }
@@ -366,7 +368,7 @@ public class AliOSSImpl implements AliOSSApi {
             client.deleteObject(aliProperties.getOss().getBucketName(), fileName);
         } catch (OSSException | ClientException oe) {
             log.error("删除文件失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "删除文件失败", oe);
         } finally {
             this.closeClient(client);
         }
@@ -385,7 +387,7 @@ public class AliOSSImpl implements AliOSSApi {
             client.deleteObjects(new DeleteObjectsRequest(aliProperties.getOss().getBucketName()).withKeys(fileNameList).withEncodingType("url"));
         } catch (OSSException | ClientException oe) {
             log.error("批量删除文件失败", oe);
-            throw new AllApiException(PlatformEnum.ALI, oe);
+            throw new AllApiException(PlatformEnum.ALI, "批量删除文件失败", oe);
         } finally {
             this.closeClient(client);
         }

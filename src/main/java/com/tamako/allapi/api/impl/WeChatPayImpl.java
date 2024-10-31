@@ -114,7 +114,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             }
         } catch (Exception e) {
             log.error("微信支付接口调用失败", e);
-            throw new AllApiException(PlatformEnum.WX, e);
+            throw new AllApiException(PlatformEnum.WX, "微信支付接口调用失败", e);
         }
     }
 
@@ -153,7 +153,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             return JSONUtil.toBean(plainText, MiniAppPayNotifyVo.class);
         } catch (Exception e) {
             log.error("微信支付通知接口调用失败", e);
-            throw new AllApiException(PlatformEnum.WX, e);
+            throw new AllApiException(PlatformEnum.WX, "微信支付通知接口调用失败", e);
         }
     }
 
@@ -188,12 +188,12 @@ public class WeChatPayImpl implements WeChatPayApi {
                 return JSONUtil.toBean(response.getBody(), MiniAppPayNotifyVo.class);
             } else {
                 log.error("微信商户号查询订单失败,状态码：{}, 响应信息：{}", response.getStatus(), response.getBody());
-                throw new AllApiException(PlatformEnum.WX,String.valueOf(response.getStatus()), response.getBody());
+                throw new AllApiException(PlatformEnum.WX, String.valueOf(response.getStatus()), response.getBody());
             }
 
         } catch (Exception e) {
             log.error("微信商户号查询订单失败", e);
-            throw new AllApiException(PlatformEnum.WX, e);
+            throw new AllApiException(PlatformEnum.WX, "微信商户号查询订单失败", e);
         }
     }
 
@@ -288,7 +288,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             }
         } catch (Exception e) {
             log.error("获取证书失败", e);
-            throw new AllApiException(PlatformEnum.WX, e);
+            throw new AllApiException(PlatformEnum.WX, "获取证书失败", e);
         }
     }
 
@@ -321,7 +321,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             writer.write(publicKey);
         } catch (Exception e) {
             log.error("保存平台证书失败", e);
-            throw new AllApiException(PlatformEnum.WX, e);
+            throw new AllApiException(PlatformEnum.WX, "保存平台证书失败", e);
         }
 
     }
