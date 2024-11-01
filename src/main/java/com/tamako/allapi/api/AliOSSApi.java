@@ -149,6 +149,16 @@ public interface AliOSSApi {
     List<String> generatePresignedUrl(@NotNull List<String> fileNames, @NotNull Date expiration);
 
     /**
+     * 生成以GET方法访问的签名URLs
+     *
+     * @param fileNames  文件名
+     * @param notExistFileName 不存在的文件名(替换)
+     * @param expiration 过期时间
+     * @return 签名URLs
+     */
+    List<String> generatePresignedUrl(@NotNull List<String> fileNames, String notExistFileName, @NotNull Date expiration);
+
+    /**
      * 删除文件或目录（如果要删除目录，目录必须为空）
      *
      * @param fileName 文件名

@@ -330,6 +330,19 @@ public class AliOSSImpl implements AliOSSApi {
      */
     @Override
     public List<String> generatePresignedUrl(@NotNull List<String> fileNames, @NotNull Date expiration) {
+        return this.generatePresignedUrl(fileNames, null, expiration);
+    }
+
+    /**
+     * 生成以GET方法访问的签名URLs
+     *
+     * @param fileNames        文件名
+     * @param notExistFileName 不存在的文件名(替换)
+     * @param expiration       过期时间
+     * @return 签名URLs
+     */
+    @Override
+    public List<String> generatePresignedUrl(@NotNull List<String> fileNames, String notExistFileName, @NotNull Date expiration) {
         this.formatCheckAndConvert(fileNames);
         OSS client = this.initClient();
         try {
@@ -337,7 +350,11 @@ public class AliOSSImpl implements AliOSSApi {
             fileNames.forEach(fileName -> {
                 boolean exists = this.exists(client, fileName);
                 if (!exists) {
-                    urls.add("文件不存在");
+                    if (StrUtil.isBlank(notExistFileName)) {
+                        urls.add("文件不存在");
+                    } else {
+                        urls.add(notExistFileName);
+                    }
                 } else {
                     String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
                     urls.add(this.decode(url));
