@@ -30,7 +30,7 @@ import com.tamako.allapi.api.WeChatPayApi;
 import com.tamako.allapi.configuration.WechatProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
-import com.tamako.allapi.utils.NetWorkUtil;
+import com.tamako.allapi.utils.NetWorkToWeChatUtil;
 import com.tamako.allapi.wechat.model.wxpay.dto.MiniAppPayOrderDto;
 import com.tamako.allapi.wechat.model.wxpay.vo.MiniAppPayNotifyVo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -133,7 +133,7 @@ public class WeChatPayImpl implements WeChatPayApi {
             String nonce = request.getHeader("Wechatpay-Nonce");
             String serialNo = request.getHeader("Wechatpay-Serial");
             String signature = request.getHeader("Wechatpay-Signature");
-            String result = NetWorkUtil.readData(request);
+            String result = NetWorkToWeChatUtil.readData(request);
             // 通过证书序列号查找对应的证书，verifyNotify 中有验证证书的序列号
             String plainText = WxPayKit.verifyNotify(serialNo, result, signature, nonce, timestamp,
                     wechatProperties.getPay().getMchKey(), wechatProperties.getPay().getPlatformPath());

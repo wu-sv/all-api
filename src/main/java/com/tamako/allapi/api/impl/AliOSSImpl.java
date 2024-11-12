@@ -330,7 +330,20 @@ public class AliOSSImpl implements AliOSSApi {
      */
     @Override
     public List<String> generatePresignedUrl(@NotNull List<String> fileNames, @NotNull Date expiration) {
-        return this.generatePresignedUrl(fileNames, null, expiration);
+        return this.generatePresignedUrl(fileNames, null, expiration, true);
+    }
+
+    /**
+     * 生成以GET方法访问的签名URLs
+     *
+     * @param fileNames   文件名
+     * @param expiration  过期时间
+     * @param checkExists 是否检查文件是否存在
+     * @return 签名URLs
+     */
+    @Override
+    public List<String> generatePresignedUrl(@NotNull List<String> fileNames, @NotNull Date expiration, @NotNull Boolean checkExists) {
+        return this.generatePresignedUrl(fileNames, null, expiration, checkExists);
     }
 
     /**
@@ -339,21 +352,27 @@ public class AliOSSImpl implements AliOSSApi {
      * @param fileNames        文件名
      * @param notExistFileName 不存在的文件名(替换)
      * @param expiration       过期时间
+     * @param checkExists      是否检查文件是否存在
      * @return 签名URLs
      */
     @Override
-    public List<String> generatePresignedUrl(@NotNull List<String> fileNames, String notExistFileName, @NotNull Date expiration) {
-        this.formatCheckAndConvert(fileNames);
+    public List<String> generatePresignedUrl(@NotNull List<String> fileNames, String notExistFileName, @NotNull Date expiration, @NotNull Boolean checkExists) {
         OSS client = this.initClient();
         try {
             List<String> urls = new ArrayList<>();
             fileNames.forEach(fileName -> {
-                boolean exists = this.exists(client, fileName);
-                if (!exists) {
-                    if (StrUtil.isBlank(notExistFileName)) {
-                        urls.add("文件不存在");
+                this.formatCheckAndConvert(fileName);
+                if (checkExists) {
+                    boolean exists = this.exists(client, fileName);
+                    if (!exists) {
+                        if (StrUtil.isBlank(notExistFileName)) {
+                            urls.add("文件不存在");
+                        } else {
+                            urls.add(notExistFileName);
+                        }
                     } else {
-                        urls.add(notExistFileName);
+                        String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
+                        urls.add(this.decode(url));
                     }
                 } else {
                     String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();

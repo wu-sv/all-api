@@ -6,17 +6,28 @@
 
 所有的实现的接口都在`com.tamako.allapi.api`目录中可以直接查看，目前编写了微信小程序服务器端常用的接口，微信支付（小程序端），阿里云的OSS，短信服务等接口，后续会陆续增加更多的接口。
 
+已提供的接口：
+
+- 微信小程序
+- 阿里云OSS
+- 阿里云SMS
+- 阿里云FC
+- 火山引擎RTC
+
 在启动类中添加注解以启用
 
 ```java
+
 @SpringBootApplication
 @EnableAllAPI
-public class AllApiTestApplication{}
+public class AllApiTestApplication {
+}
 ```
 
 在这里需要说明微信支付平台证书路径只需要填一个路径加文件名就好，不用管这个文件是否存在，该项目会自动生成该文件。其他文件则需要自行到官网进行获取：
 
 ### 相关网页
+
 ApiDoc：[https://apidoc.gitee.com/Tamako520/all-api/](https://apidoc.gitee.com/Tamako520/all-api/)
 
 Gitee：[https://gitee.com/Tamako520/all-api](https://gitee.com/Tamako520/all-api)
@@ -28,10 +39,11 @@ GitHub：[https://github.com/wu-sv/all-api](https://github.com/wu-sv/all-api)
 1.在`pom.xml`中导入依赖
 
 ```xml
+
 <dependency>
-	<groupId>io.gitee.tamako520</groupId>
-	<artifactId>all-api</artifactId>
-	<version>1.1.6.7</version>
+    <groupId>io.gitee.tamako520</groupId>
+    <artifactId>all-api</artifactId>
+    <version>1.2.0</version>
 </dependency>
 ```
 
@@ -58,11 +70,14 @@ ali:
   access-key-id: <accessKeyId>
   access-key-secret: <accessKeySecret>
   oss:
-    endpoint: <endpoint>  
+    endpoint: <endpoint>
     bucket-name: <bucketName>
   sms:
     sign-name: <signName>
     template-code: <templateCode>
+  fc:
+    # 阿里云函数计算服务名称(oss文件打压缩)
+    zipOssUrl: <zipOssUrl>
 ```
 
 3.在启动类中添加注解`@EnableAllAPI`
@@ -129,4 +144,6 @@ public class TestController {
 [阿里短信服务参考文档](https://help.aliyun.com/zh/sms)
 
 [阿里OSS参考文档](https://help.aliyun.com/zh/oss/)
+
+[火山引擎RTC参考文档](https://www.volcengine.com/docs/6348)
 

@@ -1,6 +1,3 @@
-/**
- * 工具包
- */
 package com.tamako.allapi.utils;
 
 
@@ -10,27 +7,20 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.tamako.allapi.exception.AllApiException;
-import com.tamako.allapi.exception.PlatformEnum;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Map;
 
 import static cn.hutool.http.HttpRequest.get;
 import static cn.hutool.http.HttpRequest.post;
 
 /**
- * 网络请求工具，封装了hutool的网络请求
- *
  * @author Tamako
+ * @since 2024/11/12 15:03
  */
 @Slf4j
 public class NetWorkUtil {
-
-
     /**
      * 同步GET请求
      *
@@ -71,7 +61,6 @@ public class NetWorkUtil {
         return handleBytesResponse(request);
     }
 
-
     /**
      * 同步POST请求
      *
@@ -95,39 +84,6 @@ public class NetWorkUtil {
         return postSync(url, null, body);
     }
 
-    /**
-     * 读取请求体数据
-     *
-     * @param request HttpServletRequest
-     * @return String
-     */
-    public static String readData(HttpServletRequest request) {
-        BufferedReader br = null;
-        try {
-            StringBuilder result = new StringBuilder();
-
-            String line;
-            for (br = request.getReader(); (line = br.readLine()) != null; result.append(line)) {
-                if (!result.isEmpty()) {
-                    result.append("\n");
-                }
-            }
-            line = result.toString();
-            return line;
-        } catch (IOException var12) {
-            log.error(var12.getMessage(), var12);
-            throw new AllApiException(var12);
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException var11) {
-                    log.error("close BufferedReader error", var11);
-                }
-            }
-
-        }
-    }
 
     /**
      * 处理响应数据
@@ -135,17 +91,14 @@ public class NetWorkUtil {
      * @param request Request
      * @return JSONObject
      */
-    private static JSONObject handleResponse(HttpRequest request) {
+    public static JSONObject handleResponse(HttpRequest request) {
         try (HttpResponse response = request.execute()) {
             String body = response.body();
             if (response.body() == null) {
                 log.error("response body is null,please check your request");
                 throw new AllApiException("response body is null");
             }
-            JSONObject obj = JSONUtil.parseObj(body);
-            //处理微信的错误码
-            checkErrorCode(obj);
-            return obj;
+            return JSONUtil.parseObj(body);
         } catch (AllApiException e) {
             throw e;
         } catch (Exception e) {
@@ -160,17 +113,12 @@ public class NetWorkUtil {
      * @param request Request
      * @return byte[]
      */
-    private static byte[] handleBytesResponse(HttpRequest request) {
+    public static byte[] handleBytesResponse(HttpRequest request) {
         try (HttpResponse response = request.execute()) {
             byte[] bytes = response.bodyBytes();
             if (bytes == null) {
                 log.error("response body is null,pleas check your request");
                 throw new AllApiException("response body is null");
-            }
-            //判断是报错还是正常返回
-            if (bytes.length <= 200) {
-                JSONObject jsonObj = JSONUtil.parseObj(new String(bytes));
-                checkErrorCode(jsonObj);
             }
             return bytes;
         } catch (AllApiException e) {
@@ -179,19 +127,4 @@ public class NetWorkUtil {
             throw new AllApiException(e);
         }
     }
-
-    /**
-     * 检查微信返回的错误码
-     *
-     * @param jsonObject JSONObject
-     */
-    private static void checkErrorCode(JSONObject jsonObject) {
-        Integer errcode = jsonObject.getInt("errcode");
-        if (errcode != null && errcode != 0) {
-            String errmsg = jsonObject.getStr("errmsg");
-            log.error("接口调用微信返回失败，失败状态码：{}，失败原因：{}", errcode, errmsg);
-            throw new AllApiException(PlatformEnum.WX, errcode.toString(), errmsg);
-        }
-    }
-
 }

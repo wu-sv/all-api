@@ -40,6 +40,12 @@ public class AliProperties {
     private AliSMS sms;
 
     /**
+     * 阿里云 FC 配置
+     */
+    @NestedConfigurationProperty
+    private AliFC fc;
+
+    /**
      * 阿里云 OSS 配置
      */
     @Data
@@ -67,6 +73,17 @@ public class AliProperties {
          * 阿里云 SMS 短信模板
          */
         private String templateCode;
+    }
+
+    /**
+     * 阿里云 FC 配置
+     */
+    @Data
+    public static class AliFC {
+        /**
+         * 阿里云 FC压缩oss文件的url
+         */
+        private String zipOssUrl;
     }
 
 }

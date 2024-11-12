@@ -1,6 +1,7 @@
 package com.tamako.allapi.exception;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -10,14 +11,12 @@ import lombok.Getter;
  * @since 2024/10/8 09:42
  */
 @Getter
+@AllArgsConstructor
 public enum PlatformEnum {
     WX("微信"),
-    ALI("阿里云");
+    ALI("阿里云"),
+    VOLC_ENGINE("火山引擎");
 
     private final String name;
-
-    PlatformEnum(String name) {
-        this.name = name;
-    }
 
 }
