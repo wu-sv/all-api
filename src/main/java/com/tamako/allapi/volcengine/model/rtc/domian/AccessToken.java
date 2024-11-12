@@ -23,7 +23,6 @@ import java.util.TreeMap;
  * @since 2024/11/12 15:34
  */
 @Data
-@Accessors(chain = true)
 @Slf4j
 public class AccessToken {
     /**
@@ -76,7 +75,7 @@ public class AccessToken {
         this.appKey = appKey;
         this.roomId = roomId;
         this.userId = userId;
-        this.issuedAt = DateUtil.getTimestamp();
+        this.issuedAt = DateUtil.getTimestampNow();
         this.nonce = RandomUtil.randomInt();
         this.privileges = new TreeMap<>();
     }
@@ -156,7 +155,7 @@ public class AccessToken {
      * @return 是否有效
      */
     public boolean verify(String key) {
-        if (this.expireAt > 0 && DateUtil.getTimestamp() > this.expireAt) {
+        if (this.expireAt > 0 && DateUtil.getTimestampNow() > this.expireAt) {
             return false;
         }
 

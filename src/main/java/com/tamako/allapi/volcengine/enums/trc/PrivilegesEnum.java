@@ -15,6 +15,7 @@ import lombok.Getter;
 public enum PrivilegesEnum {
     PRIV_PUBLISH_STREAM(0),
 
+    //中间这三个不需要使用，因为上面的那个代表这三个的权限
     PRIV_PUBLISH_AUDIO_STREAM(1),
     PRIV_PUBLISH_VIDEO_STREAM(2),
     PRIV_PUBLISH_DATA_STREAM(3),

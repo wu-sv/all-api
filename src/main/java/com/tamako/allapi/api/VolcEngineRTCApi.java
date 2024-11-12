@@ -1,6 +1,11 @@
 package com.tamako.allapi.api;
 
 
+import com.tamako.allapi.volcengine.enums.trc.PrivilegesEnum;
+
+import java.util.Date;
+import java.util.Map;
+
 /**
  * 火山引擎实时音视频
  *
@@ -9,4 +14,5 @@ package com.tamako.allapi.api;
  */
 public interface VolcEngineRTCApi {
 
+    String getAccessToken(String userId, String roomId, Date expireTime, Map<PrivilegesEnum, Date> privileges);
 }

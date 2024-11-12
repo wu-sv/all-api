@@ -10,7 +10,15 @@ import org.springframework.context.annotation.Import;
  * @since 2024/8/30 14:44
  */
 @Configuration
-@EnableConfigurationProperties({WechatProperties.class, AliProperties.class})
-@Import({WechatConfiguration.class, AliConfiguration.class})
+@EnableConfigurationProperties({
+        WechatProperties.class,
+        AliProperties.class,
+        VolcEngineProperties.class
+})
+@Import({
+        WechatConfiguration.class,
+        AliConfiguration.class,
+        VolcEngineConfiguration.class
+})
 public class APIConfiguration {
 }
