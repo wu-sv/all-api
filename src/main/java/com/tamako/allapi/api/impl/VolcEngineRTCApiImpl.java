@@ -28,6 +28,7 @@ public class VolcEngineRTCApiImpl implements VolcEngineRTCApi {
      */
     private final VolcEngineProperties volcEngineProperties;
 
+
     /**
      * 构造方法
      *
@@ -38,7 +39,7 @@ public class VolcEngineRTCApiImpl implements VolcEngineRTCApi {
     }
 
     /**
-     * 获取AccessToken
+     * 获取进入房间的AccessToken
      *
      * @param userId     用户Id
      * @param roomId     房间Id(支持通配符“*”)

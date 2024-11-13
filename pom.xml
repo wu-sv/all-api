@@ -124,8 +124,6 @@
             <version>${AliSMS.version}</version>
         </dependency>
 
-
-
         <!--=====================provided====================-->
         <dependency>
             <groupId>com.google.code.gson</groupId>

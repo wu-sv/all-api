@@ -22,7 +22,7 @@ import java.util.Map;
  * @author Tamako
  */
 @Slf4j
-public class NetWorkToWeChatUtil extends NetWorkUtil {
+public class NetWork2WeChatUtil extends NetWorkUtil {
 
 
     /**

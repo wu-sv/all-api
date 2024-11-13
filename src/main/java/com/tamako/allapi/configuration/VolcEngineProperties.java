@@ -16,6 +16,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class VolcEngineProperties {
     /**
+     * 用户秘钥id
+     */
+    private String accessKeyId;
+    /**
+     * 用户秘钥
+     */
+    private String secretAccessKey;
+    /**
      * RTC 配置
      */
     @NestedConfigurationProperty

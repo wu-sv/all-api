@@ -21,6 +21,7 @@ import static cn.hutool.http.HttpRequest.post;
  */
 @Slf4j
 public class NetWorkUtil {
+
     /**
      * 同步GET请求
      *
@@ -28,7 +29,18 @@ public class NetWorkUtil {
      * @return JSONObject
      */
     public static JSONObject getSync(String url) {
-        HttpRequest request = get(url);
+        return getSync(url, null);
+    }
+
+    /**
+     * 同步GET请求
+     *
+     * @param url     请求地址
+     * @param headers 请求头
+     * @return JSONObject
+     */
+    public static JSONObject getSync(String url, Map<String, String> headers) {
+        HttpRequest request = get(url).addHeaders(headers);
         return handleResponse(request);
     }
 
