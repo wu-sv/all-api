@@ -1,6 +1,9 @@
 package com.tamako.allapi.configuration;
 
+import com.tamako.allapi.api.VolcEngineRTCApi;
+import com.tamako.allapi.api.impl.VolcEngineRTCImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -10,4 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(VolcEngineProperties.class)
 public class VolcEngineConfiguration {
+    @Bean
+    public VolcEngineRTCApi volcEngineRtcApi(VolcEngineProperties properties) {
+        return new VolcEngineRTCImpl(properties);
+    }
 }

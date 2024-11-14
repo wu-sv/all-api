@@ -11,11 +11,14 @@ import cn.hutool.json.JSONUtil;
 import com.tamako.allapi.configuration.VolcEngineProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * 火山引擎网络工具类
@@ -23,6 +26,7 @@ import java.util.Map;
  * @author Tamako
  * @since 2024/11/13 09:04
  */
+@Slf4j
 public class NetWork2VolcEngineUtil extends NetWorkUtil {
 
     /**
@@ -32,7 +36,7 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
      * @param properties 火山引擎配置
      * @return JSONObject
      */
-    public static JSONObject get(String url, VolcEngineProperties properties) {
+    public static JSONObject get(@NotNull String url, @NotNull VolcEngineProperties properties) {
         try {
             Map<String, String> headers = publicHeaders(url, new HashMap<>(), null, Method.GET, properties);
             return NetWorkUtil.getSync(url, headers);
@@ -50,13 +54,25 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
      * @param properties 火山引擎配置
      * @return JSONObject
      */
-    public static JSONObject post(String url, Map<String, String> headers, JSONObject body, VolcEngineProperties properties) {
+    public static JSONObject post(@NotNull String url, Map<String, String> headers, @NotNull JSONObject body, @NotNull VolcEngineProperties properties) {
         try {
-            publicHeaders(url, headers, body, Method.GET, properties);
-            return NetWorkUtil.getSync(url, headers);
+            headers = publicHeaders(url, headers, body, Method.POST, properties);
+            return NetWorkUtil.postSync(url, headers, body);
         } catch (Exception e) {
             throw new AllApiException(PlatformEnum.VOLC_ENGINE, "网络请求失败", e);
         }
+    }
+
+    /**
+     * 同步POST请求
+     *
+     * @param url        请求地址
+     * @param body       请求体
+     * @param properties 火山引擎配置
+     * @return JSONObject
+     */
+    public static JSONObject post(@NotNull String url, @NotNull JSONObject body, @NotNull VolcEngineProperties properties) {
+        return post(url, null, body, properties);
     }
 
     /**
@@ -68,11 +84,11 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
      * @param properties 火山引擎配置
      * @return 公共参数请求头
      */
-    public static Map<String, String> publicHeaders(String url, Map<String, String> headers, JSONObject body, Method method, VolcEngineProperties properties) throws NoSuchAlgorithmException, InvalidKeyException {
+    private static Map<String, String> publicHeaders(String url, Map<String, String> headers, JSONObject body, Method method, VolcEngineProperties properties) throws NoSuchAlgorithmException, InvalidKeyException {
         headers = headers == null ? new HashMap<>() : headers;
         headers.put("Host", URLUtil.getHostWithoutProtocol(url));
         headers.put("Content-Type", "application/json");
-        headers.put("X-Date", DateTime.now().toString("yyyyMMdd'T'HHmmss'Z'"));
+        headers.put("X-Date", DateTime.now().setTimeZone(TimeZone.getTimeZone("UTC")).toString("yyyyMMdd'T'HHmmss'Z'"));
         String bodyJsonStr = "";
         if (ObjUtil.isNotNull(body)) {
             bodyJsonStr = JSONUtil.toJsonStr(body);
@@ -93,7 +109,7 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
      * @param properties 火山引擎配置
      * @return 签名
      */
-    public static String authorization(String url, Method method, Map<String, String> headers, VolcEngineProperties properties) throws NoSuchAlgorithmException, InvalidKeyException {
+    private static String authorization(String url, Method method, Map<String, String> headers, VolcEngineProperties properties) throws NoSuchAlgorithmException, InvalidKeyException {
         //CanonicalRequest = HTTPRequestMethod + '\n' + CanonicalURI + '\n' + CanonicalQueryString + '\n' + CanonicalHeaders + '\n' + SignedHeaders + '\n' + HexEncode(Hash(RequestPayload))
         String canonicalQueryString = URLUtil.getQuery(url);
         //1.构建规范的请求
@@ -121,11 +137,10 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
         byte[] kRegion = HmacUtil.hmacSign(kDate, region);
         byte[] kService = HmacUtil.hmacSign(kRegion, service);
         byte[] signingKey = HmacUtil.hmacSign(kService, "request");
-
         String signature = HmacUtil.hmacSign2Hex(signingKey, stringToSign);
         Map<String, String> authorizationMap = new HashMap<>();
         authorizationMap.put("Credential", accessKeyId + "/" + credentialScope);
-        authorizationMap.put("SignedHeaders", signedHeaders);
+        authorizationMap.put("SignedHeaders", signedHeaders.substring(signedHeaders.indexOf("\n\n") + 2));
         authorizationMap.put("Signature", signature);
         return "HMAC-SHA256 " + StrUtil.join(", ", authorizationMap.entrySet());
     }
@@ -137,14 +152,25 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
      * @param headers 请求头
      * @return 规范格式的请求头
      */
-    public static String convertHeaders(Map<String, String> headers) {
+    private static String convertHeaders(Map<String, String> headers) {
         StringBuilder canonicalHeaders = new StringBuilder();
         StringBuilder signedHeaders = new StringBuilder();
         for (Map.Entry<String, String> entry : headers.entrySet()) {
-            canonicalHeaders.append(entry.getKey()).append(":").append(entry.getValue()).append("\n");
-            signedHeaders.append(entry.getKey()).append(";");
+            String key = entry.getKey().toLowerCase();
+            canonicalHeaders.append(key).append(":").append(entry.getValue()).append("\n");
+            signedHeaders.append(key).append(";");
         }
         return canonicalHeaders + "\n" +
                 signedHeaders.deleteCharAt(signedHeaders.length() - 1);
+    }
+
+    private static String loweCase(String str) {
+        char firstChar = str.charAt(0);
+        if (firstChar >= 'A' && firstChar <= 'Z') {
+            char[] chars = str.toCharArray();
+            chars[0] += 32;
+            return new String(chars);
+        }
+        return str;
     }
 }

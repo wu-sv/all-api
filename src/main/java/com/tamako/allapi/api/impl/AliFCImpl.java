@@ -14,7 +14,7 @@ import java.util.List;
  * @author Tamako
  * @since 2024/11/12 14:50
  */
-public class AliFCApiImpl implements AliFCApi {
+public class AliFCImpl implements AliFCApi {
     /**
      * 日志
      */
@@ -30,7 +30,7 @@ public class AliFCApiImpl implements AliFCApi {
      *
      * @param aliProperties 阿里云OSS配置
      */
-    public AliFCApiImpl(AliProperties aliProperties) {
+    public AliFCImpl(AliProperties aliProperties) {
         this.aliProperties = aliProperties;
     }
 
