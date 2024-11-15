@@ -56,9 +56,13 @@ public class WeChatPayImpl implements WeChatPayApi {
     /**
      * 微信配置
      */
-
     private final WechatProperties wechatProperties;
 
+    /**
+     * 构造方法
+     *
+     * @param wechatProperties 微信配置
+     */
     public WeChatPayImpl(WechatProperties wechatProperties) {
         this.wechatProperties = wechatProperties;
     }

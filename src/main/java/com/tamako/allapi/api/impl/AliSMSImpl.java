@@ -35,9 +35,13 @@ public class AliSMSImpl implements AliSMSApi {
     /**
      * 阿里云短信配置
      */
-
     private final AliProperties aliProperties;
 
+    /**
+     * 构造方法
+     *
+     * @param aliProperties 阿里云短信配置
+     */
     public AliSMSImpl(AliProperties aliProperties) {
         this.aliProperties = aliProperties;
     }

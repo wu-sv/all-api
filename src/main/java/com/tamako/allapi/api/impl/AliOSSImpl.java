@@ -84,6 +84,19 @@ public class AliOSSImpl implements AliOSSApi {
         }
     }
 
+    /**
+     * 简单上传(带OSS客户端参数，需要手动关闭)
+     *
+     * @param client          OssClient对象
+     * @param file            上传文件流
+     * @param fileName        上传文件名
+     * @param forbidOverwrite 是否禁止覆盖(false:不禁止,true:禁止)
+     * @param readPermissions 读权限(true:私有读,false:公共读)
+     * @param expiration      过期时间(时间要在当前时间之后)
+     * @return 上传成功后的url
+     * @throws OSSException    OSS异常
+     * @throws ClientException 客户端异常
+     */
     @Override
     public String upload(@NotNull OSS client, @NotNull InputStream file, @NotNull String fileName, @NotNull Boolean forbidOverwrite, @NotNull Boolean readPermissions, Date expiration) throws OSSException, ClientException {
         fileName = this.formatCheckAndConvert(fileName);
@@ -95,6 +108,15 @@ public class AliOSSImpl implements AliOSSApi {
         return getUrl(client, fileName, readPermissions, expiration);
     }
 
+    /**
+     * 格式检查并转换文件名
+     *
+     * @param client          OSS客户端
+     * @param fileName        文件名
+     * @param readPermissions 读权限(true:私有读,false:公共读)
+     * @param expiration      过期时间(时间要在当前时间之后)
+     * @return 格式化后的文件名
+     */
     private @NotNull String getUrl(@NotNull OSS client, @NotNull String fileName, @NotNull Boolean readPermissions, Date expiration) {
         String url;
         if (!readPermissions) {

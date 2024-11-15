@@ -2,10 +2,10 @@ package com.tamako.allapi.volcengine.model.rtc.dto.startrecord;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Tamako
@@ -13,14 +13,13 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class StartRecordDto {
-    /**
-     * 音视频应用的唯一标志,不用设置
-     */
-    private String appId;
+//    /**
+//     * 音视频应用的唯一标志,不用设置
+//     */
+//    private String appId;
     /**
      * 业务标识
      */
@@ -28,6 +27,7 @@ public class StartRecordDto {
     /**
      * 房间的 ID，是房间的唯一标志
      */
+    @NotNull
     private String roomId;
     /**
      * 云端录制任务 ID。你必须对每个云端录制任务设定 TaskId，且在后续进行任务更新和结束时也须使用该 TaskId。
@@ -37,6 +37,7 @@ public class StartRecordDto {
      * 关于 TaskId 及以上 Id 字段的命名规则符合正则表达式：[a-zA-Z0-9_@\-\.]{1,128}
      * 若任务运行中，使用相同的 TaskId 重复调用开始接口不会导致请求失败，BaseResponse.Result 会提示 The task has been started. Please do not call the startup task interface repeatedly。
      */
+    @NotNull
     private String taskId;
     /**
      * 录制模式。支持取值及含义如下：
@@ -46,7 +47,7 @@ public class StartRecordDto {
      * <p>
      * 默认值为 0。
      */
-    private String recordMode;
+    private Integer recordMode;
     /**
      * 需要录制的音视频流。如果参数为空，默认录制房间内所有发布的音视频流，最多 17 路流。
      * 此参数中的 stream 不得和 ExcludeStreams 中重复，若重复会报错InvalidParameter。
@@ -104,5 +105,6 @@ public class StartRecordDto {
      * 腾讯云 COS
      * 七牛云 Kodo。
      */
+    @NotNull
     private StorageConfig storageConfig;
 }

@@ -79,6 +79,12 @@ public class GetUnlimitedQRCodeDto {
         private String b;
     }
 
+    /**
+     * 构造方法
+     *
+     * @param scene 最大32个可见字符，只支持数字，大小写英文以及部分特殊字符
+     *              其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlEncode 处理，请使用其他编码方式）
+     */
     public GetUnlimitedQRCodeDto(@NotNull String scene) {
         this.scene = scene;
     }

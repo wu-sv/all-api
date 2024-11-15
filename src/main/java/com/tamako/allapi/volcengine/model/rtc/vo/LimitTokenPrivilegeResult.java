@@ -12,5 +12,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class LimitTokenPrivilegeResult extends BaseResult {
+    /**
+     * 请求成功时返回 “Success"，失败时为空
+     */
+    private String message;
+    /**
+     * Token 权限限制结束时间，Unix 时间，单位为秒
+     */
     private Long endTime;
 }

@@ -79,10 +79,13 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
      * 构造公共参数请求头
      *
      * @param url        请求地址
+     * @param headers    请求头
      * @param body       请求体
      * @param method     请求方法
      * @param properties 火山引擎配置
      * @return 公共参数请求头
+     * @throws NoSuchAlgorithmException 签名异常
+     * @throws InvalidKeyException      签名异常
      */
     private static Map<String, String> publicHeaders(String url, Map<String, String> headers, JSONObject body, Method method, VolcEngineProperties properties) throws NoSuchAlgorithmException, InvalidKeyException {
         headers = headers == null ? new HashMap<>() : headers;
@@ -108,6 +111,8 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
      * @param headers    请求头
      * @param properties 火山引擎配置
      * @return 签名
+     * @throws NoSuchAlgorithmException 签名异常
+     * @throws InvalidKeyException      签名异常
      */
     private static String authorization(String url, Method method, Map<String, String> headers, VolcEngineProperties properties) throws NoSuchAlgorithmException, InvalidKeyException {
         //CanonicalRequest = HTTPRequestMethod + '\n' + CanonicalURI + '\n' + CanonicalQueryString + '\n' + CanonicalHeaders + '\n' + SignedHeaders + '\n' + HexEncode(Hash(RequestPayload))
@@ -164,6 +169,11 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
                 signedHeaders.deleteCharAt(signedHeaders.length() - 1);
     }
 
+    /**
+     * 将首字母小写
+     * @param str 字符串
+     * @return 首字母小写的字符串
+     */
     private static String loweCase(String str) {
         char firstChar = str.charAt(0);
         if (firstChar >= 'A' && firstChar <= 'Z') {

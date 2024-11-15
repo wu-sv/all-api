@@ -3,11 +3,16 @@ package com.tamako.allapi.api;
 
 import cn.hutool.core.date.DateTime;
 import com.tamako.allapi.volcengine.enums.trc.PrivilegesEnum;
+import com.tamako.allapi.volcengine.model.rtc.domian.Event;
 import com.tamako.allapi.volcengine.model.rtc.dto.*;
+import com.tamako.allapi.volcengine.model.rtc.dto.startrecord.StartRecordDto;
+import com.tamako.allapi.volcengine.model.rtc.dto.startrecord.StartRecordMergeStreamDto;
+import com.tamako.allapi.volcengine.model.rtc.dto.startrecord.StartRecordSingleStreamDto;
 import com.tamako.allapi.volcengine.model.rtc.vo.BaseResult;
 import com.tamako.allapi.volcengine.model.rtc.vo.GetRoomOnlineUsersResult;
 import com.tamako.allapi.volcengine.model.rtc.vo.LimitTokenPrivilegeResult;
 import com.tamako.allapi.volcengine.model.rtc.vo.ResponseVo;
+import com.tamako.allapi.volcengine.model.rtc.vo.getrecordtask.GetRecordTaskResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
@@ -51,7 +56,7 @@ public interface VolcEngineRTCApi {
     ResponseVo<BaseResult> unbanUserStream(UnbanUserStreamDto dto);
 
     /**
-     * 封禁房间&用户
+     * 封禁房间或者用户
      * 解散房间或移除指定用户
      *
      * @param dto 请求参数
@@ -60,7 +65,7 @@ public interface VolcEngineRTCApi {
     ResponseVo<BaseResult> banRoomUser(@NotNull BanRoomUserDto dto);
 
     /**
-     * 更新房间&用户封禁规则
+     * 更新房间或者用户封禁规则
      * 对已封禁的房间或用户进行规则调整
      *
      * @param dto 请求参数
@@ -79,6 +84,7 @@ public interface VolcEngineRTCApi {
 
     /**
      * 限制 Token 发布权限
+     * 对特定用户设定发布权限的限制(一般为直播时使用)
      *
      * @param dto 请求参数
      * @return 响应结果
@@ -87,6 +93,9 @@ public interface VolcEngineRTCApi {
 
     /**
      * 移出用户
+     * 特定用户从房间中移出
+     * 被移出的用户会收到 -1006 错误通知
+     * 如果被移出用户为可见用户，房间中其他用户将收到 onUserLeave 回调
      *
      * @param dto 请求参数
      * @return 响应结果
@@ -95,11 +104,76 @@ public interface VolcEngineRTCApi {
 
     /**
      * 解散房间
+     * 解散指定的房间
+     * 房间内所有用户会收到 -1011 错误通知
      *
      * @param roomId 房间Id
      * @return 响应结果
      */
     ResponseVo<BaseResult> dismissRoom(String roomId);
 
+    /**
+     * 开始云端录制
+     * 此接口实现云端录制功能，支持单流或合流录制模式
+     *
+     * @param dto 请求参数
+     * @return 响应结果
+     */
+    ResponseVo<String> startRecord(StartRecordDto dto);
 
+    /**
+     * 开始云端录制(单流录制)
+     * 此接口实现云端录制功能，仅支持单流录制模式
+     *
+     * @param dto 请求参数
+     * @return 响应结果
+     */
+    ResponseVo<String> startRecordSingleStream(StartRecordSingleStreamDto dto);
+
+    /**
+     * 开始云端录制(合流录制)
+     * 此接口实现云端录制功能，仅支持合流录制模式
+     *
+     * @param dto 请求参数
+     * @return 响应结果
+     */
+    ResponseVo<String> startRecordMergeStream(StartRecordMergeStreamDto dto);
+
+    /**
+     * 更新云端录制
+     * 对已设定的云端录制任务进行调整
+     *
+     * @param dto 请求参数
+     * @return 响应结果
+     */
+    ResponseVo<BaseResult> updateRecord(UpdateRecordDto dto);
+
+    /**
+     * 结束云端录制
+     * 终止正在进行的云端录制任务
+     *
+     * @param dto 请求参数
+     * @return 响应结果
+     */
+    ResponseVo<String> stopRecord(StopRecordDto dto);
+
+    /**
+     * 查询录制任务状态
+     * 获取特定录制任务的详细信息
+     * 此接口适用于查询 72 小时内启动的录制任务，且将返回最新创建的任务信息
+     *
+     * @param dto 请求参数
+     * @return 响应结果
+     */
+    ResponseVo<GetRecordTaskResult> getRecordTask(GetRecordTaskDto dto);
+
+    /**
+     * 回调检验签名
+     * RTC 会为服务端回调签名。如果你希望确定来源是否是火山以及内容是否被篡改，
+     * 你可以检验回调签名；否则，你可以忽略回调签名。
+     *
+     * @param event 事件数据
+     * @return 是否通过
+     */
+    Boolean checkCallBackData(Event event);
 }

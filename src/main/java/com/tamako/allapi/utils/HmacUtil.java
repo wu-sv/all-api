@@ -21,6 +21,8 @@ public class HmacUtil {
      * @param keyString 密钥
      * @param msg       待加密消息
      * @return 加密后的消息
+     * @throws InvalidKeyException      密钥无效异常
+     * @throws NoSuchAlgorithmException 加密算法不存在异常
      */
     public static byte[] hmacSign(String keyString, byte[] msg) throws InvalidKeyException, NoSuchAlgorithmException {
         SecretKeySpec keySpec = new SecretKeySpec(keyString.getBytes(), "HmacSHA256");
@@ -29,6 +31,15 @@ public class HmacUtil {
         return mac.doFinal(msg);
     }
 
+    /**
+     * HMAC加密(hmac-sha256)
+     *
+     * @param keyString 密钥
+     * @param msg       待加密消息
+     * @return 加密后的消息
+     * @throws InvalidKeyException      密钥无效异常
+     * @throws NoSuchAlgorithmException 加密算法不存在异常
+     */
     public static byte[] hmacSign(byte[] keyString, String msg) throws InvalidKeyException, NoSuchAlgorithmException {
         SecretKeySpec keySpec = new SecretKeySpec(keyString, "HmacSHA256");
         Mac mac = Mac.getInstance("HmacSHA256");
@@ -42,6 +53,8 @@ public class HmacUtil {
      * @param keyString 密钥
      * @param msg       待加密消息
      * @return 加密后的消息
+     * @throws InvalidKeyException      密钥无效异常
+     * @throws NoSuchAlgorithmException 加密算法不存在异常
      */
     public static String hmacSign2Hex(byte[] keyString, String msg) throws InvalidKeyException, NoSuchAlgorithmException {
         return HexUtil.encodeHexStr(hmacSign(keyString, msg));

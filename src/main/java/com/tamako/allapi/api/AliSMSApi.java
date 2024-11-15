@@ -14,6 +14,7 @@ public interface AliSMSApi {
      * 发送短信验证码
      *
      * @param phone 手机号
+     * @param code  验证码
      */
     void sendSms(@NotNull String phone, @NotNull String code);
 

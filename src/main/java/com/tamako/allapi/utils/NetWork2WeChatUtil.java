@@ -127,6 +127,7 @@ public class NetWork2WeChatUtil extends NetWorkUtil {
      * 检查微信返回的错误码
      *
      * @param jsonObject JSONObject
+     * @return JSONObject
      */
     private static JSONObject checkErrorCode(JSONObject jsonObject) {
         Integer errcode = jsonObject.getInt("errcode");

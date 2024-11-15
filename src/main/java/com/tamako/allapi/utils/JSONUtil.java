@@ -40,6 +40,14 @@ public class JSONUtil extends cn.hutool.json.JSONUtil {
         return toBean(json, beanClass);
     }
 
+    /**
+     * 将JSON字符串转换为指定类型的对象，键值对的键转换为小写
+     *
+     * @param json          JSON字符串
+     * @param typeReference 目标对象类型
+     * @param <T>           目标对象类型
+     * @return 目标对象
+     */
     public static <T> T toBeanLowerCase(JSONObject json, TypeReference<T> typeReference) {
         JSONObject lowerKeys = toLowerKeys(json);
         return toBean(lowerKeys, typeReference, true);
@@ -49,6 +57,7 @@ public class JSONUtil extends cn.hutool.json.JSONUtil {
      * 将JSON对象中的键值对的键转换为小写
      *
      * @param json JSON对象
+     * @return 转换后的JSON对象
      */
     private static JSONObject toLowerKeys(JSONObject json) {
         // 遍历所有的键值对

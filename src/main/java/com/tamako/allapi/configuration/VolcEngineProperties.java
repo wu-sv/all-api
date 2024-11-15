@@ -29,6 +29,9 @@ public class VolcEngineProperties {
     @NestedConfigurationProperty
     private VolcEngineRTC rtc;
 
+    /**
+     * RTC 配置类
+     */
     @Data
     public static class VolcEngineRTC {
         /**
@@ -39,6 +42,10 @@ public class VolcEngineProperties {
          * RTC 应用密钥
          */
         private String appKey;
+        /**
+         * RTC回调秘钥
+         */
+        private String callbackSecretKey;
     }
 
 }

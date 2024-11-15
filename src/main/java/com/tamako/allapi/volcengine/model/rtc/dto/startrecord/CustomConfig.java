@@ -2,7 +2,6 @@ package com.tamako.allapi.volcengine.model.rtc.dto.startrecord;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -15,7 +14,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomConfig {
@@ -32,7 +30,8 @@ public class CustomConfig {
      */
     private Integer vendor;
     /**
-     * 不同存储平台支持的 Region 不同，具体参看 Region对照表
+     * 不同存储平台支持的 Region 不同，具体参看
+     * <a href="https://www.volcengine.com/docs/6348/1167931#region">Region对照表</a>
      * 默认值为0。
      */
     private Integer region;

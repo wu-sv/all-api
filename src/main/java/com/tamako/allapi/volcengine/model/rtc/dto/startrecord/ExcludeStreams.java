@@ -2,7 +2,6 @@ package com.tamako.allapi.volcengine.model.rtc.dto.startrecord;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -11,12 +10,12 @@ import java.util.List;
 
 /**
  * 音视频流录制黑名单
+ *
  * @author Tamako
  * @since 2024/11/14 16:04
  */
 @Data
 @Accessors(chain = true)
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExcludeStreams {

@@ -46,6 +46,11 @@ public class WechatMiniAppImpl implements WechatMiniAppApi {
 
     private final WechatProperties wechatProperties;
 
+    /**
+     * 构造方法
+     *
+     * @param wechatProperties 微信配置
+     */
     public WechatMiniAppImpl(WechatProperties wechatProperties) {
         this.wechatProperties = wechatProperties;
     }

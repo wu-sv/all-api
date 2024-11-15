@@ -26,7 +26,8 @@ public enum OrderDetailJumpLinkTypeEnum {
 
     /**
      * 构造方法
-     * @param code
+     *
+     * @param code code
      */
     OrderDetailJumpLinkTypeEnum(Integer code) {
         this.code = code;

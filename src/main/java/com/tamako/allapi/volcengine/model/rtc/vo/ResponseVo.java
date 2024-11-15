@@ -10,11 +10,19 @@ import lombok.Data;
  * @since 2024/11/14 09:21
  */
 @Data
-public class ResponseVo<T extends BaseResult> {
+public class ResponseVo<T> {
+    /**
+     * 响应元数据
+     */
     private ResponseMetadata responseMetadata;
-
+    /**
+     * 响应结果
+     */
     private T result;
 
+    /**
+     * 响应元数据
+     */
     @Data
     public static class ResponseMetadata {
         /**
@@ -46,10 +54,22 @@ public class ResponseVo<T extends BaseResult> {
         private ErrorInfo error;
     }
 
+    /**
+     * 仅在请求失败时返回
+     */
     @Data
     public static class ErrorInfo {
+        /**
+         * codeN
+         */
         private Long codeN;
+        /**
+         * code
+         */
         private String code;
+        /**
+         * message
+         */
         private String message;
     }
 

@@ -51,6 +51,7 @@ public interface AliOSSApi {
      *
      * @param file     上传文件流
      * @param fileName 上传文件名
+     * @return 上传成功后的url
      */
     String upload(@NotNull InputStream file, @NotNull String fileName);
 
@@ -143,8 +144,8 @@ public interface AliOSSApi {
     /**
      * 生成以GET方法访问的签名URLs
      *
-     * @param fileNames   文件名
-     * @param expiration  过期时间
+     * @param fileNames  文件名
+     * @param expiration 过期时间
      * @return 签名URLs
      */
     List<String> generatePresignedUrl(@NotNull List<String> fileNames, @NotNull Date expiration);

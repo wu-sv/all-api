@@ -24,6 +24,9 @@ public class URLUtil extends cn.hutool.core.util.URLUtil {
 
     /**
      * 获取url的query并编码
+     *
+     * @param url url
+     * @return query
      */
     public static String getQuery(String url) {
         return url.substring(url.indexOf("?") + 1);

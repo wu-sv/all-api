@@ -7,26 +7,20 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * BanRoomUserDto
- *
  * @author Tamako
- * @since 2024/11/14 14:38
+ * @since 2024/11/15 11:20
  */
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class BanRoomUserDto {
+public class GetRecordTaskDto {
     /**
-     * 房间ID
+     * 房间的 ID，是房间的唯一标志
      */
     private String roomId;
     /**
-     * 用户ID
+     * 要查询的云端录制任务 ID。
      */
-    private String userId;
-    /**
-     * 封禁时长，单位：秒
-     */
-    private String forbiddenInterval;
+    private String taskId;
 }
