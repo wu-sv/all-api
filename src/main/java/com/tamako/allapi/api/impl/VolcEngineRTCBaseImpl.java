@@ -44,6 +44,14 @@ public class VolcEngineRTCBaseImpl {
         return JSONUtil.toBeanLowerCase(reqBody, typeReference);
     }
 
+    /**
+     * post请求，返回String结果
+     *
+     * @param url        请求地址
+     * @param body       请求体
+     * @param properties 配置信息
+     * @return 响应结果
+     */
     protected ResponseVo<String> post2String(String url, Object body, VolcEngineProperties properties) {
         JSONObject reqBody = NetWork2VolcEngineUtil.post(url, this.addAppId(body, properties), properties);
         TypeReference<ResponseVo<String>> typeReference = new TypeReference<>() {
