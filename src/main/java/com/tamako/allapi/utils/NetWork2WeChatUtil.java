@@ -133,7 +133,7 @@ public class NetWork2WeChatUtil extends NetWorkUtil {
         Integer errcode = jsonObject.getInt("errcode");
         if (errcode != null && errcode != 0) {
             String errmsg = jsonObject.getStr("errmsg");
-            log.error("接口调用微信返回失败，失败状态码：{}，失败原因：{}", errcode, errmsg);
+            log.warn("接口调用微信返回失败，失败状态码：{}，失败原因：{}", errcode, errmsg);
             throw new AllApiException(PlatformEnum.WX, errcode.toString(), errmsg);
         }
         return jsonObject;

@@ -49,6 +49,8 @@ GitHub：[https://github.com/wu-sv/all-api](https://github.com/wu-sv/all-api)
 
 2.在`application.yml`文件中添加配置
 
+该处的配置并不需要全部填写，只需要按需填写即可，也就是说需要哪些功能就填那些参数
+
 ```yaml
 wechat:
   app-id: <appId>
@@ -78,6 +80,12 @@ ali:
   fc:
     # 阿里云函数计算服务名称(oss文件打压缩)
     zipOssUrl: <zipOssUrl>
+volc-engine:
+  access-key-id: <accessKeyId>
+  secret-access-key: <secretAccessKey>
+  rtc:
+    app-id: <appId>
+    app-key: <appKey>
 ```
 
 3.在启动类中添加注解`@EnableAllAPI`
