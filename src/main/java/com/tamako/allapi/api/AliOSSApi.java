@@ -8,6 +8,7 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.PartETag;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
@@ -140,6 +141,28 @@ public interface AliOSSApi {
      */
     String generatePresignedUrl(@NotNull String fileName, @NotNull Date expiration);
 
+    /**
+     * 生成以GET方法访问的签名URL
+     *
+     * @param client           OSS客户端
+     * @param fileName         文件名
+     * @param notExistFileName 不存在的文件名(替换)
+     * @param expiration       过期时间
+     * @param checkExists      是否检查文件是否存在
+     * @return 签名URL
+     */
+    String generatePresignedUrl(@NotNull OSS client, @NotNull String fileName, String notExistFileName, @NotNull Date expiration, @NotNull Boolean checkExists);
+
+    /**
+     * 生成以GET方法访问的签名URL
+     *
+     * @param fileName         文件名
+     * @param notExistFileName 不存在的文件名(替换)
+     * @param expiration       过期时间
+     * @param checkExists      是否检查文件是否存在
+     * @return 签名URL
+     */
+    String generatePresignedUrl(@NotNull String fileName, String notExistFileName, @NotNull Date expiration, @NotNull Boolean checkExists);
 
     /**
      * 生成以GET方法访问的签名URLs
@@ -184,4 +207,20 @@ public interface AliOSSApi {
      * @param fileNameList 文件名列表
      */
     void delete(List<String> fileNameList);
+
+    /**
+     * 流式下载文件
+     *
+     * @param fileName 文件名
+     * @return 文件字节数组
+     */
+    byte[] download2Bytes(String fileName);
+
+    /**
+     * 下载到本地文件
+     *
+     * @param fileName 文件名
+     * @param file     本地文件
+     */
+    void download2File(String fileName, File file);
 }

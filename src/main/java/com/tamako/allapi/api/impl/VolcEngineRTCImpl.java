@@ -218,7 +218,8 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
                 .setMaxIdleTime(dto.getMaxIdleTime())
                 .setEnableSyncUpload(dto.getEnableSyncUpload());
         FileNameConfig fileNameConfig = new FileNameConfig()
-                .setPrefix(dto.getPrefix());
+                .setPrefix(dto.getPrefix())
+                .setPattern(dto.getPattern());
         StartRecordDto startRecordDto = new StartRecordDto()
                 .setBusinessId(dto.getBusinessId())
                 .setRoomId(dto.getRoomId())
@@ -247,7 +248,8 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
                 .setMaxIdleTime(dto.getMaxIdleTime())
                 .setEnableSyncUpload(dto.getEnableSyncUpload());
         FileNameConfig fileNameConfig = new FileNameConfig()
-                .setPrefix(dto.getPrefix());
+                .setPrefix(dto.getPrefix())
+                .setPattern(dto.getPattern());
         StartRecordDto startRecordDto = new StartRecordDto()
                 .setBusinessId(dto.getBusinessId())
                 .setRoomId(dto.getRoomId())

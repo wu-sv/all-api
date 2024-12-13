@@ -20,6 +20,9 @@ import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
@@ -344,6 +347,53 @@ public class AliOSSImpl implements AliOSSApi {
     }
 
     /**
+     * 生成以GET方法访问的签名URL
+     *
+     * @param client           OSS客户端
+     * @param fileName         文件名
+     * @param notExistFileName 不存在的文件名(替换)
+     * @param expiration       过期时间
+     * @param checkExists      是否检查文件是否存在
+     * @return 签名URL
+     */
+    @Override
+    public String generatePresignedUrl(@NotNull OSS client, @NotNull String fileName, String notExistFileName, @NotNull Date expiration, @NotNull Boolean checkExists) {
+        fileName = this.formatCheckAndConvert(fileName);
+        if (checkExists) {
+            boolean exists = this.exists(client, fileName);
+            if (!exists) {
+                if (StrUtil.isBlank(notExistFileName)) {
+                    return "文件不存在";
+                } else {
+                    return notExistFileName;
+                }
+            } else {
+                String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
+                return this.decode(url);
+            }
+        } else {
+            String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
+            return this.decode(url);
+        }
+    }
+
+    /**
+     * 生成以GET方法访问的签名URL
+     *
+     * @param fileName         文件名
+     * @param notExistFileName 不存在的文件名(替换)
+     * @param expiration       过期时间
+     * @param checkExists      是否检查文件是否存在
+     * @return 签名URL
+     */
+    @Override
+    public String generatePresignedUrl(@NotNull String fileName, String notExistFileName, @NotNull Date expiration, @NotNull Boolean checkExists) {
+        OSS client = this.initClient();
+        return this.generatePresignedUrl(client, fileName, notExistFileName, expiration, checkExists);
+    }
+
+
+    /**
      * 生成以GET方法访问的签名URLs
      *
      * @param fileNames  文件名
@@ -383,23 +433,7 @@ public class AliOSSImpl implements AliOSSApi {
         try {
             List<String> urls = new ArrayList<>();
             fileNames.forEach(fileName -> {
-                this.formatCheckAndConvert(fileName);
-                if (checkExists) {
-                    boolean exists = this.exists(client, fileName);
-                    if (!exists) {
-                        if (StrUtil.isBlank(notExistFileName)) {
-                            urls.add("文件不存在");
-                        } else {
-                            urls.add(notExistFileName);
-                        }
-                    } else {
-                        String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
-                        urls.add(this.decode(url));
-                    }
-                } else {
-                    String url = client.generatePresignedUrl(aliProperties.getOss().getBucketName(), fileName, expiration).toString();
-                    urls.add(this.decode(url));
-                }
+                urls.add(this.generatePresignedUrl(client, fileName, notExistFileName, expiration, checkExists));
             });
             return urls;
         } catch (OSSException | ClientException oe) {
@@ -446,6 +480,57 @@ public class AliOSSImpl implements AliOSSApi {
         } catch (OSSException | ClientException oe) {
             log.error("批量删除文件失败", oe);
             throw new AllApiException(PlatformEnum.ALI, "批量删除文件失败", oe);
+        } finally {
+            this.closeClient(client);
+        }
+    }
+
+    /**
+     * 流式下载文件
+     *
+     * @param fileName 文件名
+     * @return 文件字节数组
+     */
+    @Override
+    public byte[] download2Bytes(String fileName) {
+        fileName = formatCheckAndConvert(fileName);
+        OSS client = this.initClient();
+        try {
+            OSSObject ossObject = client.getObject(aliProperties.getOss().getBucketName(), fileName);
+            InputStream inputStream = ossObject.getObjectContent();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            // 读取文件内容到字节数组。
+            byte[] readBuffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(readBuffer)) != -1) {
+                byteArrayOutputStream.write(readBuffer, 0, bytesRead);
+            }
+            // 获取最终的字节数组。
+            return byteArrayOutputStream.toByteArray();
+        } catch (OSSException | ClientException | IOException oe) {
+            log.error("流式下载文件失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, "流式下载文件失败", oe);
+        } finally {
+            this.closeClient(client);
+        }
+    }
+
+    /**
+     * 下载到本地文件
+     *
+     * @param fileName 文件名
+     * @param file     本地文件
+     */
+    @Override
+    public void download2File(String fileName, File file) {
+        fileName = formatCheckAndConvert(fileName);
+        OSS client = this.initClient();
+        try {
+            GetObjectRequest getObjectRequest = new GetObjectRequest(aliProperties.getOss().getBucketName(), fileName);
+            client.getObject(getObjectRequest, file);
+        } catch (OSSException | ClientException oe) {
+            log.error("下载到本地文件失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, "下载到本地文件失败", oe);
         } finally {
             this.closeClient(client);
         }

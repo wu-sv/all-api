@@ -97,6 +97,12 @@ public class StartRecordSingleStreamDto {
      */
     private String[] prefix;
     /**
+     * 自定义录制文件名模式，具体参看自定义录制文件名。
+     * 如果你设置了 Pattern，需自行保证最终文件名的唯一性，否则在 TOS 或第三方存储平台上同名文件将被覆盖;
+     * 你也可以给对应 bucket 开启版本控制，允许文件名重复，防止被覆盖的情况发生。
+     */
+    private String pattern;
+    /**
      * 录制文件的存储平台配置。
      * <p>
      * 支持：
