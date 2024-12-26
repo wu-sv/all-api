@@ -5,7 +5,7 @@
 
     <groupId>io.gitee.tamako520</groupId>
     <artifactId>all-api</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <name>all-api</name>
     <description>Facilitate rapid development，Secondary encapsulation of the api like weChat,ali and so on</description>
     <url>https://gitee.com/Tamako520/all-api</url>
@@ -42,12 +42,12 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <bcprov.version>1.78.1</bcprov.version>
+        <bcprov.version>1.79</bcprov.version>
         <IJPay.version>2.9.11</IJPay.version>
         <AliOSS.version>3.18.1</AliOSS.version>
-        <AliSMS.version>3.0.0</AliSMS.version>
+        <AliSMS.version>3.0.1</AliSMS.version>
         <AliAuth.version>0.2.12-beta</AliAuth.version>
-        <hutool.version>5.8.32</hutool.version>
+        <hutool.version>5.8.34</hutool.version>
 
     </properties>
 
@@ -65,7 +65,7 @@
             </dependency>
             <dependency>
                 <groupId>com.github.javen205</groupId>
-                <artifactId>IJPay</artifactId>
+                <artifactId>IJPay-All</artifactId>
                 <version>${IJPay.version}</version>
             </dependency>
             <dependency>
@@ -97,31 +97,26 @@
         <dependency>
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-All</artifactId>
-            <version>${IJPay.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15to18</artifactId>
-            <version>${bcprov.version}</version>
+            <artifactId>bcprov-jdk18on</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-log</artifactId>
-            <version>${hutool.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
-            <version>${AliOSS.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>alibabacloud-dysmsapi20170525</artifactId>
-            <version>${AliSMS.version}</version>
         </dependency>
 
         <!--=====================provided====================-->
@@ -171,7 +166,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
-            <version>3.3.4</version>
+            <version>3.4.1</version>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>

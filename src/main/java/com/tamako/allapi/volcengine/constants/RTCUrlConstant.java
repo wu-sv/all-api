@@ -27,7 +27,7 @@ public class RTCUrlConstant {
     /**
      * 获取实时用户列表
      */
-    public static final String GET_ROOM_ONLINE_USERS_URL = "https://rtc.volcengineapi.com?Action=GetRoomOnlineUsers&Version=2023-11-01&AppId={}&RoomId={}";
+    public static final String GET_ROOM_ONLINE_USERS_URL = "https://rtc.volcengineapi.com?Action=GetRoomOnlineUsers&AppId={}&RoomId={}&Version=2023-11-01";
     /**
      * 限制 Token 发布权限
      */

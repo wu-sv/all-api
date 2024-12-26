@@ -89,15 +89,16 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
      */
     private static Map<String, String> publicHeaders(String url, Map<String, String> headers, JSONObject body, Method method, VolcEngineProperties properties) throws NoSuchAlgorithmException, InvalidKeyException {
         headers = headers == null ? new HashMap<>() : headers;
-        headers.put("Host", URLUtil.getHostWithoutProtocol(url));
-        headers.put("Content-Type", "application/json");
-        headers.put("X-Date", DateTime.now().setTimeZone(TimeZone.getTimeZone("UTC")).toString("yyyyMMdd'T'HHmmss'Z'"));
-        String bodyJsonStr = "";
-        if (ObjUtil.isNotNull(body)) {
-            bodyJsonStr = JSONUtil.toJsonStr(body);
+        if (Method.POST.equals(method)) {
+            headers.put("Content-Type", "application/json");
         }
-        String sha256Hex = DigestUtil.sha256Hex(bodyJsonStr);
-        headers.put("X-Content-Sha256", sha256Hex);
+        headers.put("Host", URLUtil.getHostWithoutProtocol(url));
+        headers.put("X-Date", DateTime.now().setTimeZone(TimeZone.getTimeZone("UTC")).toString("yyyyMMdd'T'HHmmss'Z'"));
+        if (ObjUtil.isNotNull(body)) {
+            String bodyJsonStr = JSONUtil.toJsonStr(body);
+            String sha256Hex = DigestUtil.sha256Hex(bodyJsonStr);
+            headers.put("X-Content-Sha256", sha256Hex);
+        }
         headers.put("Authorization", authorization(url, method, headers, properties));
         return headers;
     }
@@ -122,8 +123,12 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
         String canonicalRequest = method.toString() + "\n" +
                 "/" + "\n" +
                 canonicalQueryString + "\n" +
-                signedHeaders + "\n" +
-                headers.get("X-Content-Sha256");
+                signedHeaders + "\n";
+        if (Method.POST.equals(method)) {
+            canonicalRequest += headers.get("X-Content-Sha256");
+        } else if (Method.GET.equals(method)) {
+            canonicalRequest += DigestUtil.sha256Hex("");
+        }
         //2.构建待签字符串
         //StringToSign = Algorithm + '\n' + RequestDate + '\n' + CredentialScope + '\n' + HexEncode(Hash(CanonicalRequest))
         String requestDate = headers.get("X-Date");
@@ -171,6 +176,7 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
 
     /**
      * 将首字母小写
+     *
      * @param str 字符串
      * @return 首字母小写的字符串
      */
