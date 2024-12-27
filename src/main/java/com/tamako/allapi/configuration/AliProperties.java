@@ -58,6 +58,12 @@ public class AliProperties {
          * 阿里云 OSS 访问 Bucket 名称
          */
         private String bucketName;
+
+        /**
+         * 阿里云 OSS  Bucket 所在的地域
+         * 以华东1（杭州）为例，Region填写为cn-hangzhou。
+         */
+        private String region;
     }
 
     /**

@@ -6,18 +6,17 @@ package com.tamako.allapi.api.impl;
 
 import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.URLUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.aliyun.oss.ClientException;
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.OSSException;
+import com.aliyun.oss.*;
+import com.aliyun.oss.common.auth.DefaultCredentialProvider;
+import com.aliyun.oss.common.comm.SignVersion;
 import com.aliyun.oss.model.*;
 import com.tamako.allapi.api.AliOSSApi;
 import com.tamako.allapi.configuration.AliProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
+import com.tamako.allapi.utils.URLUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
@@ -579,7 +578,17 @@ public class AliOSSImpl implements AliOSSApi {
      * @return OSS客户端
      */
     private OSS initClient() {
-        return new OSSClientBuilder().build(aliProperties.getOss().getEndpoint(), aliProperties.getAccessKeyId(), aliProperties.getAccessKeySecret());
+        ClientBuilderConfiguration clientBuilderConfiguration = new ClientBuilderConfiguration();
+        clientBuilderConfiguration.setSignatureVersion(SignVersion.V4);
+        DefaultCredentialProvider credentialProvider = new DefaultCredentialProvider(aliProperties.getAccessKeyId(), aliProperties.getAccessKeySecret());
+        String region = aliProperties.getOss().getRegion();
+        region = StrUtil.isEmpty(region) ? URLUtil.getAliOssRegion(aliProperties.getOss().getEndpoint()) : region;
+        return OSSClientBuilder.create()
+                .endpoint(aliProperties.getOss().getEndpoint())
+                .credentialsProvider(credentialProvider)
+                .clientConfiguration(clientBuilderConfiguration)
+                .region(region)
+                .build();
     }
 
     /**

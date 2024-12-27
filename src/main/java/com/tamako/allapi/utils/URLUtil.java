@@ -1,10 +1,12 @@
 package com.tamako.allapi.utils;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.tamako.allapi.exception.AllApiException;
+import com.tamako.allapi.exception.PlatformEnum;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Tamako
@@ -71,5 +73,36 @@ public class URLUtil extends cn.hutool.core.util.URLUtil {
      */
     public static String getVersion(String url) {
         return getParams(url).get("Version");
+    }
+
+    /**
+     * 获取url的各级名称
+     * 参考 0:com 1:aliyuncs 2:oss-cn-hangzhou
+     *
+     * @param url url
+     * @return 各级名称
+     */
+    public static List<String> getLevelNames(String url) {
+        String host = getHostWithoutProtocol(url);
+        String[] split = host.split("\\.");
+        List<String> levelNames = new ArrayList<>(Arrays.asList(split));
+        CollUtil.reverse(levelNames);
+        return levelNames;
+    }
+
+    /**
+     * 获取ali oss url的Region
+     *
+     * @param url url
+     * @return Region
+     */
+    //"https://oss-cn-hangzhou.aliyuncs.com"
+    public static String getAliOssRegion(String url) {
+        List<String> levelNames = getLevelNames(url);
+        if (levelNames.size() < 3) {
+            throw new AllApiException(PlatformEnum.ALI, "endpoint url is not valid ");
+        }
+        String region = levelNames.get(2);
+        return region.substring(region.indexOf("-") + 1);
     }
 }

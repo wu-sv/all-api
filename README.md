@@ -74,6 +74,7 @@ ali:
   oss:
     endpoint: <endpoint>
     bucket-name: <bucketName>
+    region: <region>
   sms:
     sign-name: <signName>
     template-code: <templateCode>
