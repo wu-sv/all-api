@@ -46,6 +46,12 @@ public class AliProperties {
     private AliFC fc;
 
     /**
+     * 阿里云 NLS 配置类
+     */
+    @NestedConfigurationProperty
+    private AliNLS nls;
+
+    /**
      * 阿里云 OSS 配置
      */
     @Data
@@ -92,4 +98,29 @@ public class AliProperties {
         private String zipOssUrl;
     }
 
+    /**
+     * 阿里云智能语音交互配置类
+     */
+    @Data
+    public static class AliNLS {
+        /**
+         * 阿里云 NLS 的应用秘钥
+         */
+        private String appKey;
+        /**
+         * 阿里云 NLS 的地域id
+         * 可选参数：cn-shanghai、cn-beijing、cn-shenzhen
+         */
+        private String regionId;
+        /**
+         * 阿里云 NLS 的端点名称
+         * 非必填参数
+         */
+        private String endpointName;
+        /**
+         * 阿里云 NLS 的域名
+         * 非必填参数
+         */
+        private String domain;
+    }
 }

@@ -174,19 +174,4 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
                 signedHeaders.deleteCharAt(signedHeaders.length() - 1);
     }
 
-    /**
-     * 将首字母小写
-     *
-     * @param str 字符串
-     * @return 首字母小写的字符串
-     */
-    private static String loweCase(String str) {
-        char firstChar = str.charAt(0);
-        if (firstChar >= 'A' && firstChar <= 'Z') {
-            char[] chars = str.toCharArray();
-            chars[0] += 32;
-            return new String(chars);
-        }
-        return str;
-    }
 }
