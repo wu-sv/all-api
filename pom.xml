@@ -5,7 +5,7 @@
 
     <groupId>io.gitee.tamako520</groupId>
     <artifactId>all-api</artifactId>
-    <version>1.2.2.1</version>
+    <version>1.2.3</version>
     <name>all-api</name>
     <description>Facilitate rapid development，Secondary encapsulation of the api like weChat,ali and so on</description>
     <url>https://gitee.com/Tamako520/all-api</url>
@@ -42,12 +42,12 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <bcprov.version>1.79</bcprov.version>
+        <bcprov.version>1.80</bcprov.version>
         <IJPay.version>2.9.11</IJPay.version>
         <AliOSS.version>3.18.1</AliOSS.version>
-        <AliSMS.version>3.0.1</AliSMS.version>
+        <AliSMS.version>3.0.2</AliSMS.version>
         <AliAuth.version>0.2.12-beta</AliAuth.version>
-        <hutool.version>5.8.34</hutool.version>
+        <hutool.version>5.8.35</hutool.version>
 
     </properties>
 
@@ -131,7 +131,7 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.17.1</version>
+            <version>1.17.2</version>
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>
@@ -140,7 +140,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.34</version>
+            <version>1.18.36</version>
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>
@@ -149,7 +149,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>24.1.0</version>
+            <version>26.0.1</version>
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>
@@ -190,7 +190,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>3.3.3</version>
+            <version>3.4.1</version>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -199,7 +199,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.11.0</version>
+            <version>5.11.4</version>
             <scope>test</scope>
         </dependency>
 

@@ -13,7 +13,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum NLSProductEnum {
+    /**
+     * 语音识别
+     */
     FILE_TRANS("nls-filetrans");
 
+    /**
+     * 产品名称
+     */
     private final String name;
 }

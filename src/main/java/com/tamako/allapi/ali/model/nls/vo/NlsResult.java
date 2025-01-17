@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2025/1/16 17:25
  */
 @Data
-public class BaseResult {
+public class NlsResult {
     /**
      * 识别任务ID。
      */
@@ -30,7 +30,19 @@ public class BaseResult {
      */
     @Alias("StatusText")
     private String statusText;
-
-
-
+    /**
+     * 识别的音频文件总时长，单位为毫秒。
+     */
+    @Alias("BizDuration")
+    private String bizDuration;
+    /**
+     * 时间戳，单位为毫秒，录音文件识别完成的时间。
+     */
+    @Alias("SolveTime")
+    private String solveTime;
+    /**
+     * 识别结果对象。
+     */
+    @Alias("Result")
+    private TransResult result;
 }

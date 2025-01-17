@@ -83,7 +83,7 @@ public class AliConfiguration {
         //适配参数
         if (StrUtil.isNotEmpty(regionId) && StrUtil.isEmpty(domain)) {
             domain = "filetrans." + regionId + ".aliyuncs.com";
-            nls.setEndpointName(domain);
+            nls.setDomain(domain);
         }
         aliProperties.setNls(nls);
 
