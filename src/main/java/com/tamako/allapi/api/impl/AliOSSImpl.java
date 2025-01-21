@@ -536,6 +536,57 @@ public class AliOSSImpl implements AliOSSApi {
     }
 
     /**
+     * 判断文件是否存在
+     *
+     * @param fileName 文件名
+     * @return true:存在,false:不存在
+     */
+    @Override
+    public Boolean exist(String fileName) {
+        OSS client = this.initClient();
+        try {
+            return this.exists(client, fileName);
+        } catch (OSSException | ClientException oe) {
+            log.error("判断文件是否存在失败", oe);
+            throw new AllApiException(PlatformEnum.ALI, "判断文件是否存在失败", oe);
+        } finally {
+            this.closeClient(client);
+        }
+    }
+
+    /**
+     * 初始化OSS客户端
+     *
+     * @return OSS客户端
+     */
+    @Override
+    public OSS initClient() {
+        ClientBuilderConfiguration clientBuilderConfiguration = new ClientBuilderConfiguration();
+        clientBuilderConfiguration.setSignatureVersion(SignVersion.V4);
+        DefaultCredentialProvider credentialProvider = new DefaultCredentialProvider(aliProperties.getAccessKeyId(), aliProperties.getAccessKeySecret());
+        String region = aliProperties.getOss().getRegion();
+        region = StrUtil.isEmpty(region) ? URLUtil.getAliOssRegion(aliProperties.getOss().getEndpoint()) : region;
+        return OSSClientBuilder.create()
+                .endpoint(aliProperties.getOss().getEndpoint())
+                .credentialsProvider(credentialProvider)
+                .clientConfiguration(clientBuilderConfiguration)
+                .region(region)
+                .build();
+    }
+
+    /**
+     * 关闭OSS客户端
+     *
+     * @param ossClient OSS客户端
+     */
+    @Override
+    public void closeClient(OSS ossClient) {
+        if (ossClient != null) {
+            ossClient.shutdown();
+        }
+    }
+
+    /**
      * 判断文件是否存在(一般配合delete方法使用)
      *
      * @param client   OSS客户端
@@ -572,35 +623,6 @@ public class AliOSSImpl implements AliOSSApi {
         fileNameList.replaceAll(this::formatCheckAndConvert);
     }
 
-    /**
-     * 初始化OSS客户端
-     *
-     * @return OSS客户端
-     */
-    private OSS initClient() {
-        ClientBuilderConfiguration clientBuilderConfiguration = new ClientBuilderConfiguration();
-        clientBuilderConfiguration.setSignatureVersion(SignVersion.V4);
-        DefaultCredentialProvider credentialProvider = new DefaultCredentialProvider(aliProperties.getAccessKeyId(), aliProperties.getAccessKeySecret());
-        String region = aliProperties.getOss().getRegion();
-        region = StrUtil.isEmpty(region) ? URLUtil.getAliOssRegion(aliProperties.getOss().getEndpoint()) : region;
-        return OSSClientBuilder.create()
-                .endpoint(aliProperties.getOss().getEndpoint())
-                .credentialsProvider(credentialProvider)
-                .clientConfiguration(clientBuilderConfiguration)
-                .region(region)
-                .build();
-    }
-
-    /**
-     * 关闭OSS客户端
-     *
-     * @param ossClient OSS客户端
-     */
-    private void closeClient(OSS ossClient) {
-        if (ossClient != null) {
-            ossClient.shutdown();
-        }
-    }
 
     /**
      * 解码URL(将unicode编码转为中文)

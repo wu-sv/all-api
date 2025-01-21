@@ -223,4 +223,26 @@ public interface AliOSSApi {
      * @param file     本地文件
      */
     void download2File(String fileName, File file);
+
+    /**
+     * 判断文件是否存在
+     *
+     * @param fileName 文件名
+     * @return true:存在,false:不存在
+     */
+    Boolean exist(String fileName);
+
+    /**
+     * 初始化OSS客户端
+     *
+     * @return OSS客户端
+     */
+    OSS initClient();
+
+    /**
+     * 关闭OSS客户端
+     *
+     * @param ossClient OSS客户端
+     */
+    void closeClient(OSS ossClient);
 }
