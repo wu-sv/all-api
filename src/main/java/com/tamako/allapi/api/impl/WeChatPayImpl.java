@@ -27,7 +27,7 @@ import com.ijpay.wxpay.model.v3.Amount;
 import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import com.tamako.allapi.api.WeChatPayApi;
-import com.tamako.allapi.configuration.WechatProperties;
+import com.tamako.allapi.configuration.properties.WechatProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
 import com.tamako.allapi.utils.NetWork2WeChatUtil;

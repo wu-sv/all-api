@@ -3,7 +3,7 @@ package com.tamako.allapi.api.impl;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.json.JSONObject;
-import com.tamako.allapi.configuration.VolcEngineProperties;
+import com.tamako.allapi.configuration.properties.VolcEngineProperties;
 import com.tamako.allapi.utils.JSONUtil;
 import com.tamako.allapi.utils.NetWork2VolcEngineUtil;
 import com.tamako.allapi.volcengine.model.rtc.vo.BaseResult;

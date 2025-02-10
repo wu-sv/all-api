@@ -11,7 +11,7 @@ import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponseBody;
 import com.tamako.allapi.api.AliSMSApi;
-import com.tamako.allapi.configuration.AliProperties;
+import com.tamako.allapi.configuration.properties.AliProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
 import darabonba.core.client.ClientOverrideConfiguration;

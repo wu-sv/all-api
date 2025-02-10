@@ -5,7 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.tamako.allapi.api.AliFCApi;
-import com.tamako.allapi.configuration.AliProperties;
+import com.tamako.allapi.configuration.properties.AliProperties;
 import com.tamako.allapi.utils.NetWorkUtil;
 
 import java.util.List;

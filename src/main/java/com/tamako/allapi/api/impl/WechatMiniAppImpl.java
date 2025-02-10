@@ -7,7 +7,7 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.tamako.allapi.api.WechatMiniAppApi;
-import com.tamako.allapi.configuration.WechatProperties;
+import com.tamako.allapi.configuration.properties.WechatProperties;
 import com.tamako.allapi.utils.NetWork2WeChatUtil;
 import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
 import com.tamako.allapi.wechat.enums.miniapp.uploadshop.OrderNumberTypeEnum;

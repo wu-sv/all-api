@@ -1,7 +1,7 @@
 /**
  * 阿里云模型包
  */
-package com.tamako.allapi.configuration;
+package com.tamako.allapi.configuration.properties;
 
 
 import lombok.Data;

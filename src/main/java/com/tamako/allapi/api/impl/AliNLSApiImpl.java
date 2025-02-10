@@ -13,7 +13,7 @@ import com.tamako.allapi.ali.enums.nls.NLSProductEnum;
 import com.tamako.allapi.ali.model.nls.dto.GetFileTransResultDto;
 import com.tamako.allapi.ali.model.nls.vo.NlsResult;
 import com.tamako.allapi.api.AliNLSApi;
-import com.tamako.allapi.configuration.AliProperties;
+import com.tamako.allapi.configuration.properties.AliProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
 import com.tamako.allapi.utils.JSONUtil;

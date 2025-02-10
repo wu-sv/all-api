@@ -10,7 +10,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.tamako.allapi.api.VolcEngineRTCApi;
-import com.tamako.allapi.configuration.VolcEngineProperties;
+import com.tamako.allapi.configuration.properties.VolcEngineProperties;
 import com.tamako.allapi.utils.DateUtil;
 import com.tamako.allapi.utils.JSONUtil;
 import com.tamako.allapi.utils.NetWork2VolcEngineUtil;

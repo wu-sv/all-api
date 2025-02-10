@@ -8,7 +8,7 @@ import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.http.Method;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.tamako.allapi.configuration.VolcEngineProperties;
+import com.tamako.allapi.configuration.properties.VolcEngineProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
 import lombok.extern.slf4j.Slf4j;

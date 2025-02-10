@@ -14,6 +14,8 @@ import com.tamako.allapi.api.impl.AliFCImpl;
 import com.tamako.allapi.api.impl.AliNLSApiImpl;
 import com.tamako.allapi.api.impl.AliOSSImpl;
 import com.tamako.allapi.api.impl.AliSMSImpl;
+import com.tamako.allapi.configuration.properties.AliProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +39,7 @@ public class AliConfiguration {
      * @return AliSMSApi
      */
     @Bean
+    @ConditionalOnProperty(prefix = "ali.sms", name = "sign-name")
     public AliSMSApi aliSmsApi(AliProperties aliProperties) {
         return new AliSMSImpl(aliProperties);
     }
@@ -48,6 +51,7 @@ public class AliConfiguration {
      * @return AliOSSApi
      */
     @Bean
+    @ConditionalOnProperty(prefix = "ali.oss", name = "bucket-name")
     public AliOSSApi aliOssApi(AliProperties aliProperties) {
         return new AliOSSImpl(aliProperties);
     }
@@ -59,6 +63,7 @@ public class AliConfiguration {
      * @return AliFCApi
      */
     @Bean
+    @ConditionalOnProperty(prefix = "ali.fc", name = "zip-oss-url")
     public AliFCApi aliFcApi(AliProperties aliProperties) {
         return new AliFCImpl(aliProperties);
     }
@@ -70,6 +75,7 @@ public class AliConfiguration {
      * @return AliNLSApi
      */
     @Bean
+    @ConditionalOnProperty(prefix = "ali.nls", name = "app-key")
     public AliNLSApi aliNlsApi(AliProperties aliProperties) {
         AliProperties.AliNLS nls = aliProperties.getNls();
         String regionId = nls.getRegionId();

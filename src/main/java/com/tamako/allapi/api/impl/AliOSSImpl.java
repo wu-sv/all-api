@@ -13,7 +13,7 @@ import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.common.comm.SignVersion;
 import com.aliyun.oss.model.*;
 import com.tamako.allapi.api.AliOSSApi;
-import com.tamako.allapi.configuration.AliProperties;
+import com.tamako.allapi.configuration.properties.AliProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
 import com.tamako.allapi.utils.URLUtil;
