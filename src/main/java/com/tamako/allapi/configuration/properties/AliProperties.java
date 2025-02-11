@@ -52,6 +52,12 @@ public class AliProperties {
     private AliNLS nls;
 
     /**
+     * 阿里云 NLS 配置类
+     */
+    @NestedConfigurationProperty
+    private AliBaiLian baiLian;
+
+    /**
      * 阿里云 OSS 配置
      */
     @Data
@@ -122,5 +128,16 @@ public class AliProperties {
          * 非必填参数
          */
         private String domain;
+    }
+
+    /**
+     * 阿里云百炼配置类
+     */
+    @Data
+    public static class AliBaiLian {
+        /**
+         * 阿里云百炼的API Key
+         */
+        private String apiKey;
     }
 }

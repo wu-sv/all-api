@@ -13,6 +13,7 @@ import com.tamako.allapi.ali.enums.nls.NLSProductEnum;
 import com.tamako.allapi.ali.model.nls.dto.GetFileTransResultDto;
 import com.tamako.allapi.ali.model.nls.vo.NlsResult;
 import com.tamako.allapi.api.AliNLSApi;
+import com.tamako.allapi.api.impl.base.AliBaseImpl;
 import com.tamako.allapi.configuration.properties.AliProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
@@ -27,16 +28,12 @@ import java.util.Map;
  * @author Tamako
  * @since 2025/1/16 15:46
  */
-public class AliNLSApiImpl implements AliNLSApi {
+public class AliNLSImpl extends AliBaseImpl implements AliNLSApi {
     /**
      * 中国站版本
      */
     public static final String API_VERSION = "2018-08-17";
 
-    /**
-     * 阿里云OSS配置
-     */
-    private final AliProperties properties;
     /**
      * 阿里云鉴权client
      */
@@ -45,11 +42,11 @@ public class AliNLSApiImpl implements AliNLSApi {
     /**
      * 构造方法
      *
-     * @param properties 配置参数
-     * @param clientMap  阿里云鉴权client
+     * @param aliProperties 配置参数
+     * @param clientMap     阿里云鉴权client
      */
-    public AliNLSApiImpl(AliProperties properties, Map<NLSProductEnum, IAcsClient> clientMap) {
-        this.properties = properties;
+    public AliNLSImpl(AliProperties aliProperties, Map<NLSProductEnum, IAcsClient> clientMap) {
+        super(aliProperties);
         this.clientMap = clientMap;
     }
 
@@ -66,7 +63,7 @@ public class AliNLSApiImpl implements AliNLSApi {
         // 创建CommonRequest，设置请求参数。
         CommonRequest postRequest = createRequest(ActionEnum.POST_REQUEST_ACTION, MethodType.POST);
         JSONObject taskObject = JSONUtil.parseObj(dto, true);
-        taskObject.set("appkey", properties.getNls().getAppKey());
+        taskObject.set("appkey", aliProperties.getNls().getAppKey());
         // 设置以上JSON字符串为Body参数。
         postRequest.putBodyParameter("Task", taskObject.toString());
         // 提交录音文件识别请求，获取录音文件识别请求任务的ID，以供识别结果查询使用。
@@ -115,7 +112,7 @@ public class AliNLSApiImpl implements AliNLSApi {
     private @NotNull CommonRequest createRequest(ActionEnum action, MethodType method) {
         CommonRequest request = new CommonRequest();
         // 设置域名
-        request.setSysDomain(properties.getNls().getDomain());
+        request.setSysDomain(aliProperties.getNls().getDomain());
         // 设置API版本
         request.setSysVersion(API_VERSION);
         // 设置action

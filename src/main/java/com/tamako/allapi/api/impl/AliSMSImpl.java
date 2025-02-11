@@ -2,8 +2,6 @@ package com.tamako.allapi.api.impl;
 
 
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import com.aliyun.auth.credentials.Credential;
 import com.aliyun.auth.credentials.provider.StaticCredentialProvider;
 import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
@@ -11,6 +9,7 @@ import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponseBody;
 import com.tamako.allapi.api.AliSMSApi;
+import com.tamako.allapi.api.impl.base.AliBaseImpl;
 import com.tamako.allapi.configuration.properties.AliProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
@@ -27,25 +26,15 @@ import java.util.concurrent.CompletableFuture;
  * @author Tamako
  * @since 2024/8/28 11:50
  */
-public class AliSMSImpl implements AliSMSApi {
-    /**
-     * 日志
-     */
-    private static final Log log = LogFactory.get();
-    /**
-     * 阿里云短信配置
-     */
-    private final AliProperties aliProperties;
-
+public class AliSMSImpl extends AliBaseImpl implements AliSMSApi {
     /**
      * 构造方法
      *
      * @param aliProperties 阿里云短信配置
      */
     public AliSMSImpl(AliProperties aliProperties) {
-        this.aliProperties = aliProperties;
+        super(aliProperties);
     }
-
 
     /**
      * 发送短信验证码

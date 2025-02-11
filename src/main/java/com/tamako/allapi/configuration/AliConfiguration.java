@@ -6,14 +6,8 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.profile.DefaultProfile;
 import com.tamako.allapi.ali.enums.nls.NLSProductEnum;
-import com.tamako.allapi.api.AliFCApi;
-import com.tamako.allapi.api.AliNLSApi;
-import com.tamako.allapi.api.AliOSSApi;
-import com.tamako.allapi.api.AliSMSApi;
-import com.tamako.allapi.api.impl.AliFCImpl;
-import com.tamako.allapi.api.impl.AliNLSApiImpl;
-import com.tamako.allapi.api.impl.AliOSSImpl;
-import com.tamako.allapi.api.impl.AliSMSImpl;
+import com.tamako.allapi.api.*;
+import com.tamako.allapi.api.impl.*;
 import com.tamako.allapi.configuration.properties.AliProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -103,6 +97,18 @@ public class AliConfiguration {
             IAcsClient client = new DefaultAcsClient(profile);
             clientMap.put(NLSProductEnum.FILE_TRANS, client);
         }
-        return new AliNLSApiImpl(aliProperties, clientMap);
+        return new AliNLSImpl(aliProperties, clientMap);
+    }
+
+    /**
+     * 阿里云百炼大模型配置
+     *
+     * @param aliProperties 阿里云百炼大模型配置
+     * @return AliBaiLianApi
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "ali.bai-lian", name = "api-key")
+    public AliBaiLianApi aliBaiLianApi(AliProperties aliProperties) {
+        return new AliBaiLianImpl(aliProperties);
     }
 }

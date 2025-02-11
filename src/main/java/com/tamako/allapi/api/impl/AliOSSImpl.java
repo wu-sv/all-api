@@ -13,6 +13,7 @@ import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.common.comm.SignVersion;
 import com.aliyun.oss.model.*;
 import com.tamako.allapi.api.AliOSSApi;
+import com.tamako.allapi.api.impl.base.AliBaseImpl;
 import com.tamako.allapi.configuration.properties.AliProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
@@ -32,12 +33,7 @@ import java.util.*;
  * @author Tamako
  * @since 2024/8/26 14:14
  */
-public class AliOSSImpl implements AliOSSApi {
-    /**
-     * 日志
-     */
-    private static final Log log = LogFactory.get();
-
+public class AliOSSImpl extends AliBaseImpl implements AliOSSApi {
 
     /**
      * 上传ID常量
@@ -49,10 +45,7 @@ public class AliOSSImpl implements AliOSSApi {
      */
     public static final String OSS_CLIENT = "ossClient";
 
-    /**
-     * 阿里云OSS配置
-     */
-    private final AliProperties aliProperties;
+
 
     /**
      * 构造方法
@@ -60,7 +53,7 @@ public class AliOSSImpl implements AliOSSApi {
      * @param aliProperties 阿里云OSS配置
      */
     public AliOSSImpl(AliProperties aliProperties) {
-        this.aliProperties = aliProperties;
+        super(aliProperties);
     }
 
     /**

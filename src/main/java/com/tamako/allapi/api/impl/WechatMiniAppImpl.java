@@ -4,11 +4,10 @@ package com.tamako.allapi.api.impl;
 import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import com.tamako.allapi.api.WechatMiniAppApi;
+import com.tamako.allapi.api.impl.base.WeChatBaseImpl;
 import com.tamako.allapi.configuration.properties.WechatProperties;
-import com.tamako.allapi.utils.NetWork2WeChatUtil;
+import com.tamako.allapi.utils.network.NetWork2WeChatUtil;
 import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
 import com.tamako.allapi.wechat.enums.miniapp.uploadshop.OrderNumberTypeEnum;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
@@ -35,24 +34,14 @@ import java.util.Map;
  *
  * @author Tamako
  */
-public class WechatMiniAppImpl implements WechatMiniAppApi {
-    /**
-     * 日志
-     */
-    private static final Log log = LogFactory.get();
-    /**
-     * 微信配置
-     */
-
-    private final WechatProperties wechatProperties;
-
+public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppApi {
     /**
      * 构造方法
      *
      * @param wechatProperties 微信配置
      */
     public WechatMiniAppImpl(WechatProperties wechatProperties) {
-        this.wechatProperties = wechatProperties;
+        super(wechatProperties);
     }
 
     /**

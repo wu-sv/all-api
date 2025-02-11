@@ -1,4 +1,4 @@
-package com.tamako.allapi.utils;
+package com.tamako.allapi.utils.network;
 
 
 import cn.hutool.http.ContentType;

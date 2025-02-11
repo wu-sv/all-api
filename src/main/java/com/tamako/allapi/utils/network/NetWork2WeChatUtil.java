@@ -1,7 +1,7 @@
 /**
  * 工具包
  */
-package com.tamako.allapi.utils;
+package com.tamako.allapi.utils.network;
 
 
 import cn.hutool.json.JSONObject;

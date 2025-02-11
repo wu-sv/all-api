@@ -1,4 +1,4 @@
-package com.tamako.allapi.utils;
+package com.tamako.allapi.utils.network;
 
 
 import cn.hutool.core.date.DateTime;
@@ -11,6 +11,8 @@ import cn.hutool.json.JSONUtil;
 import com.tamako.allapi.configuration.properties.VolcEngineProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
+import com.tamako.allapi.utils.HmacUtil;
+import com.tamako.allapi.utils.URLUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 

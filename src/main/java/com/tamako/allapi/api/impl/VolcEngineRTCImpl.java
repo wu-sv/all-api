@@ -7,13 +7,12 @@ import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.json.JSONObject;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import com.tamako.allapi.api.VolcEngineRTCApi;
+import com.tamako.allapi.api.impl.base.VolcEngineRTCBaseImpl;
 import com.tamako.allapi.configuration.properties.VolcEngineProperties;
 import com.tamako.allapi.utils.DateUtil;
 import com.tamako.allapi.utils.JSONUtil;
-import com.tamako.allapi.utils.NetWork2VolcEngineUtil;
+import com.tamako.allapi.utils.network.NetWork2VolcEngineUtil;
 import com.tamako.allapi.volcengine.constants.RTCUrlConstant;
 import com.tamako.allapi.volcengine.enums.trc.PrivilegesEnum;
 import com.tamako.allapi.volcengine.model.rtc.domian.AccessToken;
@@ -40,22 +39,12 @@ import java.util.Map;
  */
 public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngineRTCApi {
     /**
-     * 日志
-     */
-    private static final Log log = LogFactory.get();
-    /**
-     * 火山引擎配置
-     */
-    private final VolcEngineProperties properties;
-
-
-    /**
      * 构造方法
      *
      * @param volcEngineProperties 火山引擎配置
      */
     public VolcEngineRTCImpl(VolcEngineProperties volcEngineProperties) {
-        this.properties = volcEngineProperties;
+        super(volcEngineProperties);
     }
 
     /**
@@ -87,7 +76,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<BaseResult> banUserStream(@NotNull BanUserStreamDto dto) {
-        return super.post(RTCUrlConstant.BAN_USER_STREAM_URL, dto, properties);
+        return super.post(RTCUrlConstant.BAN_USER_STREAM_URL, dto);
     }
 
     /**
@@ -99,7 +88,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<BaseResult> unbanUserStream(@NotNull UnbanUserStreamDto dto) {
-        return super.post(RTCUrlConstant.UNBAN_USER_STREAM_URL, dto, properties);
+        return super.post(RTCUrlConstant.UNBAN_USER_STREAM_URL, dto);
     }
 
     /**
@@ -111,7 +100,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<BaseResult> banRoomUser(@NotNull BanRoomUserDto dto) {
-        return super.post(RTCUrlConstant.BAN_ROOM_USER_URL, dto, properties);
+        return super.post(RTCUrlConstant.BAN_ROOM_USER_URL, dto);
     }
 
     /**
@@ -123,7 +112,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<BaseResult> updateBanRoomUserRule(@NotNull BanRoomUserDto dto) {
-        return super.post(RTCUrlConstant.UPDATE_BAN_ROOM_USER_RULE_URL, dto, properties);
+        return super.post(RTCUrlConstant.UPDATE_BAN_ROOM_USER_RULE_URL, dto);
     }
 
     /**
@@ -150,7 +139,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<LimitTokenPrivilegeResult> limitTokenPrivilege(LimitTokenPrivilegeDto dto) {
-        JSONObject reqBody = NetWork2VolcEngineUtil.post(RTCUrlConstant.LIMIT_TOKEN_PRIVILEGE_URL, this.addAppId(dto, properties), properties);
+        JSONObject reqBody = NetWork2VolcEngineUtil.post(RTCUrlConstant.LIMIT_TOKEN_PRIVILEGE_URL, this.addAppId(dto), properties);
         TypeReference<ResponseVo<LimitTokenPrivilegeResult>> typeReference = new TypeReference<>() {
         };
         return JSONUtil.toBeanLowerCase(reqBody, typeReference);
@@ -167,7 +156,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<BaseResult> kickUser(@NotNull KickUserDto dto) {
-        return super.post(RTCUrlConstant.KICK_USER_URL, dto, properties);
+        return super.post(RTCUrlConstant.KICK_USER_URL, dto);
     }
 
     /**
@@ -198,7 +187,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<String> startRecord(StartRecordDto dto) {
-        return super.post2String(RTCUrlConstant.START_RECORD_URL, dto, properties);
+        return super.post2String(RTCUrlConstant.START_RECORD_URL, dto);
     }
 
     /**
@@ -272,7 +261,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<BaseResult> updateRecord(UpdateRecordDto dto) {
-        return super.post(RTCUrlConstant.UPDATE_RECORD_URL, dto, properties);
+        return super.post(RTCUrlConstant.UPDATE_RECORD_URL, dto);
     }
 
     /**
@@ -284,7 +273,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<String> stopRecord(StopRecordDto dto) {
-        return super.post2String(RTCUrlConstant.STOP_RECORD_URL, dto, properties);
+        return super.post2String(RTCUrlConstant.STOP_RECORD_URL, dto);
     }
 
     /**

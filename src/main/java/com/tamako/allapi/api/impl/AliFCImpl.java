@@ -2,11 +2,10 @@ package com.tamako.allapi.api.impl;
 
 
 import cn.hutool.json.JSONObject;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import com.tamako.allapi.api.AliFCApi;
+import com.tamako.allapi.api.impl.base.AliBaseImpl;
 import com.tamako.allapi.configuration.properties.AliProperties;
-import com.tamako.allapi.utils.NetWorkUtil;
+import com.tamako.allapi.utils.network.NetWorkUtil;
 
 import java.util.List;
 
@@ -14,24 +13,14 @@ import java.util.List;
  * @author Tamako
  * @since 2024/11/12 14:50
  */
-public class AliFCImpl implements AliFCApi {
-    /**
-     * 日志
-     */
-    private static final Log log = LogFactory.get();
-
-    /**
-     * 阿里云OSS配置
-     */
-    private final AliProperties aliProperties;
-
+public class AliFCImpl extends AliBaseImpl implements AliFCApi {
     /**
      * 构造方法
      *
      * @param aliProperties 阿里云OSS配置
      */
     public AliFCImpl(AliProperties aliProperties) {
-        this.aliProperties = aliProperties;
+        super(aliProperties);
     }
 
     /**

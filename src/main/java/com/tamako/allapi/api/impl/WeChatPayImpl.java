@@ -12,8 +12,6 @@ import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.kit.AesUtil;
@@ -27,10 +25,11 @@ import com.ijpay.wxpay.model.v3.Amount;
 import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import com.tamako.allapi.api.WeChatPayApi;
+import com.tamako.allapi.api.impl.base.WeChatBaseImpl;
 import com.tamako.allapi.configuration.properties.WechatProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
-import com.tamako.allapi.utils.NetWork2WeChatUtil;
+import com.tamako.allapi.utils.network.NetWork2WeChatUtil;
 import com.tamako.allapi.wechat.model.wxpay.dto.MiniAppPayOrderDto;
 import com.tamako.allapi.wechat.model.wxpay.vo.MiniAppPayNotifyVo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,23 +47,14 @@ import java.util.Map;
  * @author Tamako
  * @since 2021/1/18 16:22
  */
-public class WeChatPayImpl implements WeChatPayApi {
-    /**
-     * 日志
-     */
-    private static final Log log = LogFactory.get();
-    /**
-     * 微信配置
-     */
-    private final WechatProperties wechatProperties;
-
+public class WeChatPayImpl extends WeChatBaseImpl implements WeChatPayApi {
     /**
      * 构造方法
      *
      * @param wechatProperties 微信配置
      */
     public WeChatPayImpl(WechatProperties wechatProperties) {
-        this.wechatProperties = wechatProperties;
+        super(wechatProperties);
     }
 
     /**
