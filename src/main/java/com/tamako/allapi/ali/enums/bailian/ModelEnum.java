@@ -16,7 +16,19 @@ public enum ModelEnum {
     /**
      * 通义千问MAX
      */
-    QWEN_MAX("qwen-max");
+    QWEN_MAX("qwen-max"),
+    /**
+     * 通义千问-Max-Latest
+     */
+    QWEN_MAX_LATEST("qwen-max-latest"),
+    /**
+     * DeepSeek-R1
+     */
+    DEEPSEEK_R1("deepseek-r1"),
+    /**
+     * 零一万物千亿参数大语言模型
+     */
+    YI_LARGE("yi-large");
     /**
      * 大模型参数
      */

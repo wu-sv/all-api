@@ -81,7 +81,7 @@ public class ChatDto {
     /**
      * 在流式输出模式下是否开启增量输出
      */
-    private Boolean incrementalOutput;
+    private Boolean incrementalOutput = true;
 
     /**
      * 返回结果的格式，默认为text，也可选择message。推荐您优先使用message格式

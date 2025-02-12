@@ -5,7 +5,7 @@
 
     <groupId>io.gitee.tamako520</groupId>
     <artifactId>all-api</artifactId>
-    <version>1.2.5</version>
+    <version>1.2.6</version>
     <name>all-api</name>
     <description>Facilitate rapid development，Secondary encapsulation of the api like weChat,ali and so on</description>
     <url>https://gitee.com/Tamako520/all-api</url>
@@ -48,6 +48,7 @@
         <AliSMS.version>3.0.2</AliSMS.version>
         <AliAuth.version>0.2.12-beta</AliAuth.version>
         <hutool.version>5.8.35</hutool.version>
+        <AliDashScope.version>2.18.1</AliDashScope.version>
 
     </properties>
 
@@ -88,6 +89,11 @@
                 <artifactId>aliyun-java-auth</artifactId>
                 <version>${AliAuth.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dashscope-sdk-java</artifactId>
+                <version>${AliDashScope.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -119,6 +125,10 @@
             <artifactId>alibabacloud-dysmsapi20170525</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dashscope-sdk-java</artifactId>
+        </dependency>
         <!--=====================provided====================-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
