@@ -294,7 +294,7 @@ public class WeChatPayImpl extends WeChatBaseImpl implements WeChatPayApi {
     private void savePlatformCert(JSONObject encryptObject) {
         //【证书信息】 证书内容
         JSONObject encryptCertificate = encryptObject.getJSONObject("encrypt_certificate");
-        //【加密证书的附加数据】 加密证书的附加数据，固定为“certificate"。
+        //【加密证书的附加数据】 加密证书的附加数据，固定为"certificate"。
         String associatedData = encryptCertificate.getStr("associated_data");
         //【加密后的证书内容】 使用API KEY和上述参数，可以解密出平台证书的明文。证书明文为PEM格式。
         // （注意：更换证书时会出现PEM格式中的证书失效时间与接口返回的证书弃用时间不一致的情况）

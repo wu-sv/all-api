@@ -7,7 +7,7 @@
     <artifactId>all-api</artifactId>
     <version>1.2.6</version>
     <name>all-api</name>
-    <description>Facilitate rapid development，Secondary encapsulation of the api like weChat,ali and so on</description>
+    <description>Facilitate rapid development,Secondary encapsulation of the api like weChat,ali and so on</description>
     <url>https://gitee.com/Tamako520/all-api</url>
 
     <developers>
@@ -264,7 +264,8 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>compile</phase>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>

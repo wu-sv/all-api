@@ -14,8 +14,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 阿里云配置类
@@ -87,7 +87,7 @@ public class AliConfiguration {
         }
         aliProperties.setNls(nls);
 
-        Map<NLSProductEnum, IAcsClient> clientMap = new HashMap<>();
+        ConcurrentMap<NLSProductEnum, IAcsClient> clientMap = new ConcurrentHashMap<>();
         if (StrUtil.isNotEmpty(regionId)) {
             DefaultProfile.addEndpoint(regionId, NLSProductEnum.FILE_TRANS.getName(),
                     endpointName);

@@ -10,7 +10,6 @@ import com.tamako.allapi.utils.HmacUtil;
 import com.tamako.allapi.volcengine.constants.RTCConstant;
 import com.tamako.allapi.volcengine.enums.trc.PrivilegesEnum;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;

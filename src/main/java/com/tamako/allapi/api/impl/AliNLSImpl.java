@@ -20,7 +20,7 @@ import com.tamako.allapi.exception.PlatformEnum;
 import com.tamako.allapi.utils.JSONUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 阿里智能语音交互API实现类
@@ -37,7 +37,7 @@ public class AliNLSImpl extends AliBaseImpl implements AliNLSApi {
     /**
      * 阿里云鉴权client
      */
-    private final Map<NLSProductEnum, IAcsClient> clientMap;
+    private final ConcurrentMap<NLSProductEnum, IAcsClient> clientMap;
 
     /**
      * 构造方法
@@ -45,7 +45,7 @@ public class AliNLSImpl extends AliBaseImpl implements AliNLSApi {
      * @param aliProperties 配置参数
      * @param clientMap     阿里云鉴权client
      */
-    public AliNLSImpl(AliProperties aliProperties, Map<NLSProductEnum, IAcsClient> clientMap) {
+    public AliNLSImpl(AliProperties aliProperties, ConcurrentMap<NLSProductEnum, IAcsClient> clientMap) {
         super(aliProperties);
         this.clientMap = clientMap;
     }
