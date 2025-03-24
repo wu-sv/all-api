@@ -47,6 +47,11 @@ public class AliConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = "ali.oss", name = "bucket-name")
     public AliOSSApi aliOssApi(AliProperties aliProperties) {
+        String endpoint = aliProperties.getOss().getEndpoint();
+        if (!endpoint.startsWith("http://") && !endpoint.startsWith("https://")) {
+            endpoint="https://"+endpoint;
+            aliProperties.getOss().setEndpoint(endpoint);
+        }
         return new AliOSSImpl(aliProperties);
     }
 
