@@ -12,7 +12,7 @@ import com.tamako.allapi.api.impl.base.VolcEngineRTCBaseImpl;
 import com.tamako.allapi.configuration.properties.VolcEngineProperties;
 import com.tamako.allapi.utils.DateUtil;
 import com.tamako.allapi.utils.JSONUtil;
-import com.tamako.allapi.utils.network.NetWork2VolcEngineUtil;
+import com.tamako.allapi.utils.network.VolcEngineNetWorkUtil;
 import com.tamako.allapi.volcengine.constants.RTCUrlConstant;
 import com.tamako.allapi.volcengine.enums.trc.PrivilegesEnum;
 import com.tamako.allapi.volcengine.model.rtc.domian.AccessToken;
@@ -124,7 +124,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<GetRoomOnlineUsersResult> getRoomOnlineUsers(@NotNull String roomId) {
-        JSONObject reqBody = NetWork2VolcEngineUtil.get(StrUtil.format(RTCUrlConstant.GET_ROOM_ONLINE_USERS_URL, properties.getRtc().getAppId(), roomId), properties);
+        JSONObject reqBody = VolcEngineNetWorkUtil.get(StrUtil.format(RTCUrlConstant.GET_ROOM_ONLINE_USERS_URL, properties.getRtc().getAppId(), roomId), properties);
         TypeReference<ResponseVo<GetRoomOnlineUsersResult>> typeReference = new TypeReference<>() {
         };
         return JSONUtil.toBeanLowerCase(reqBody, typeReference);
@@ -139,7 +139,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<LimitTokenPrivilegeResult> limitTokenPrivilege(LimitTokenPrivilegeDto dto) {
-        JSONObject reqBody = NetWork2VolcEngineUtil.post(RTCUrlConstant.LIMIT_TOKEN_PRIVILEGE_URL, this.addAppId(dto), properties);
+        JSONObject reqBody = VolcEngineNetWorkUtil.post(RTCUrlConstant.LIMIT_TOKEN_PRIVILEGE_URL, this.addAppId(dto), properties);
         TypeReference<ResponseVo<LimitTokenPrivilegeResult>> typeReference = new TypeReference<>() {
         };
         return JSONUtil.toBeanLowerCase(reqBody, typeReference);
@@ -172,7 +172,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
         JSONObject body = new JSONObject();
         body.set("appId", properties.getRtc().getAppId());
         body.set("roomId", roomId);
-        JSONObject reqBody = NetWork2VolcEngineUtil.post(RTCUrlConstant.DISMISS_ROOM_URL, body, properties);
+        JSONObject reqBody = VolcEngineNetWorkUtil.post(RTCUrlConstant.DISMISS_ROOM_URL, body, properties);
         TypeReference<ResponseVo<BaseResult>> typeReference = new TypeReference<>() {
         };
         return JSONUtil.toBeanLowerCase(reqBody, typeReference);
@@ -286,7 +286,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
      */
     @Override
     public ResponseVo<GetRecordTaskResult> getRecordTask(GetRecordTaskDto dto) {
-        JSONObject reqBody = NetWork2VolcEngineUtil.get(
+        JSONObject reqBody = VolcEngineNetWorkUtil.get(
                 StrUtil.format(RTCUrlConstant.GET_RECORD_TASK_URL, properties.getRtc().getAppId(), dto.getRoomId(), dto.getTaskId())
                 , properties);
         TypeReference<ResponseVo<GetRecordTaskResult>> typeReference = new TypeReference<>() {

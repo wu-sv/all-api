@@ -29,7 +29,7 @@ import java.util.TimeZone;
  * @since 2024/11/13 09:04
  */
 @Slf4j
-public class NetWork2VolcEngineUtil extends NetWorkUtil {
+public class VolcEngineNetWorkUtil extends DefaultNetWorkUtil {
 
     /**
      * 同步GET请求
@@ -41,7 +41,7 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
     public static JSONObject get(@NotNull String url, @NotNull VolcEngineProperties properties) {
         try {
             Map<String, String> headers = publicHeaders(url, new HashMap<>(), null, Method.GET, properties);
-            return NetWorkUtil.getSync(url, headers);
+            return DefaultNetWorkUtil.getSync(url, headers);
         } catch (Exception e) {
             throw new AllApiException(PlatformEnum.VOLC_ENGINE, "网络请求失败", e);
         }
@@ -59,7 +59,7 @@ public class NetWork2VolcEngineUtil extends NetWorkUtil {
     public static JSONObject post(@NotNull String url, Map<String, String> headers, @NotNull JSONObject body, @NotNull VolcEngineProperties properties) {
         try {
             headers = publicHeaders(url, headers, body, Method.POST, properties);
-            return NetWorkUtil.postSync(url, headers, body);
+            return DefaultNetWorkUtil.postSync(url, headers, body);
         } catch (Exception e) {
             throw new AllApiException(PlatformEnum.VOLC_ENGINE, "网络请求失败", e);
         }

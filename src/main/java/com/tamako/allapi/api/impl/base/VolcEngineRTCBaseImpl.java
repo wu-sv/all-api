@@ -7,7 +7,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.tamako.allapi.configuration.properties.VolcEngineProperties;
 import com.tamako.allapi.utils.JSONUtil;
-import com.tamako.allapi.utils.network.NetWork2VolcEngineUtil;
+import com.tamako.allapi.utils.network.VolcEngineNetWorkUtil;
 import com.tamako.allapi.volcengine.model.rtc.vo.BaseResult;
 import com.tamako.allapi.volcengine.model.rtc.vo.ResponseVo;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ public class VolcEngineRTCBaseImpl {
      * @return 响应结果
      */
     protected ResponseVo<BaseResult> post(String url, Object body) {
-        JSONObject reqBody = NetWork2VolcEngineUtil.post(url, this.addAppId(body), properties);
+        JSONObject reqBody = VolcEngineNetWorkUtil.post(url, this.addAppId(body), properties);
         TypeReference<ResponseVo<BaseResult>> typeReference = new TypeReference<>() {
         };
         return JSONUtil.toBeanLowerCase(reqBody, typeReference);
@@ -63,7 +63,7 @@ public class VolcEngineRTCBaseImpl {
      * @return 响应结果
      */
     protected ResponseVo<String> post2String(String url, Object body) {
-        JSONObject reqBody = NetWork2VolcEngineUtil.post(url, this.addAppId(body), properties);
+        JSONObject reqBody = VolcEngineNetWorkUtil.post(url, this.addAppId(body), properties);
         TypeReference<ResponseVo<String>> typeReference = new TypeReference<>() {
         };
         return JSONUtil.toBeanLowerCase(reqBody, typeReference);

@@ -14,7 +14,7 @@
 - 阿里云FC
 - 火山引擎RTC
 
-在启动类中添加注解以启用
+~~在启动类中添加注解以启用~~ 现在增加了spring-auto-configuration，可以不用写注解了
 
 ```java
 
@@ -43,7 +43,7 @@ GitHub：[https://github.com/wu-sv/all-api](https://github.com/wu-sv/all-api)
 <dependency>
     <groupId>io.gitee.tamako520</groupId>
     <artifactId>all-api</artifactId>
-    <version>1.2.6</version>
+    <version>1.2.7</version>
 </dependency>
 ```
 
@@ -89,7 +89,7 @@ volc-engine:
     app-key: <appKey>
 ```
 
-3.在启动类中添加注解`@EnableAllAPI`
+~~3.在启动类中添加注解`@EnableAllAPI`~~ 这一步可以省略了
 
 ```java
 package com.tamako.test;
@@ -160,7 +160,7 @@ public class TestController {
 
 ###### 反则也没人会看到最后
 
-1.增加spring-auto-configuration，简化项目引入方式
+~~1.增加spring-auto-configuration，简化项目引入方式~~（已完成）
 
 2.增加网络请求时的拦截器，并支持自定义配置
 

@@ -22,7 +22,7 @@ import java.util.Map;
  * @author Tamako
  */
 @Slf4j
-public class NetWork2WeChatUtil extends NetWorkUtil {
+public class WeChatNetWorkUtil extends DefaultNetWorkUtil {
 
 
     /**
@@ -32,7 +32,7 @@ public class NetWork2WeChatUtil extends NetWorkUtil {
      * @return JSONObject
      */
     public static JSONObject getSync(String url) {
-        return checkErrorCode(NetWorkUtil.getSync(url));
+        return checkErrorCode(DefaultNetWorkUtil.getSync(url));
     }
 
 
@@ -45,7 +45,7 @@ public class NetWork2WeChatUtil extends NetWorkUtil {
      * @return JSONObject
      */
     public static JSONObject postSync(@NotNull String url, Map<String, String> headers, @NotNull JSONObject requestBody) {
-        return checkErrorCode(NetWorkUtil.postSync(url, headers, requestBody));
+        return checkErrorCode(DefaultNetWorkUtil.postSync(url, headers, requestBody));
     }
 
     /**
@@ -56,7 +56,7 @@ public class NetWork2WeChatUtil extends NetWorkUtil {
      * @return byte[]
      */
     public static byte[] postSyncBytes(@NotNull String url, @NotNull JSONObject requestBody) {
-        byte[] bytes = NetWorkUtil.postSyncBytes(url, requestBody);
+        byte[] bytes = DefaultNetWorkUtil.postSyncBytes(url, requestBody);
         //判断是报错还是正常返回
         if (bytes.length <= 200) {
             JSONObject jsonObj = JSONUtil.parseObj(new String(bytes));

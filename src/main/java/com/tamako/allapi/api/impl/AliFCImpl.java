@@ -5,7 +5,7 @@ import cn.hutool.json.JSONObject;
 import com.tamako.allapi.api.AliFCApi;
 import com.tamako.allapi.api.impl.base.AliBaseImpl;
 import com.tamako.allapi.configuration.properties.AliProperties;
-import com.tamako.allapi.utils.network.NetWorkUtil;
+import com.tamako.allapi.utils.network.DefaultNetWorkUtil;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class AliFCImpl extends AliBaseImpl implements AliFCApi {
         JSONObject body = new JSONObject();
         body.set("bucket", aliProperties.getOss().getBucketName());
         body.set("source-files", fileList);
-        JSONObject jsonObject = NetWorkUtil.postSync(aliProperties.getFc().getZipOssUrl(), body);
+        JSONObject jsonObject = DefaultNetWorkUtil.postSync(aliProperties.getFc().getZipOssUrl(), body);
         return jsonObject.toBean(String.class);
     }
 }

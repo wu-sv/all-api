@@ -7,7 +7,7 @@ import cn.hutool.json.JSONUtil;
 import com.tamako.allapi.api.WechatMiniAppApi;
 import com.tamako.allapi.api.impl.base.WeChatBaseImpl;
 import com.tamako.allapi.configuration.properties.WechatProperties;
-import com.tamako.allapi.utils.network.NetWork2WeChatUtil;
+import com.tamako.allapi.utils.network.WeChatNetWorkUtil;
 import com.tamako.allapi.wechat.constants.MiniAppUrlConstant;
 import com.tamako.allapi.wechat.enums.miniapp.uploadshop.OrderNumberTypeEnum;
 import com.tamako.allapi.wechat.model.miniapp.dto.*;
@@ -62,7 +62,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
                 .addQuery("appid", dto.getAppid())
                 .addQuery("secret", dto.getSecret());
 
-        JSONObject jsonObject = NetWork2WeChatUtil.getSync(urlBuilder.build());
+        JSONObject jsonObject = WeChatNetWorkUtil.getSync(urlBuilder.build());
         return JSONUtil.toBean(jsonObject, GetAccessTokenVo.class);
     }
 
@@ -99,7 +99,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
                 .addQuery("js_code", dto.getJsCode())
                 .addQuery("grant_type", "authorization_code")
                 .build();
-        JSONObject jsonObject = NetWork2WeChatUtil.getSync(url);
+        JSONObject jsonObject = WeChatNetWorkUtil.getSync(url);
         return JSONUtil.toBean(jsonObject, JsCode2SessionVo.class);
 
     }
@@ -133,7 +133,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_GET_PHONE_NUMBER, accessToken).build();
         Map<String, String> params = new HashMap<>();
         params.put("code", code);
-        JSONObject jsonObject = NetWork2WeChatUtil.postSync(url, params);
+        JSONObject jsonObject = WeChatNetWorkUtil.postSync(url, params);
         return JSONUtil.toBean(jsonObject, GetPhoneNumberVo.class);
     }
 
@@ -149,7 +149,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
     public byte[] getUnlimitedQrCode(@NotNull String accessToken, @NotNull GetUnlimitedQRCodeDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_GET_UNLIMITED_QR_CODE, accessToken).build();
         JSONObject params = JSONUtil.parseObj(dto, true);
-        return NetWork2WeChatUtil.postSyncBytes(url, params);
+        return WeChatNetWorkUtil.postSyncBytes(url, params);
     }
 
     /**
@@ -162,7 +162,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
     @Override
     public ResponseVo sendMessage(@NotNull String accessToken, @NotNull SendMessageDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_SEND_MESSAGE, accessToken).build();
-        JSONObject jsonObject = NetWork2WeChatUtil.postSync(url, JSONUtil.parseObj(dto, true));
+        JSONObject jsonObject = WeChatNetWorkUtil.postSync(url, JSONUtil.parseObj(dto, true));
         return JSONUtil.toBean(jsonObject, ResponseVo.class);
     }
 
@@ -176,7 +176,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
     @Override
     public MsgSecCheckVo msgSecCheck(@NotNull String accessToken, @NotNull MsgSecCheckDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_MSG_SEC_CHECK, accessToken).build();
-        JSONObject jsonObject = NetWork2WeChatUtil.postSync(url, JSONUtil.parseObj(dto, true));
+        JSONObject jsonObject = WeChatNetWorkUtil.postSync(url, JSONUtil.parseObj(dto, true));
         return JSONUtil.toBean(jsonObject, MsgSecCheckVo.class);
     }
 
@@ -191,7 +191,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
     public ResponseVo uploadShoppingInfo(@NotNull String accessToken, @NotNull UploadShoppingInfoDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_UPLOAD_SHOPPING_INFO, accessToken).build();
         JSONObject body = JSONUtil.parseObj(dto, true).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        JSONObject jsonObject = NetWork2WeChatUtil.postSync(url, body);
+        JSONObject jsonObject = WeChatNetWorkUtil.postSync(url, body);
         return JSONUtil.toBean(jsonObject, ResponseVo.class);
     }
 
@@ -232,7 +232,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
     public ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull UploadShippingInfoDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_UPLOAD_SHIPPING_INFO, accessToken).build();
         JSONObject body = JSONUtil.parseObj(dto, true).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        JSONObject jsonObject = NetWork2WeChatUtil.postSync(url, body);
+        JSONObject jsonObject = WeChatNetWorkUtil.postSync(url, body);
         return JSONUtil.toBean(jsonObject, ResponseVo.class);
     }
 
@@ -263,7 +263,7 @@ public class WechatMiniAppImpl extends WeChatBaseImpl implements WechatMiniAppAp
     public ResponseVo uploadShippingInfo(@NotNull String accessToken, @NotNull CommonUploadShippingInfoDto dto) {
         String url = createUrlBuilderWithAccessToken(MiniAppUrlConstant.WECHAT_COMMON_UPLOAD_SHIPPING_INFO, accessToken).build();
         JSONObject body = JSONUtil.parseObj(dto, true).setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        JSONObject jsonObject = NetWork2WeChatUtil.postSync(url, body);
+        JSONObject jsonObject = WeChatNetWorkUtil.postSync(url, body);
         return JSONUtil.toBean(jsonObject, ResponseVo.class);
     }
 

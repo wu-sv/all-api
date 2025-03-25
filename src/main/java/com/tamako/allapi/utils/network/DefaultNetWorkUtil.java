@@ -20,7 +20,7 @@ import static cn.hutool.http.HttpRequest.post;
  * @since 2024/11/12 15:03
  */
 @Slf4j
-public class NetWorkUtil {
+public class DefaultNetWorkUtil {
 
     /**
      * 同步GET请求

@@ -29,7 +29,7 @@ import com.tamako.allapi.api.impl.base.WeChatBaseImpl;
 import com.tamako.allapi.configuration.properties.WechatProperties;
 import com.tamako.allapi.exception.AllApiException;
 import com.tamako.allapi.exception.PlatformEnum;
-import com.tamako.allapi.utils.network.NetWork2WeChatUtil;
+import com.tamako.allapi.utils.network.WeChatNetWorkUtil;
 import com.tamako.allapi.wechat.model.wxpay.dto.MiniAppPayOrderDto;
 import com.tamako.allapi.wechat.model.wxpay.vo.MiniAppPayNotifyVo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -127,7 +127,7 @@ public class WeChatPayImpl extends WeChatBaseImpl implements WeChatPayApi {
             String nonce = request.getHeader("Wechatpay-Nonce");
             String serialNo = request.getHeader("Wechatpay-Serial");
             String signature = request.getHeader("Wechatpay-Signature");
-            String result = NetWork2WeChatUtil.readData(request);
+            String result = WeChatNetWorkUtil.readData(request);
             // 通过证书序列号查找对应的证书，verifyNotify 中有验证证书的序列号
             String plainText = WxPayKit.verifyNotify(serialNo, result, signature, nonce, timestamp,
                     wechatProperties.getPay().getMchKey(), wechatProperties.getPay().getPlatformPath());
@@ -243,7 +243,7 @@ public class WeChatPayImpl extends WeChatBaseImpl implements WeChatPayApi {
             );
             String body = response.getBody();
             if (response.getStatus() == HttpStatus.HTTP_OK) {
-                boolean verifySignature = WxPayKit.verifySignature(response, wechatProperties.getPay().getPlatformPath());
+                boolean verifySignature = verifyPlatformCert(response);
                 if (verifySignature) {
                     log.info("获取证书成功");
                 } else {
@@ -283,6 +283,28 @@ public class WeChatPayImpl extends WeChatBaseImpl implements WeChatPayApi {
         } catch (Exception e) {
             log.error("获取证书失败", e);
             throw new AllApiException(PlatformEnum.WX, "获取证书失败", e);
+        }
+    }
+
+    /**
+     * 校验平台证书
+     *
+     * @param response 响应
+     * @return 校验结果
+     */
+    private boolean verifyPlatformCert(IJPayHttpResponse response) {
+        //当文件为空的时候，则不需要校验，直接保存文件
+        try {
+            String platformPath = wechatProperties.getPay().getPlatformPath();
+            //判断文件是否为空
+            File platformFile = new File(platformPath);
+            if (FileUtil.isEmpty(platformFile)) {
+                //如果为空则不进行后续校验
+                return true;
+            }
+            return WxPayKit.verifySignature(response, platformPath);
+        } catch (Exception e) {
+            throw new AllApiException(PlatformEnum.WX, "校验平台证书失败", e);
         }
     }
 
