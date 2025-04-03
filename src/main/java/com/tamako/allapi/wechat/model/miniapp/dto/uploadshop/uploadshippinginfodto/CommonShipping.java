@@ -28,7 +28,7 @@ public class CommonShipping {
     /**
      * 商品信息，例如：微信红包抱枕*1个，限120个字以内
      */
-    @Alias(" item_desc")
+    @Alias("item_desc")
     @NotNull
     private String itemDesc;
     /**
