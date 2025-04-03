@@ -5,7 +5,7 @@
 
     <groupId>io.gitee.tamako520</groupId>
     <artifactId>all-api</artifactId>
-    <version>1.2.7</version>
+    <version>1.2.8</version>
     <name>all-api</name>
     <description>Facilitate rapid development,Secondary encapsulation of the api like weChat,ali and so on</description>
     <url>https://gitee.com/Tamako520/all-api</url>
