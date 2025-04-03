@@ -50,15 +50,15 @@ public class WechatProperties {
          */
         private String notifyUrl;
         /**
-         * 证书地址
+         * 证书地址(需要填写绝对路径)
          */
         private String certPath;
         /**
-         * 证书秘钥地址
+         * 证书秘钥地址(需要填写绝对路径)
          */
         private String certKeyPath;
         /**
-         * 微信支付平台证书路径
+         * 微信支付平台证书路径(需要填写绝对路径)
          */
         private String platformPath;
     }

@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface WeChatPayApi {
     /**
-     * 小程序支付下单
+     * 小程序支付下单(JSAPI)
      *
      * @param dto 订单信息
      * @return 支付结果
@@ -24,7 +24,7 @@ public interface WeChatPayApi {
     Map<String, String> miniAppPayOrder(MiniAppPayOrderDto dto);
 
     /**
-     * 小程序支付结果通知
+     * 小程序支付结果回调通知(JSAPI)
      *
      * @param request  请求
      * @param response 响应

@@ -12,6 +12,7 @@ import com.tamako.allapi.api.impl.base.VolcEngineRTCBaseImpl;
 import com.tamako.allapi.configuration.properties.VolcEngineProperties;
 import com.tamako.allapi.utils.DateUtil;
 import com.tamako.allapi.utils.JSONUtil;
+import com.tamako.allapi.utils.ObjUtil;
 import com.tamako.allapi.utils.network.VolcEngineNetWorkUtil;
 import com.tamako.allapi.volcengine.constants.RTCUrlConstant;
 import com.tamako.allapi.volcengine.enums.trc.PrivilegesEnum;
@@ -313,6 +314,7 @@ public class VolcEngineRTCImpl extends VolcEngineRTCBaseImpl implements VolcEngi
         data.add(event.getVersion());
         data.add(event.getNonce());
         data.add(properties.getRtc().getCallbackSecretKey());
+        data.removeIf(ObjUtil::isNull);
         CollUtil.sort(data, null);
         String payloadData = String.join("", data);
         String signature = DigestUtil.sha256Hex(payloadData);
