@@ -16,9 +16,11 @@ import java.util.List;
  * 上传物流信息的DTO
  *
  * @author Tamako
+ * @deprecated
  */
 @Data
 @Builder
+@Deprecated
 @AllArgsConstructor
 public class UploadShippingInfoDto {
     /**

@@ -14,10 +14,12 @@ import java.util.List;
  * 简单上传购物信息DTO
  *
  * @author Tamako
+ * @deprecated
  */
 @Data
 @Builder
 @AllArgsConstructor
+@Deprecated
 public class SimpleUploadShoppingInfoDto {
     /**
      * 原支付交易对应的微信订单号

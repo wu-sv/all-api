@@ -16,10 +16,12 @@ import java.util.List;
  * 上传购物详情请求参数
  *
  * @author Tamako
+ * @deprecated
  */
 @Data
 @Builder
 @AllArgsConstructor
+@Deprecated
 public class UploadShoppingInfoDto {
     /**
      * 订单，需要上传购物详情的订单，根据订单类型二选一

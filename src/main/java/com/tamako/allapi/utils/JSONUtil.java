@@ -3,6 +3,7 @@ package com.tamako.allapi.utils;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONConfig;
 import cn.hutool.json.JSONObject;
 
 import java.util.Map;
@@ -14,6 +15,19 @@ import java.util.Map;
  * @since 2024/11/14 09:53
  */
 public class JSONUtil extends cn.hutool.json.JSONUtil {
+    /**
+     * 将JSON字符串转换为适合微信的JSONObject对象
+     *
+     * @param obj 对象
+     * @return JSONObject对象
+     */
+    public static JSONObject parseObj2WeChat(Object obj) {
+        JSONConfig jsonConfig = new JSONConfig()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+                .setIgnoreNullValue(true);
+        return parseObj(obj, jsonConfig);
+    }
+
     /**
      * 将JSON字符串转换为指定类型的对象，键值对的键转换为小写
      *

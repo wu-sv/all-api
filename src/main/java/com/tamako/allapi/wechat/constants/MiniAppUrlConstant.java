@@ -48,17 +48,43 @@ public class MiniAppUrlConstant {
     public static final String WECHAT_MSG_SEC_CHECK = "/wxa/msg_sec_check";
 
     /**
-     * 上传购物详情(微信电商)
+     * 上传购物详情(旧版)
+     *
+     * @deprecated
      */
+    @Deprecated
     public static final String WECHAT_UPLOAD_SHOPPING_INFO = "/user-order/orders";
 
     /**
-     * 上传物流信息(微信电商)
+     * 上传物流信息(旧版)
+     *
+     * @deprecated
      */
+    @Deprecated
     public static final String WECHAT_UPLOAD_SHIPPING_INFO = "/user-order/orders/shippings";
 
     /**
-     * 发货信息录入接口（普通商户）
+     * 发货信息录入接口（新版）
      */
     public static final String WECHAT_COMMON_UPLOAD_SHIPPING_INFO = "/wxa/sec/order/upload_shipping_info";
+
+    /**
+     * 发货信息合单录入接口(新版)
+     */
+    public static final String UPLOAD_COMBINED_SHIPPING_INFO = "/wxa/sec/order/upload_combined_shipping_info";
+
+    /**
+     * 获取订单详情(新版)
+     */
+    public static final String GET_ORDER = "/wxa/sec/order/get_order";
+
+    /**
+     * 查询订单列表(新版)
+     */
+    public static final String GET_ORDER_LIST = "/wxa/sec/order/get_order_list";
+
+    /**
+     *
+     */
+    public static final String OP_SPECIAL_ORDER = "/wxa/sec/order/opspecialorder";
 }

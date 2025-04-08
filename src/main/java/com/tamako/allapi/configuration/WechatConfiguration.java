@@ -19,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * Wechat configuration
+ * WeChat configuration
  *
  * @author Tamako
  * @since 2024/8/30 14:47
