@@ -48,7 +48,7 @@
         <AliAuth.version>0.2.16-beta</AliAuth.version>
         <AliDashScope.version>2.19.1</AliDashScope.version>
         <Bcprov.version>1.80</Bcprov.version>
-        <IJPay.version>2.9.12-17</IJPay.version>
+        <IJPay.version>2.9.12</IJPay.version>
         <Hutool.version>5.8.37</Hutool.version>
 
         <SpringBoot.version>3.4.4</SpringBoot.version>
