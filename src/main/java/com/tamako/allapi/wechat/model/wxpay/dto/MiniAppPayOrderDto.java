@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class MiniAppPayOrderDto {
     /**
      * 【商品描述】 商品描述

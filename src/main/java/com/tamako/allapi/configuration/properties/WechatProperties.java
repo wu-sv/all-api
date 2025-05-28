@@ -42,7 +42,9 @@ public class WechatProperties {
          */
         private String mchId;
         /**
-         * 微信支付商户密钥
+         * 微信支付商户密钥（APIv3秘钥）
+         * 32位字符串
+         * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4013053267">什么是APIv3密钥？如何获取APIv3密钥</a>
          */
         private String mchKey;
         /**
@@ -51,15 +53,13 @@ public class WechatProperties {
         private String notifyUrl;
         /**
          * 证书地址(需要填写绝对路径)
+         * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4013053053">什么是商户API证书？如何获取商户API证书和私钥？</a>
          */
         private String certPath;
         /**
          * 证书秘钥地址(需要填写绝对路径)
+         * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4013053053">什么是商户API证书？如何获取商户API证书和私钥？</a>
          */
         private String certKeyPath;
-        /**
-         * 微信支付平台证书路径(需要填写绝对路径)
-         */
-        private String platformPath;
     }
 }

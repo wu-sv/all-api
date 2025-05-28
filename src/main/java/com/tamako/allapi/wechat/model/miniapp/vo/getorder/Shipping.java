@@ -4,6 +4,7 @@ package com.tamako.allapi.wechat.model.miniapp.vo.getorder;
 import cn.hutool.core.annotation.Alias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * 物流信息
@@ -13,6 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
 public class Shipping extends com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshippinginfodto.Shipping {
     /**
      * 该物流信息的上传时间，时间戳形式。

@@ -5,6 +5,7 @@ import cn.hutool.core.annotation.Alias;
 import com.tamako.allapi.wechat.model.miniapp.vo.ResponseVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class MsgSecCheckVo extends ResponseVo {
     /**
      * 详细检测结果

@@ -9,6 +9,7 @@ import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfod
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class CommonUploadShippingInfoDto {
     /**
      * 订单，需要上传物流信息的订单

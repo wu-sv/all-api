@@ -5,7 +5,7 @@
 
     <groupId>io.gitee.tamako520</groupId>
     <artifactId>all-api</artifactId>
-    <version>1.2.10</version>
+    <version>1.3.0</version>
     <name>all-api</name>
     <description>Facilitate rapid development,Secondary encapsulation of the api like weChat,ali and so on</description>
     <url>https://gitee.com/Tamako520/all-api</url>
@@ -43,15 +43,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <AliOSS.version>3.18.1</AliOSS.version>
-        <AliSMS.version>3.0.3</AliSMS.version>
-        <AliAuth.version>0.2.16-beta</AliAuth.version>
-        <AliDashScope.version>2.19.1</AliDashScope.version>
+        <AliOSS.version>3.18.2</AliOSS.version>
+        <AliSMS.version>4.0.1</AliSMS.version>
+        <AliAuth.version>0.3.0-beta</AliAuth.version>
+        <AliDashScope.version>2.20.1</AliDashScope.version>
         <Bcprov.version>1.80</Bcprov.version>
-        <IJPay.version>2.9.12</IJPay.version>
-        <Hutool.version>5.8.37</Hutool.version>
+        <IJPay.version>2.9.12.1-17</IJPay.version>
+        <Hutool.version>5.8.38</Hutool.version>
 
-        <SpringBoot.version>3.4.4</SpringBoot.version>
+        <SpringBoot.version>3.5.0</SpringBoot.version>
 
     </properties>
 
@@ -137,7 +137,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.12.1</version>
+            <version>2.13.1</version>
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>
@@ -220,7 +220,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.12.1</version>
+            <version>5.12.2</version>
             <scope>test</scope>
         </dependency>
 

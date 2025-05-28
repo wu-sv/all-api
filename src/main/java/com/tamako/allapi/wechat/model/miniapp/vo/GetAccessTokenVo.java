@@ -6,6 +6,7 @@ package com.tamako.allapi.wechat.model.miniapp.vo;
 
 import cn.hutool.core.annotation.Alias;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 获取小程序全局唯一后台接口调用凭据（access_token）返回对象
@@ -13,6 +14,7 @@ import lombok.Data;
  * @author Tamako
  */
 @Data
+@Accessors(chain = true)
 public class GetAccessTokenVo {
     /**
      * 获取到的凭证

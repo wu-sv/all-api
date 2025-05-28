@@ -3,6 +3,7 @@ package com.tamako.allapi.ali.model.nls.vo;
 
 import cn.hutool.core.annotation.Alias;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 句子识别结果
@@ -11,6 +12,7 @@ import lombok.Data;
  * @since 2025/1/17 09:57
  */
 @Data
+@Accessors(chain = true)
 public class SentenceResult {
     /**
      * 该句所属音轨ID。

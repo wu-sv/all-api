@@ -4,6 +4,7 @@ package com.tamako.allapi.wechat.model.miniapp.vo;
 import cn.hutool.core.annotation.Alias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * 微信小程序登录凭证校验返回结果
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class JsCode2SessionVo extends ResponseVo {
     /**
      * 会话密钥

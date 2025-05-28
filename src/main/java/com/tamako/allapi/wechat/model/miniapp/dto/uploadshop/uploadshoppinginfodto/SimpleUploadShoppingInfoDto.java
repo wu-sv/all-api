@@ -5,6 +5,7 @@ import com.tamako.allapi.wechat.enums.miniapp.uploadshop.uploadshoppinginfo.Logi
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Deprecated
+@Accessors(chain = true)
 public class SimpleUploadShoppingInfoDto {
     /**
      * 原支付交易对应的微信订单号

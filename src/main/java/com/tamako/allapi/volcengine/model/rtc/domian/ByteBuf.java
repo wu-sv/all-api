@@ -1,7 +1,9 @@
 package com.tamako.allapi.volcengine.model.rtc.domian;
 
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -14,7 +16,9 @@ import java.util.TreeMap;
  * @author Tamako
  * @since 2024/11/12 16:00
  */
+@Data
 @NoArgsConstructor
+@Accessors(chain = true)
 public class ByteBuf {
     /**
      * buffer

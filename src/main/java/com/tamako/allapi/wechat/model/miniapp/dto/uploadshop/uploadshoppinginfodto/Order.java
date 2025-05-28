@@ -5,6 +5,7 @@ import cn.hutool.core.annotation.Alias;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class Order {
     /**
      * 商户交易订单编号，商户侧的交易订单详情页向用户展示的订单编号

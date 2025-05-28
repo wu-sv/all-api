@@ -2,6 +2,7 @@ package com.tamako.allapi.volcengine.model.rtc.vo;
 
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * RTC的公共响应类
@@ -10,6 +11,7 @@ import lombok.Data;
  * @since 2024/11/14 09:21
  */
 @Data
+@Accessors(chain = true)
 public class ResponseVo<T> {
     /**
      * 响应元数据

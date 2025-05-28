@@ -5,6 +5,7 @@ import cn.hutool.core.annotation.Alias;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class GetUnlimitedQRCodeDto {
     /**
      * 最大32个可见字符，只支持数字，大小写英文以及部分特殊字符

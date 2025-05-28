@@ -7,6 +7,7 @@ package com.tamako.allapi.wechat.model.miniapp.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -17,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class GetAccessTokenDto {
     /**
      * 微信小程序 appid
