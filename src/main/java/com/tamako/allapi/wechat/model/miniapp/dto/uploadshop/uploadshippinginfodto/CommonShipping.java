@@ -5,6 +5,7 @@ import cn.hutool.core.annotation.Alias;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -14,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class CommonShipping {
     /**
      * 物流单号，物流快递发货时必填，示例值: 323244567777 字符字节限制: [1, 128]

@@ -3,12 +3,14 @@ package com.tamako.allapi.ali.model.nls.vo;
 
 import cn.hutool.core.annotation.Alias;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author Tamako
  * @since 2025/1/16 17:25
  */
 @Data
+@Accessors(chain = true)
 public class NlsResult {
     /**
      * 识别任务ID。

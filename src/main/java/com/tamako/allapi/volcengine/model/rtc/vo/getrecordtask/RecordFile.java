@@ -3,6 +3,7 @@ package com.tamako.allapi.volcengine.model.rtc.vo.getrecordtask;
 
 import com.tamako.allapi.volcengine.model.rtc.dto.startrecord.Stream;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @author Tamako
  * @since 2024/11/15 11:31
  */
+@Accessors(chain = true)
 @Data
 public class RecordFile {
     /**

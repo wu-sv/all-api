@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 商品信息
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 public class Item {
     /**
      * 商户侧商品ID，商户系统内部商品编码，分拆发货模式下为必填，用于标识每笔物流单号内包含的商品，需与「上传购物详情」中传入的商品ID匹配

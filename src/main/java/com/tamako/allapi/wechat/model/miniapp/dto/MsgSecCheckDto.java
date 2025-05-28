@@ -5,6 +5,7 @@ import com.tamako.allapi.wechat.enums.miniapp.msgseccheck.SceneEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class MsgSecCheckDto {
 
     /**

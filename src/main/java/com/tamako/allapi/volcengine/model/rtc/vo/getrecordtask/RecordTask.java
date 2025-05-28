@@ -2,6 +2,7 @@ package com.tamako.allapi.volcengine.model.rtc.vo.getrecordtask;
 
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @since 2024/11/15 11:29
  */
 @Data
+@Accessors(chain = true)
 public class RecordTask {
     /**
      * 任务开始的时间，为 Unix 时间戳，单位为毫秒

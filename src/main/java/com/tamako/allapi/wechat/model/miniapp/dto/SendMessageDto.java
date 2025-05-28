@@ -5,6 +5,7 @@ import cn.hutool.core.annotation.Alias;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class SendMessageDto {
     /**
      * 所需下发的订阅模板id

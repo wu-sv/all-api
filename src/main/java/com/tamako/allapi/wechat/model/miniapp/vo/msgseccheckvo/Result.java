@@ -3,6 +3,7 @@ package com.tamako.allapi.wechat.model.miniapp.vo.msgseccheckvo;
 import com.tamako.allapi.wechat.enums.miniapp.msgseccheck.LabelEnum;
 import com.tamako.allapi.wechat.enums.miniapp.msgseccheck.SuggestEnum;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 综合结果
@@ -10,6 +11,7 @@ import lombok.Data;
  * @author Tamako
  */
 @Data
+@Accessors(chain = true)
 public class Result {
     /**
      * 建议

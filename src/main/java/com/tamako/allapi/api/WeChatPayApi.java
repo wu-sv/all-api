@@ -2,7 +2,7 @@ package com.tamako.allapi.api;
 
 
 import com.tamako.allapi.wechat.model.wxpay.dto.MiniAppPayOrderDto;
-import com.tamako.allapi.wechat.model.wxpay.vo.MiniAppPayNotifyVo;
+import com.tamako.allapi.wechat.model.wxpay.vo.WxPayOrderInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,7 +30,7 @@ public interface WeChatPayApi {
      * @param response 响应
      * @return 通知结果
      */
-    MiniAppPayNotifyVo miniAppPayNotify(HttpServletRequest request, HttpServletResponse response);
+    WxPayOrderInfo miniAppPayNotify(HttpServletRequest request, HttpServletResponse response);
 
 
     /**
@@ -42,5 +42,22 @@ public interface WeChatPayApi {
      * @param outTradeNo 商户订单号
      * @return 订单信息
      */
-    MiniAppPayNotifyVo miniAppQueryOrder(String outTradeNo);
+    WxPayOrderInfo orderQueryByOutTradeNo(String outTradeNo);
+
+    /**
+     * 微信支付订单号查询订单
+     *
+     * @param transactionId 微信交易订单号
+     * @return 订单信息
+     */
+    WxPayOrderInfo orderQueryByTransactionId(String transactionId);
+
+    /**
+     * 关闭订单
+     * 未支付状态的订单，可在无需支付时调用此接口关闭订单
+     *
+     * @param outTradeNo 商户订单号
+     */
+    void closeOrderByOutTradeNo(String outTradeNo);
+
 }

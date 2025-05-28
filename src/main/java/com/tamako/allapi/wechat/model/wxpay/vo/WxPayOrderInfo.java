@@ -7,6 +7,7 @@ import com.tamako.allapi.wechat.enums.wxpay.TradeStateEnum;
 import com.tamako.allapi.wechat.enums.wxpay.TradeTypeEnum;
 import com.tamako.allapi.wechat.model.miniapp.dto.uploadshop.uploadshoppinginfodto.Payer;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 微信小程序支付通知参数对象
@@ -14,7 +15,8 @@ import lombok.Data;
  * @author Tamako
  */
 @Data
-public class MiniAppPayNotifyVo {
+@Accessors(chain = true)
+public class WxPayOrderInfo {
     /**
      * 直连商户申请的公众号或移动应用AppID
      */
@@ -22,6 +24,7 @@ public class MiniAppPayNotifyVo {
     /**
      * 商户的商户号，由微信支付生成并下发。
      */
+    @Alias("mchid")
     private String mchId;
     /**
      * 商户系统内部订单号，可以是数字、大小写字母_-*的任意组合且在同一个商户号下唯一。

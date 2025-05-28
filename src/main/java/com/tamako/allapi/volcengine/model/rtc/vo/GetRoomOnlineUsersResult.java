@@ -3,6 +3,7 @@ package com.tamako.allapi.volcengine.model.rtc.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
 public class GetRoomOnlineUsersResult extends BaseResult {
     /**
      * 查询到的用户总数

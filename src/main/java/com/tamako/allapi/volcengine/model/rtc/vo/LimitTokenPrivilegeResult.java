@@ -3,6 +3,7 @@ package com.tamako.allapi.volcengine.model.rtc.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * @author Tamako
@@ -11,6 +12,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class LimitTokenPrivilegeResult extends BaseResult {
     /**
      * 请求成功时返回 “Success"，失败时为空

@@ -5,6 +5,7 @@ import com.tamako.allapi.wechat.enums.miniapp.uploadshop.uploadshoppinginfo.Orde
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
+@Accessors(chain = true)
 public class OrderDetailJumpLink {
     /**
      * 链接地址（链接类型为H5时必填）
