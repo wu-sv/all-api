@@ -16,8 +16,7 @@
 
 ### 注意事项：
 
-1. 微信支付的platform.pem只需要填一个路径加文件名就好（证书需要放在项目外部并填写绝对路径），
-  不用管这个文件是否存在，该项目会自动生成该文件。其他文件则需要自行到官网进行获取
+1. 微信支付的文件则需要自行到[微信支付官网](https://pay.weixin.qq.com/)进行获取
 
 2. ~~在启动类中添加注解@EnableAllAPI以启用~~
   现在增加了spring-auto-configuration，可以不用写注解了
@@ -49,7 +48,7 @@ GitHub：[https://github.com/wu-sv/all-api](https://github.com/wu-sv/all-api)
 <dependency>
     <groupId>io.gitee.tamako520</groupId>
     <artifactId>all-api</artifactId>
-    <version>1.2.10</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 2. 在`application.yml`文件中添加配置
@@ -71,8 +70,6 @@ wechat:
     cert-path: <apiclient_cert.pem>
     # 证书秘钥地址
     cert-key-path: <apiclient_key.pem>
-    # 微信支付平台证书路径
-    platform-path: <platform.pem>
 ali:
   access-key-id: <accessKeyId>
   access-key-secret: <accessKeySecret>
